@@ -533,7 +533,6 @@ const calculateCosts = (): CostBreakdown => {
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9.]*"
-                        maxLength={4}
                         value={value}
                         onChange={(e) => {
                           // Validate numeric inputs only
@@ -543,7 +542,7 @@ const calculateCosts = (): CostBreakdown => {
                             [key]: validValue ? parseFloat(validValue) : 0,
                           }));
                         }}
-                        className="w-20 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-right"
+                        className="w-28 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
                         style={{ MozAppearance: 'textfield' }}
                       />
                     </div>
