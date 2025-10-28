@@ -246,15 +246,19 @@ export default function App() {
 
   return (
 
-
-    <div className="min-h-screen bg-white text-black" style={isDarkMode ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}>
-      <div className="container mx-auto px-4 py-8 max-w-6xl" style={isDarkMode ? { filter: 'invert(1) hue-rotate(180deg)' } : {}}>
+    <div className={`min-h-screen transition-colors ${
+      isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
+    }`}>
+      <div className="container mx-auto px-4 py-8 max-w-6xl">
         {/* Theme Toggle Button */}
         <button
           onClick={() => setIsDarkMode(!isDarkMode)}
-          className="fixed top-4 right-4 p-3 rounded-full transition-all hover:scale-110 z-50 shadow-lg bg-black text-white hover:bg-gray-800"
-          title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-          aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          className={`fixed top-4 right-4 p-3 rounded-full transition-all hover:scale-110 z-50 ${
+            isDarkMode 
+              ? 'bg-white text-black hover:bg-gray-200' 
+              : 'bg-black text-white hover:bg-gray-800'
+          }`}
+          title={isDarkMode ? 'Mod luminos' : 'Mod întunecat'}
         >
           {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
         </button>
@@ -605,8 +609,7 @@ export default function App() {
         )}
       </div>
 
-
-      <Toaster theme={isDarkMode ? 'dark' : 'light'} />
+      <Toaster theme="light" />
     </div>
   );
 }
