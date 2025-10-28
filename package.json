@@ -7,23 +7,17 @@
     "dev": "vite --open",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest run",
-    "test:ui": "vitest --ui",
-    "test:watch": "vitest",
     "deploy": "npm run build && gh-pages -d dist",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@testing-library/react": "^16.3.0",
-    "@vitest/ui": "^4.0.4",
     "clsx": "^2.1.1",
     "gh-pages": "^6.3.0",
     "lucide-react": "^0.548.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.1.0",
-    "vitest": "^4.0.4"
+    "tailwind-merge": "^3.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
