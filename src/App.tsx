@@ -22,7 +22,6 @@ interface ParameterConfig {
   value: Parameters;
 }
 
-
 interface CostBreakdown {
   materialCost: number;
   printTimeCost: number;
@@ -122,42 +121,71 @@ const calculateCosts = (): CostBreakdown => {
 
   const costs = calculateCosts();
 
-  const handleOpenGcode = async () => {
+  const handleGcodeFile = async (file: File) => {
     try {
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.accept = '.gcode';
-      
-      const file = await new Promise<File | null>((resolve) => {
-        input.onchange = (e) => {
-          resolve((e.target as HTMLInputElement).files?.[0] || null);
-        };
-        input.click();
-      });
-
-      if (!file) return;
-
       const { filamentUsed, printTime } = await readGcodeMetadata(file);
       
-      // Update filament weight
       setGrams(filamentUsed.toString());
       
-      // Parse print time (e.g. "4h 51m" or "3h 15m 30s")
+      // Parse time components (now supporting days)
+      let totalHours = 0;
+      const daysMatch = printTime.match(/(\d+)d/);
       const hoursMatch = printTime.match(/(\d+)h/);
       const minutesMatch = printTime.match(/(\d+)m/);
       
-      setHours(hoursMatch ? hoursMatch[1] : '0');
-      setMinutes(minutesMatch ? minutesMatch[1] : '0');
+      if (daysMatch) totalHours += parseInt(daysMatch[1]) * 24;
+      if (hoursMatch) totalHours += parseInt(hoursMatch[1]);
+      if (minutesMatch) totalHours += parseInt(minutesMatch[1]) / 60;
+      
+      // Set hours (floored) and minutes (remaining fraction)
+      const hours = Math.floor(totalHours);
+      const minutes = Math.round((totalHours - hours) * 60);
+      
+      setHours(hours.toString());
+      setMinutes(minutes.toString());
 
       toast.success(UI_TEXT.TOAST.GCODE_SUCCESS);
     } catch (error: any) {
-      if (error.message.includes('Missing metadata')) {
+      if (error.message?.includes('Missing metadata')) {
         toast.error(UI_TEXT.TOAST.GCODE_INVALID);
       } else {
         toast.error(UI_TEXT.TOAST.GCODE_ERROR);
       }
     }
   };
+
+  const handleOpenGcode = async () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.gcode';
+    
+    const file = await new Promise<File | null>((resolve) => {
+      input.onchange = (e) => {
+        resolve((e.target as HTMLInputElement).files?.[0] || null);
+      };
+      input.click();
+    });
+    
+    if (file) await handleGcodeFile(file);
+  };
+
+  // Drag and drop handlers
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files?.[0];
+    if (file?.name.endsWith('.gcode')) handleGcodeFile(file);
+  };
+
+  // Paste handler
+  const handlePaste = (e: ClipboardEvent) => {
+    const file = e.clipboardData?.files?.[0];
+    if (file?.name.endsWith('.gcode')) handleGcodeFile(file);
+  };
+
+  useEffect(() => {
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
+  }, []);
 
   const saveParameters = () => {
     setParameterConfig({
@@ -216,11 +244,11 @@ const calculateCosts = (): CostBreakdown => {
             </head>
             <body>
               <h1>3D Printing Cost Calculation</h1>
-              <h2>{UI_TEXT.WORK_DETAILS.TITLE}</h2>
+              <h2>${UI_TEXT.WORK_DETAILS.TITLE}</h2>
               <div>${UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}: ${grams || '0'} ${UI_TEXT.UNITS.GRAMS}</div>
               <div>${UI_TEXT.WORK_DETAILS.PRINT_TIME}: ${hours || '0'}h ${minutes || '0'}m</div>
               
-              <h2>{UI_TEXT.COST_DETAILS.TITLE}</h2>
+              <h2>${UI_TEXT.COST_DETAILS.TITLE}</h2>
               <div class="breakdown">
                 ${parameterConfig.enabled.pricePerKg ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.MATERIAL_COST}</span><span>${formatCurrency(costs.materialCost)}</span></div>` : ''}
                 ${parameterConfig.enabled.pricePerHour ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.TIME_COST}</span><span>${formatCurrency(costs.printTimeCost)}</span></div>` : ''}
@@ -262,7 +290,11 @@ const calculateCosts = (): CostBreakdown => {
   };
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div 
+      className="min-h-screen bg-white text-black"
+      onDrop={handleDrop}
+      onDragOver={(e) => e.preventDefault()}
+    >
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
