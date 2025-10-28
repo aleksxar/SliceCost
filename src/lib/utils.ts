@@ -26,8 +26,8 @@ export async function readGcodeMetadata(file: File): Promise<{ filamentUsed: num
             filamentUsed = parseFloat(filamentMatch[1]);
           }
           
-          // Print time extraction (supports days)
-          const timeMatch = line.match(/;\s*estimated printing time \(normal mode\)\s*=\s*((\d+d\s*)?(\d+h\s*)?(\d+m\s*)?(\d+s)?)/);
+          // Print time extraction
+          const timeMatch = line.match(/;\s*estimated printing time \(normal mode\)\s*=\s*((\d+h\s*)?(\d+m\s*)?(\d+s)?)/);
           if (timeMatch) {
             printTime = timeMatch[0].replace(/;\s*estimated printing time \(normal mode\)\s*=\s*/, '');
           }
