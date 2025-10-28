@@ -126,8 +126,8 @@ const calculateCosts = (): CostBreakdown => {
     input.type = 'file';
     input.accept = '.gcode';
     input.onchange = () => {
-      toast.info('Parsarea G-code nu este încă implementată', {
-        description: 'Această funcție va extrage gramele și timpul de printare din fișierele G-code.',
+      toast.info(UI_TEXT.TOAST.GCODE_PARSER, {
+        description: UI_TEXT.TOAST.GCODE_DESCRIPTION,
       });
     };
     input.click();
@@ -139,7 +139,7 @@ const calculateCosts = (): CostBreakdown => {
       value: tempParameters,
     });
     setShowParameterEditor(false);
-    toast.success('Parametrii au fost salvați');
+    toast.success(UI_TEXT.TOAST.PARAMS_SAVED);
   };
 
   const resetToDefaults = () => {
@@ -196,24 +196,24 @@ const calculateCosts = (): CostBreakdown => {
               </style>
             </head>
             <body>
-              <h1>Calculul Costului Printării 3D</h1>
-              <h2>Detalii Lucrare</h2>
-              <div>Greutatea filamentului: ${grams || '0'} g</div>
-              <div>Timpul de printare: ${hours || '0'}h ${minutes || '0'}m</div>
+              <h1>3D Printing Cost Calculation</h1>
+              <h2>{UI_TEXT.WORK_DETAILS.TITLE}</h2>
+              <div>${UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}: ${grams || '0'} ${UI_TEXT.UNITS.GRAMS}</div>
+              <div>${UI_TEXT.WORK_DETAILS.PRINT_TIME}: ${hours || '0'}h ${minutes || '0'}m</div>
               
-              <h2>Detalii Cost</h2>
+              <h2>{UI_TEXT.COST_DETAILS.TITLE}</h2>
               <div class="breakdown">
-                ${parameterConfig.enabled.pricePerKg ? `<div class="breakdown-item"><span>Cost material:</span><span>${formatCurrency(costs.materialCost)}</span></div>` : ''}
-                ${parameterConfig.enabled.pricePerHour ? `<div class="breakdown-item"><span>Cost timp printare:</span><span>${formatCurrency(costs.printTimeCost)}</span></div>` : ''}
-                ${(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) ? `<div class="breakdown-item"><span>Cost electricitate:</span><span>${formatCurrency(costs.electricityCost)}</span></div>` : ''}
-                ${parameterConfig.enabled.flatWorkFee ? `<div class="breakdown-item"><span>Taxa fixă de lucru:</span><span>${formatCurrency(costs.flatWorkFee)}</span></div>` : ''}
-                <div class="breakdown-item breakdown-subtotal"><span>Subtotal:</span><span>${formatCurrency(costs.subtotal)}</span></div>
-                ${parameterConfig.enabled.markup ? `<div class="breakdown-item"><span>Adaos (${parameterConfig.value.markup}%):</span><span>${formatCurrency(costs.markupAmount)}</span></div>` : ''}
-                <div class="breakdown-item breakdown-total"><span>Total:</span><span>${formatCurrency(costs.total)}</span></div>
+                ${parameterConfig.enabled.pricePerKg ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.MATERIAL_COST}</span><span>${formatCurrency(costs.materialCost)}</span></div>` : ''}
+                ${parameterConfig.enabled.pricePerHour ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.TIME_COST}</span><span>${formatCurrency(costs.printTimeCost)}</span></div>` : ''}
+                ${(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span><span>${formatCurrency(costs.electricityCost)}</span></div>` : ''}
+                ${parameterConfig.enabled.flatWorkFee ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.WORK_FEE}</span><span>${formatCurrency(costs.flatWorkFee)}</span></div>` : ''}
+                <div class="breakdown-item breakdown-subtotal"><span>${UI_TEXT.COST_DETAILS.SUBTOTAL}</span><span>${formatCurrency(costs.subtotal)}</span></div>
+                ${parameterConfig.enabled.markup ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span><span>${formatCurrency(costs.markupAmount)}</span></div>` : ''}
+                <div class="breakdown-item breakdown-total"><span>${UI_TEXT.COST_DETAILS.TOTAL}</span><span>${formatCurrency(costs.total)}</span></div>
               </div>
               
               <div style="margin-top: 40px; text-align: center; color: #666; font-size: 0.9em;">
-                Generat pe ${new Date().toLocaleDateString('ro-RO')} la ${new Date().toLocaleTimeString('ro-RO')}
+                Generated on ${new Date().toLocaleDateString('en-US')} at ${new Date().toLocaleTimeString('en-US')}
               </div>
             </body>
           </html>
@@ -263,7 +263,7 @@ const calculateCosts = (): CostBreakdown => {
               <div className="grid grid-cols-1 gap-4 mb-4">
                 <div>
                   <label htmlFor="grams" className="block text-sm font-medium mb-2">
-                    Greutatea Filamentului
+                    {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
                   </label>
                   <div className="relative">
                     <input
@@ -287,7 +287,7 @@ const calculateCosts = (): CostBreakdown => {
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Timpul de Printare
+                    {UI_TEXT.WORK_DETAILS.PRINT_TIME}
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
@@ -304,7 +304,7 @@ const calculateCosts = (): CostBreakdown => {
                           aria-describedby="hours-unit"
                           style={{ MozAppearance: 'textfield' }}
                         />
-                        <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">ore</span>
+                        <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.HOURS}</span>
                       </div>
                       {hours && !validatePositive(hours) && (
                         <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
@@ -325,7 +325,7 @@ const calculateCosts = (): CostBreakdown => {
                           aria-describedby="minutes-unit"
                           style={{ MozAppearance: 'textfield' }}
                         />
-                        <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">min</span>
+                        <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.MINUTES}</span>
                       </div>
                       {minutes && !validateMinutes(minutes) && (
                         <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.MINUTES_RANGE}</p>
@@ -341,7 +341,7 @@ const calculateCosts = (): CostBreakdown => {
                     title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
                   >
                     <FileText className="w-4 h-4" />
-                    Deschide G-code
+                    {UI_TEXT.WORK_DETAILS.OPEN_GCODE}
                   </button>
                 </div>
               </div>
@@ -371,20 +371,20 @@ const calculateCosts = (): CostBreakdown => {
                 {Object.entries(parameterConfig.value).map(([key, value]) => {
                   const enabled = parameterConfig.enabled[key as keyof Parameters];
                   const labels = {
-                    pricePerKg: 'Preț per kg',
-                    pricePerHour: 'Preț per oră',
-                    flatWorkFee: 'Taxa fixă de lucru',
-                    electricityConsumption: 'Consum electricitate',
-                    electricityPrice: 'Preț electricitate',
-                    markup: 'Adaos',
+                    pricePerKg: UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG,
+                    pricePerHour: UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR,
+                    flatWorkFee: UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE,
+                    electricityConsumption: UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION,
+                    electricityPrice: UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE,
+                    markup: UI_TEXT.PARAMETER_LABELS.MARKUP,
                   };
                   const units = {
-                    pricePerKg: 'lei/kg',
-                    pricePerHour: 'lei/h',
-                    flatWorkFee: 'lei',
-                    electricityConsumption: 'W',
-                    electricityPrice: 'lei/kWh',
-                    markup: '%',
+                    pricePerKg: UI_TEXT.UNITS.PER_KG,
+                    pricePerHour: UI_TEXT.UNITS.PER_HOUR,
+                    flatWorkFee: UI_TEXT.UNITS.WORK_FEE,
+                    electricityConsumption: UI_TEXT.UNITS.ELECTRICITY,
+                    electricityPrice: UI_TEXT.UNITS.ELECTRICITY_PRICE,
+                    markup: UI_TEXT.UNITS.PERCENT,
                   };
 
                   return (
@@ -441,7 +441,7 @@ const calculateCosts = (): CostBreakdown => {
               {/* Summary */}
               <div className="bg-black text-white rounded-lg p-4 mb-4">
                 <div className="text-center">
-                  <p className="text-gray-300 text-sm">Cost Total</p>
+                  <p className="text-gray-300 text-sm">{UI_TEXT.COST_DETAILS.TOTAL_COST}</p>
                   <p className="text-2xl font-bold">{formatCurrency(costs.total)}</p>
                 </div>
               </div>
@@ -475,30 +475,30 @@ const calculateCosts = (): CostBreakdown => {
                   )}
                   {(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) && (
                     <div className="flex justify-between">
-                      <span>Cost electricitate:</span>
+                      <span>{UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span>
                       <span className="font-mono">{formatCurrency(costs.electricityCost)}</span>
                     </div>
                   )}
                   {parameterConfig.enabled.flatWorkFee && (
                     <div className="flex justify-between">
-                      <span>Taxa fixă de lucru:</span>
+                      <span>{UI_TEXT.COST_DETAILS.WORK_FEE}</span>
                       <span className="font-mono">{formatCurrency(costs.flatWorkFee)}</span>
                     </div>
                   )}
                   <hr className="border-gray-400" />
-                  <div className="flex justify-between font-medium">
-                    <span>Subtotal:</span>
+                    <div className="flex justify-between font-medium">
+                    <span>{UI_TEXT.COST_DETAILS.SUBTOTAL}</span>
                     <span className="font-mono">{formatCurrency(costs.subtotal)}</span>
                   </div>
                   {parameterConfig.enabled.markup && (
                     <div className="flex justify-between">
-                      <span>Adaos ({parameterConfig.value.markup}%):</span>
+                      <span>{UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
                       <span className="font-mono">{formatCurrency(costs.markupAmount)}</span>
                     </div>
                   )}
                   <hr className="border-gray-400" />
                   <div className="flex justify-between font-bold text-lg">
-                    <span>Total:</span>
+                    <span>{UI_TEXT.COST_DETAILS.TOTAL}</span>
                     <span className="font-mono">{formatCurrency(costs.total)}</span>
                   </div>
                 </div>
@@ -511,17 +511,17 @@ const calculateCosts = (): CostBreakdown => {
         {showParameterEditor && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-              <h3 className="text-xl font-semibold mb-4">Editează Parametrii</h3>
+              <h3 className="text-xl font-semibold mb-4">{UI_TEXT.TOAST.MODIFY_PARAMS}</h3>
               
               <div className="space-y-4 mb-6">
                 {Object.entries(tempParameters).map(([key, value]) => {
                   const labels = {
-                    pricePerKg: 'Preț per kg (lei)',
-                    pricePerHour: 'Preț per oră (lei)',
-                    flatWorkFee: 'Taxa fixă de lucru (lei)',
-                    electricityConsumption: 'Consum electricitate (W)',
-                    electricityPrice: 'Preț electricitate (lei/kWh)',
-                    markup: 'Adaos (%)',
+                    pricePerKg: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG} (RON)`,
+                    pricePerHour: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR} (RON)`,
+                    flatWorkFee: `${UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE} (RON)`,
+                    electricityConsumption: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION} (W)`,
+                    electricityPrice: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE} (RON/kWh)`,
+                    markup: `${UI_TEXT.PARAMETER_LABELS.MARKUP} (%)`,
                   };
 
                   return (
@@ -556,19 +556,19 @@ const calculateCosts = (): CostBreakdown => {
                   onClick={resetToDefaults}
                   className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
                 >
-                  Resetează la Implicit
+                  {UI_TEXT.COMMON.RESET_BUTTON}
                 </button>
                 <button
                   onClick={() => setShowParameterEditor(false)}
                   className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
                 >
-                  Anulează
+                  {UI_TEXT.COMMON.CANCEL_BUTTON}
                 </button>
                 <button
                   onClick={saveParameters}
                   className="flex-1 bg-black hover:bg-gray-800 text-white px-4 py-2 rounded transition-colors"
                 >
-                  Salvează
+                  {UI_TEXT.COMMON.SAVE_BUTTON}
                 </button>
               </div>
             </div>
