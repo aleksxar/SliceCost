@@ -530,17 +530,20 @@ const calculateCosts = (): CostBreakdown => {
                         {labels[key as keyof typeof labels]}
                       </label>
                       <input
-                        type="number"
-                        min="0"
-                        step="0.01"
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9.]*"
+                        maxLength={5}
                         value={value}
                         onChange={(e) => {
+                          // Validate numeric inputs only
+                          const validValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
                           setTempParameters(prev => ({
                             ...prev,
-                            [key]: parseFloat(e.target.value) || 0,
+                            [key]: validValue ? parseFloat(validValue) : 0,
                           }));
                         }}
-                        className="w-2/3 bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                        className="w-20 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-right"
                         style={{ MozAppearance: 'textfield' }}
                       />
                     </div>
