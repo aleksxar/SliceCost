@@ -291,7 +291,12 @@ const calculateCosts = (): CostBreakdown => {
                       min="0"
                       step="0.1"
                       value={grams}
-                      onChange={(e) => setGrams(e.target.value)}
+                      onChange={(e) => {
+  let displayValue = e.target.value.replace(/[^0-9.,]/g, '');
+  displayValue = displayValue.replace(/,/g, '.'); // Convert commas to dots
+  displayValue = displayValue.replace(/(\..*)\./g, '$1'); // Prevent multiple dots
+  setGrams(displayValue);
+}}
                       className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
                       placeholder="0"
                       aria-describedby="grams-unit"
@@ -554,17 +559,18 @@ const calculateCosts = (): CostBreakdown => {
                         pattern="[0-9.]*"
                         maxLength={4}
                         value={value}
-                          onChange={(e) => {
-                            // Allow numbers, dots and commas - convert commas to dots
-                            let cleanedValue = e.target.value.replace(/[^0-9.,]/g, '');
-                            cleanedValue = cleanedValue.replace(/,/g, '.'); // Convert commas to dots
-                            cleanedValue = cleanedValue.replace(/(\..*)\./g, '$1'); // Prevent multiple dots
-                            
-                            setTempParameters(prev => ({
-                              ...prev,
-                              [key]: cleanedValue ? parseFloat(cleanedValue) : 0,
-                            }));
-                          }}
+onChange={(e) => {
+  // Allow numbers, dots and commas (European format)
+  let displayValue = e.target.value.replace(/[^0-9.,]/g, '');
+  // For internal parsing: convert commas to dots
+  const numericValue = displayValue.replace(/,/g, '.');
+  const validatedValue = numericValue.replace(/(\..*)\./g, '$1');
+  
+  setTempParameters(prev => ({
+    ...prev,
+    [key]: validatedValue ? parseFloat(validatedValue) : 0,
+  }));
+}}
                           pattern="[0-9.,]*"
                           className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
                           style={{ MozAppearance: 'textfield' }}
