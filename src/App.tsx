@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-import { Coins, Settings, FileText, Printer, DollarSign, Moon, Sun } from 'lucide-react';
+import { Coins, Settings, FileText, Printer, DollarSign } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
 
 interface Parameters {
@@ -42,10 +41,6 @@ export default function App() {
   const [minutes, setMinutes] = useState<string>('');
   const [showParameterEditor, setShowParameterEditor] = useState(false);
   const [showBreakdown, setShowBreakdown] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('dark-mode');
-    return saved ? JSON.parse(saved) : true; // Default to dark mode
-  });
   
   const [parameterConfig, setParameterConfig] = useState<ParameterConfig>(() => {
     const saved = localStorage.getItem('3d-calc-parameters');
@@ -75,10 +70,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('3d-calc-parameters', JSON.stringify(parameterConfig));
   }, [parameterConfig]);
-
-  useEffect(() => {
-    localStorage.setItem('dark-mode', JSON.stringify(isDarkMode));
-  }, [isDarkMode]);
 
   const calculateCosts = (): CostBreakdown => {
     const gramsNum = parseFloat(grams) || 0;
@@ -245,28 +236,11 @@ export default function App() {
   };
 
   return (
-
-    <div className={`min-h-screen transition-colors ${
-      isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
-    }`}>
+    <div className="min-h-screen bg-white text-black">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Theme Toggle Button */}
-        <button
-          onClick={() => setIsDarkMode(!isDarkMode)}
-          className={`fixed top-4 right-4 p-3 rounded-full transition-all hover:scale-110 z-50 ${
-            isDarkMode 
-              ? 'bg-white text-black hover:bg-gray-200' 
-              : 'bg-black text-white hover:bg-gray-800'
-          }`}
-          title={isDarkMode ? 'Mod luminos' : 'Mod întunecat'}
-        >
-          {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-        </button>
-
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-
-            <Coins className="w-8 h-8" />
+            <Coins className="w-8 h-8 text-black" />
             <h1 className="text-3xl font-bold">SliceCost</h1>
           </div>
         </header>
