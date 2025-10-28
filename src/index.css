@@ -56,30 +56,6 @@ input[type="checkbox"]:checked::after {
   font-weight: bold;
 }
 
-/* Dark mode support */
-.dark body {
-  background-color: #111827;
-  color: white;
-}
-
-.dark input[type="checkbox"] {
-  background-color: #1f2937;
-  border-color: #6b7280;
-}
-
-.dark input[type="checkbox"]:checked {
-  background-color: #1f2937;
-  border-color: #d1d5db;
-}
-
-.dark .bg-gray-800 {
-  background-color: #1f2937 !important;
-}
-
-.dark .border-gray-700 {
-  border-color: #374151 !important;
-}
-
 /* Print styles */
 @media print {
   body * {

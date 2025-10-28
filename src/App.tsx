@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Settings, FileText, Printer, DollarSign, Languages, Moon, Sun } from 'lucide-react';
+import { Calculator, Settings, FileText, Printer, DollarSign } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
-import { useLanguage } from './contexts/LanguageContext';
-import { useTheme } from './contexts/ThemeContext';
 
 interface Parameters {
   pricePerKg: number;
@@ -38,8 +36,6 @@ interface CostBreakdown {
 }
 
 export default function App() {
-  const { t, language, setLanguage } = useLanguage();
-  const { theme, toggleTheme } = useTheme();
   const [grams, setGrams] = useState<string>('');
   const [hours, setHours] = useState<string>('');
   const [minutes, setMinutes] = useState<string>('');
@@ -239,64 +235,31 @@ export default function App() {
     return value === '' || num >= 0;
   };
 
-  const currency = language === 'en' ? 'EUR' : 'RON';
-
   return (
-    <div className={`min-h-screen transition-colors ${
-      theme === 'dark' 
-        ? 'bg-gray-900 text-white' 
-        : 'bg-white text-black'
-    }`}>
+    <div className="min-h-screen bg-white text-black">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="text-center mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex-1"></div>
-            <div className="flex items-center gap-3">
-              <Calculator className={`w-8 h-8 ${theme === 'dark' ? 'text-white' : 'text-black'}`} />
-              <h1 className="text-3xl font-bold">{t('appName')}</h1>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setLanguage(language === 'en' ? 'ro' : 'en')}
-                className={`p-2 rounded-lg transition-colors ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 text-white hover:bg-gray-700'
-                    : 'bg-gray-100 text-black hover:bg-gray-200'
-                }`}
-                title={language === 'en' ? 'Switch to Romanian' : 'Comută la Engleză'}
-              >
-                <Languages className="w-5 h-5" />
-              </button>
-              <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-lg transition-colors ${
-                  theme === 'dark'
-                    ? 'bg-gray-800 text-white hover:bg-gray-700'
-                    : 'bg-gray-100 text-black hover:bg-gray-200'
-                }`}
-                title={theme === 'dark' ? 'Switch to light theme' : 'Comută la tema închisă'}
-              >
-                {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </button>
-            </div>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Calculator className="w-8 h-8 text-black" />
+            <h1 className="text-3xl font-bold">Calculator Cost Printare 3D</h1>
           </div>
-          <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>{t('subtitle')}</p>
+          <p className="text-gray-600">Calculează costul total al lucrărilor de printare 3D</p>
         </header>
 
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Column - Inputs and Parameters */}
           <div className="space-y-6">
             {/* Main Inputs */}
-            <div className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-gray-100 border-gray-300'} border rounded-lg p-6`}>
+            <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                {t('jobDetails')}
+                Detalii Lucrare
               </h2>
               
               <div className="grid grid-cols-1 gap-4 mb-4">
                 <div>
                   <label htmlFor="grams" className="block text-sm font-medium mb-2">
-                    {t('filamentWeight')}
+                    Greutatea Filamentului
                   </label>
                   <div className="relative">
                     <input
@@ -306,21 +269,21 @@ export default function App() {
                       step="0.1"
                       value={grams}
                       onChange={(e) => setGrams(e.target.value)}
-                      className={`w-full ${theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-white'} border rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none`}
+                      className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
                       placeholder="0"
                       aria-describedby="grams-unit"
                       style={{ MozAppearance: 'textfield' }}
                     />
-                    <span id="grams-unit" className={`absolute right-3 top-2 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>g</span>
+                    <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
                   </div>
                   {grams && !validatePositive(grams) && (
-                    <p className="text-red-600 text-sm mt-1">{t('mustBePositive')}</p>
+                    <p className="text-red-600 text-sm mt-1">Trebuie să fie un număr pozitiv</p>
                   )}
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    {t('printTime')}
+                    Timpul de Printare
                   </label>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
