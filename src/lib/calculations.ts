@@ -22,60 +22,37 @@ export interface CostBreakdown {
   total: number;
 }
 
+interface CalculationConfig {
+  enabled: Record<keyof Parameters, boolean>;
+  value: Parameters;
+}
+
 export function calculateCosts(
   grams: number,
   hours: number,
   minutes: number,
-  config: ParameterConfig
+  config: CalculationConfig
 ): CostBreakdown {
-  // Check if any of the required values are missing
   if (grams === 0 && hours === 0 && minutes === 0) {
-    return {
-      materialCost: 0,
-      printTimeCost: 0,
-      electricityCost: 0,
-      flatWorkFee: 0,
-      subtotal: 0,
-      markupAmount: 0,
-      total: 0,
-    };
+    return { materialCost: 0, printTimeCost: 0, electricityCost: 0,
+      flatWorkFee: 0, subtotal: 0, markupAmount: 0, total: 0 };
   }
 
+  const { enabled, value } = config;
   const totalHours = hours + minutes / 60;
 
-  const materialCost = config.enabled.pricePerKg
-    ? (grams / 1000) * config.value.pricePerKg
-    : 0;
-
-  const printTimeCost = config.enabled.pricePerHour
-    ? totalHours * config.value.pricePerHour
-    : 0;
-
-  const electricityCost = (config.enabled.electricityConsumption && config.enabled.electricityPrice)
-    ? (config.value.electricityConsumption / 1000) * totalHours * config.value.electricityPrice
-    : 0;
-
-  const flatWorkFee = config.enabled.flatWorkFee
-    ? config.value.flatWorkFee
-    : 0;
-
+  const materialCost = enabled.pricePerKg ? (grams / 1000) * value.pricePerKg : 0;
+  const printTimeCost = enabled.pricePerHour ? totalHours * value.pricePerHour : 0;
+  const electricityCost = (enabled.electricityConsumption && enabled.electricityPrice)
+    ? (value.electricityConsumption / 1000) * totalHours * value.electricityPrice : 0;
+  const flatWorkFee = enabled.flatWorkFee ? value.flatWorkFee : 0;
+  
   const subtotal = materialCost + printTimeCost + electricityCost + flatWorkFee;
-
-  const markupAmount = config.enabled.markup
-    ? subtotal * (config.value.markup / 100)
-    : 0;
-
+  const markupAmount = enabled.markup ? subtotal * (value.markup / 100) : 0;
   const total = subtotal + markupAmount;
 
-  return {
-    materialCost,
-    printTimeCost,
-    electricityCost,
-    flatWorkFee,
-    subtotal,
-    markupAmount,
-    total,
-  };
+  return { materialCost, printTimeCost, electricityCost, 
+    flatWorkFee, subtotal, markupAmount, total };
 }
 
 export function validateMinutes(value: string): boolean {

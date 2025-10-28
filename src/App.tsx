@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Coins, Settings, FileText, Printer, DollarSign } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
+import { 
+  DEFAULT_PARAMETERS, 
+  DEFAULT_ENABLED, 
+  UI_TEXT 
+} from './config/constants';
 
 interface Parameters {
   pricePerKg: number;
@@ -16,14 +21,6 @@ interface ParameterConfig {
   value: Parameters;
 }
 
-const defaultParameters: Parameters = {
-  pricePerKg: 100,
-  pricePerHour: 2,
-  flatWorkFee: 3,
-  electricityConsumption: 150,
-  electricityPrice: 1.5,
-  markup: 20,
-};
 
 interface CostBreakdown {
   materialCost: number;
@@ -52,15 +49,8 @@ export default function App() {
       }
     }
     return {
-      enabled: {
-        pricePerKg: true,
-        pricePerHour: true,
-        flatWorkFee: true,
-        electricityConsumption: true,
-        electricityPrice: true,
-        markup: true,
-      },
-      value: { ...defaultParameters },
+      enabled: DEFAULT_ENABLED,
+      value: { ...DEFAULT_PARAMETERS },
     };
   });
 
@@ -265,10 +255,10 @@ const calculateCosts = (): CostBreakdown => {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
-              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                <FileText className="w-5 h-5" />
-                Detalii Lucrare
-              </h2>
+                <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  {UI_TEXT.WORK_DETAILS.TITLE}
+                </h2>
               
               <div className="grid grid-cols-1 gap-4 mb-4">
                 <div>
@@ -291,7 +281,7 @@ const calculateCosts = (): CostBreakdown => {
                     <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
                   </div>
                   {grams && !validatePositive(grams) && (
-                    <p className="text-red-600 text-sm mt-1">Trebuie să fie un număr pozitiv</p>
+                    <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
                   )}
                 </div>
 
@@ -317,7 +307,7 @@ const calculateCosts = (): CostBreakdown => {
                         <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">ore</span>
                       </div>
                       {hours && !validatePositive(hours) && (
-                        <p className="text-red-600 text-sm mt-1">Trebuie să fie pozitiv</p>
+                        <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
                       )}
                     </div>
                     <div>
@@ -338,7 +328,7 @@ const calculateCosts = (): CostBreakdown => {
                         <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">min</span>
                       </div>
                       {minutes && !validateMinutes(minutes) && (
-                        <p className="text-red-600 text-sm mt-1">0-59 minute</p>
+                        <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.MINUTES_RANGE}</p>
                       )}
                     </div>
                   </div>
@@ -348,7 +338,7 @@ const calculateCosts = (): CostBreakdown => {
                   <button
                     onClick={handleFileUpload}
                     className="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
-                    title="Încarcă fișier G-code (în curând)"
+                    title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
                   >
                     <FileText className="w-4 h-4" />
                     Deschide G-code
@@ -361,10 +351,10 @@ const calculateCosts = (): CostBreakdown => {
           <div className="space-y-6">
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
-                  Parametri
-                </h2>
+                  <h2 className="text-xl font-semibold flex items-center gap-2">
+                    <Settings className="w-5 h-5" />
+                    {UI_TEXT.PARAMETERS.TITLE}
+                  </h2>
                 <button
                   onClick={() => {
                     setTempParameters(parameterConfig.value);
@@ -373,7 +363,7 @@ const calculateCosts = (): CostBreakdown => {
                   }}
                   className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm transition-colors"
                 >
-                  Editează Parametrii
+                  {UI_TEXT.PARAMETERS.EDIT_BUTTON}
                 </button>
               </div>
 
@@ -438,12 +428,12 @@ const calculateCosts = (): CostBreakdown => {
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold flex items-center gap-2">
                   <DollarSign className="w-5 h-5" />
-                  Detalii Cost
+                  {UI_TEXT.COST_DETAILS.TITLE}
                 </h2>
                 <button
                   onClick={handlePrint}
                   className="bg-gray-200 hover:bg-gray-300 border border-gray-400 p-2 rounded transition-colors"
-                  title="Printează detaliile"
+                  title={UI_TEXT.COMMON.PRINT_BUTTON}
                 >
                   <Printer className="w-4 h-4" />
                 </button>
@@ -462,7 +452,7 @@ const calculateCosts = (): CostBreakdown => {
                 className="w-full text-left bg-gray-200 hover:bg-gray-300 border border-gray-400 p-3 rounded transition-colors mb-4"
               >
                 <span className="flex items-center justify-between">
-                  <span>Vezi detaliile complete</span>
+                  <span>{UI_TEXT.COST_DETAILS.SHOW_DETAILS}</span>
                   <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`}>
                     ▼
                   </span>
@@ -473,13 +463,13 @@ const calculateCosts = (): CostBreakdown => {
                 <div className="space-y-2 text-sm">
                   {parameterConfig.enabled.pricePerKg && (
                     <div className="flex justify-between">
-                      <span>Cost material:</span>
+                      <span>{UI_TEXT.COST_DETAILS.MATERIAL_COST}</span>
                       <span className="font-mono">{formatCurrency(costs.materialCost)}</span>
                     </div>
                   )}
                   {parameterConfig.enabled.pricePerHour && (
                     <div className="flex justify-between">
-                      <span>Cost timp printare:</span>
+                      <span>{UI_TEXT.COST_DETAILS.TIME_COST}</span>
                       <span className="font-mono">{formatCurrency(costs.printTimeCost)}</span>
                     </div>
                   )}
