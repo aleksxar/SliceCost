@@ -241,9 +241,8 @@ export default function App() {
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Calculator className="w-8 h-8 text-black" />
-            <h1 className="text-3xl font-bold">Calculator Cost Printare 3D</h1>
+            <h1 className="text-3xl font-bold">SliceCost</h1>
           </div>
-          <p className="text-gray-600">Calculează costul total al lucrărilor de printare 3D</p>
         </header>
 
         <div className="grid lg:grid-cols-2 gap-8">
