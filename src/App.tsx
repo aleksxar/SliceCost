@@ -245,10 +245,8 @@ export default function App() {
           </div>
         </header>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-          {/* Left Column - Inputs and Parameters */}
+        <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">
-            {/* Main Inputs */}
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
               <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
                 <FileText className="w-5 h-5" />
@@ -341,8 +339,9 @@ export default function App() {
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Parameters */}
+          <div className="space-y-6">
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold flex items-center gap-2">
@@ -417,7 +416,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Right Column - Cost Breakdown */}
           <div className="space-y-6">
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 print-area">
               <div className="flex items-center justify-between mb-4">
@@ -433,7 +431,6 @@ export default function App() {
                   <Printer className="w-4 h-4" />
                 </button>
               </div>
-
               {/* Summary */}
               <div className="bg-black text-white rounded-lg p-4 mb-4">
                 <div className="text-center">
