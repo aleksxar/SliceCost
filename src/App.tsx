@@ -6,6 +6,7 @@ import {
   DEFAULT_ENABLED, 
   UI_TEXT 
 } from './config/constants';
+import { readGcodeMetadata } from './lib/utils';
 
 interface Parameters {
   pricePerKg: number;
@@ -121,16 +122,41 @@ const calculateCosts = (): CostBreakdown => {
 
   const costs = calculateCosts();
 
-  const handleFileUpload = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.gcode';
-    input.onchange = () => {
-      toast.info(UI_TEXT.TOAST.GCODE_PARSER, {
-        description: UI_TEXT.TOAST.GCODE_DESCRIPTION,
+  const handleOpenGcode = async () => {
+    try {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = '.gcode';
+      
+      const file = await new Promise<File | null>((resolve) => {
+        input.onchange = (e) => {
+          resolve((e.target as HTMLInputElement).files?.[0] || null);
+        };
+        input.click();
       });
-    };
-    input.click();
+
+      if (!file) return;
+
+      const { filamentUsed, printTime } = await readGcodeMetadata(file);
+      
+      // Update filament weight
+      setGrams(filamentUsed.toString());
+      
+      // Parse print time (e.g. "4h 51m" or "3h 15m 30s")
+      const hoursMatch = printTime.match(/(\d+)h/);
+      const minutesMatch = printTime.match(/(\d+)m/);
+      
+      setHours(hoursMatch ? hoursMatch[1] : '0');
+      setMinutes(minutesMatch ? minutesMatch[1] : '0');
+
+      toast.success(UI_TEXT.TOAST.GCODE_SUCCESS);
+    } catch (error: any) {
+      if (error.message.includes('Missing metadata')) {
+        toast.error(UI_TEXT.TOAST.GCODE_INVALID);
+      } else {
+        toast.error(UI_TEXT.TOAST.GCODE_ERROR);
+      }
+    }
   };
 
   const saveParameters = () => {
@@ -329,7 +355,7 @@ const calculateCosts = (): CostBreakdown => {
 
                 <div>
                   <button
-                    onClick={handleFileUpload}
+                    onClick={handleOpenGcode}
                     className="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
                     title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
                   >

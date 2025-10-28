@@ -59,6 +59,9 @@ export const UI_TEXT = {
   TOAST: {
     GCODE_PARSER: 'G-code parsing not implemented yet',
     GCODE_DESCRIPTION: 'This feature will extract weight and print time from G-code files',
+    GCODE_SUCCESS: 'G-code parsed successfully',
+    GCODE_INVALID: 'Missing metadata in G-code file',
+    GCODE_ERROR: 'Error processing G-code file',
     PARAMS_SAVED: 'Parameters saved successfully',
     MODIFY_PARAMS: 'Modify Print Parameters',
   },
