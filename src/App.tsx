@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, Settings, FileText, Printer, DollarSign } from 'lucide-react';
+import { Coins, Settings, FileText, Printer, DollarSign } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
 
 interface Parameters {
@@ -240,7 +240,7 @@ export default function App() {
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Calculator className="w-8 h-8 text-black" />
+            <Coins className="w-8 h-8 text-black" />
             <h1 className="text-3xl font-bold">SliceCost</h1>
           </div>
         </header>
