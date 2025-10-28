@@ -554,20 +554,16 @@ const calculateCosts = (): CostBreakdown => {
                         pattern="[0-9.]*"
                         maxLength={4}
                         value={value}
-                          onChange={(e) => {
-                            // Allow numbers, dots and commas - convert commas to dots
-                            let cleanedValue = e.target.value.replace(/[^0-9.,]/g, '');
-                            cleanedValue = cleanedValue.replace(/,/g, '.'); // Convert commas to dots
-                            cleanedValue = cleanedValue.replace(/(\..*)\./g, '$1'); // Prevent multiple dots
-                            
-                            setTempParameters(prev => ({
-                              ...prev,
-                              [key]: cleanedValue ? parseFloat(cleanedValue) : 0,
-                            }));
-                          }}
-                          pattern="[0-9.,]*"
-                          className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
-                          style={{ MozAppearance: 'textfield' }}
+                        onChange={(e) => {
+                          // Validate numeric inputs only
+                          const validValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                          setTempParameters(prev => ({
+                            ...prev,
+                            [key]: validValue ? parseFloat(validValue) : 0,
+                          }));
+                        }}
+                        className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
+                        style={{ MozAppearance: 'textfield' }}
                       />
                     </div>
                   );
