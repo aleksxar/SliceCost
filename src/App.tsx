@@ -143,15 +143,8 @@ const calculateCosts = (): CostBreakdown => {
   };
 
   const resetToDefaults = () => {
-    setTempParameters({ ...defaultParameters });
-    setTempEnabled({
-      pricePerKg: true,
-      pricePerHour: true,
-      flatWorkFee: true,
-      electricityConsumption: true,
-      electricityPrice: true,
-      markup: true,
-    });
+    setTempParameters({ ...DEFAULT_PARAMETERS });
+    setTempEnabled({ ...DEFAULT_ENABLED });
   };
 
   const handlePrint = () => {
