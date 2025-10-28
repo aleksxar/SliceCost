@@ -511,7 +511,7 @@ const calculateCosts = (): CostBreakdown => {
         {showParameterEditor && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-              <h3 className="text-xl font-semibold mb-4">{UI_TEXT.TOAST.MODIFY_PARAMS}</h3>
+              <h3 className="text-xl font-semibold mb-4 text-center">{UI_TEXT.TOAST.MODIFY_PARAMS}</h3>
               
               <div className="space-y-4 mb-6">
                 {Object.entries(tempParameters).map(([key, value]) => {
@@ -526,14 +526,14 @@ const calculateCosts = (): CostBreakdown => {
 
                   return (
                     <div key={key} className="flex items-center justify-between">
-                      <label className="text-sm font-medium w-1/3">
+                      <label className="text-sm font-medium w-3/5 whitespace-nowrap">
                         {labels[key as keyof typeof labels]}
                       </label>
                       <input
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9.]*"
-                        maxLength={5}
+                        maxLength={4}
                         value={value}
                         onChange={(e) => {
                           // Validate numeric inputs only
