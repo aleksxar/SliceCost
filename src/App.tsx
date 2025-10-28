@@ -71,46 +71,63 @@ export default function App() {
     localStorage.setItem('3d-calc-parameters', JSON.stringify(parameterConfig));
   }, [parameterConfig]);
 
-  const calculateCosts = (): CostBreakdown => {
-    const gramsNum = parseFloat(grams) || 0;
-    const hoursNum = parseFloat(hours) || 0;
-    const minutesNum = parseFloat(minutes) || 0;
-    const totalHours = hoursNum + minutesNum / 60;
+const calculateCosts = (): CostBreakdown => {
+  // Parse the input values
+  const gramsNum = parseFloat(grams) || 0;
+  const hoursNum = parseFloat(hours) || 0;
+  const minutesNum = parseFloat(minutes) || 0;
 
-    const materialCost = parameterConfig.enabled.pricePerKg 
-      ? (gramsNum / 1000) * parameterConfig.value.pricePerKg 
-      : 0;
-    
-    const printTimeCost = parameterConfig.enabled.pricePerHour 
-      ? totalHours * parameterConfig.value.pricePerHour 
-      : 0;
-    
-    const electricityCost = (parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice)
-      ? (parameterConfig.value.electricityConsumption / 1000) * totalHours * parameterConfig.value.electricityPrice 
-      : 0;
-    
-    const flatWorkFee = parameterConfig.enabled.flatWorkFee 
-      ? parameterConfig.value.flatWorkFee 
-      : 0;
-    
-    const subtotal = materialCost + printTimeCost + electricityCost + flatWorkFee;
-    
-    const markupAmount = parameterConfig.enabled.markup 
-      ? subtotal * (parameterConfig.value.markup / 100) 
-      : 0;
-    
-    const total = subtotal + markupAmount;
-
+  // Check if any of the required values are missing
+  if (grams === '' && hours === '' && minutes === '') {
     return {
-      materialCost,
-      printTimeCost,
-      electricityCost,
-      flatWorkFee,
-      subtotal,
-      markupAmount,
-      total,
+      materialCost: 0,
+      printTimeCost: 0,
+      electricityCost: 0,
+      flatWorkFee: 0,
+      subtotal: 0,
+      markupAmount: 0,
+      total: 0,
     };
+  }
+
+  // Calculate the total hours
+  const totalHours = hoursNum + minutesNum / 60;
+
+  // Calculate the cost breakdown
+  const materialCost = parameterConfig.enabled.pricePerKg
+    ? (gramsNum / 1000) * parameterConfig.value.pricePerKg
+    : 0;
+
+  const printTimeCost = parameterConfig.enabled.pricePerHour
+    ? totalHours * parameterConfig.value.pricePerHour
+    : 0;
+
+  const electricityCost = (parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice)
+    ? (parameterConfig.value.electricityConsumption / 1000) * totalHours * parameterConfig.value.electricityPrice
+    : 0;
+
+  const flatWorkFee = parameterConfig.enabled.flatWorkFee
+    ? parameterConfig.value.flatWorkFee
+    : 0;
+
+  const subtotal = materialCost + printTimeCost + electricityCost + flatWorkFee;
+
+  const markupAmount = parameterConfig.enabled.markup
+    ? subtotal * (parameterConfig.value.markup / 100)
+    : 0;
+
+  const total = subtotal + markupAmount;
+
+  return {
+    materialCost,
+    printTimeCost,
+    electricityCost,
+    flatWorkFee,
+    subtotal,
+    markupAmount,
+    total,
   };
+};
 
   const costs = calculateCosts();
 
