@@ -245,7 +245,7 @@ export default function App() {
           </div>
         </header>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="flex flex-col lg:flex-row gap-8 justify-center">
           {/* Left Column - Inputs and Parameters */}
           <div className="space-y-6">
             {/* Main Inputs */}
@@ -257,9 +257,17 @@ export default function App() {
               
               <div className="grid grid-cols-1 gap-4 mb-4">
                 <div>
-                  <label htmlFor="grams" className="block text-sm font-medium mb-2">
-                    Greutatea Filamentului
-                  </label>
+                  <div className="flex items-center gap-2 mb-2">
+                    <label htmlFor="grams" className="text-sm font-medium">
+                      Greutatea Filamentului
+                    </label>
+                    <span 
+                      className="text-gray-500 text-sm cursor-help"
+                      title="Introduceți greutatea totală a filamentului utilizat pentru printare, în grame."
+                    >
+                      ℹ️
+                    </span>
+                  </div>
                   <div className="relative">
                     <input
                       id="grams"
@@ -268,7 +276,9 @@ export default function App() {
                       step="0.1"
                       value={grams}
                       onChange={(e) => setGrams(e.target.value)}
-                      className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                      className={`w-full bg-white border rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none ${
+                        grams && !validatePositive(grams) ? 'border-red-500' : 'border-gray-400'
+                      }`}
                       placeholder="0"
                       aria-describedby="grams-unit"
                       style={{ MozAppearance: 'textfield' }}
@@ -278,12 +288,18 @@ export default function App() {
                   {grams && !validatePositive(grams) && (
                     <p className="text-red-600 text-sm mt-1">Trebuie să fie un număr pozitiv</p>
                   )}
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Timpul de Printare
-                  </label>
+                  <div className="flex items-center gap-2 mt-4 mb-2">
+                    <label className="text-sm font-medium">
+                      Timpul de Printare
+                    </label>
+                    <span 
+                      className="text-gray-500 text-sm cursor-help"
+                      title="Introduceți timpul total de printare. Orele și minutele sunt separate în două câmpuri distincte."
+                    >
+                      ℹ️
+                    </span>
+                  </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <div className="relative">
@@ -294,7 +310,9 @@ export default function App() {
                           step="1"
                           value={hours}
                           onChange={(e) => setHours(e.target.value)}
-                          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                          className={`w-full bg-white border rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none ${
+                            hours && !validatePositive(hours) ? 'border-red-500' : 'border-gray-400'
+                          }`}
                           placeholder="0"
                           aria-describedby="hours-unit"
                           style={{ MozAppearance: 'textfield' }}
@@ -315,7 +333,9 @@ export default function App() {
                           step="1"
                           value={minutes}
                           onChange={(e) => setMinutes(e.target.value)}
-                          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                          className={`w-full bg-white border rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none ${
+                            minutes && !validateMinutes(minutes) ? 'border-red-500' : 'border-gray-400'
+                          }`}
                           placeholder="0"
                           aria-describedby="minutes-unit"
                           style={{ MozAppearance: 'textfield' }}
@@ -344,24 +364,12 @@ export default function App() {
 
             {/* Parameters */}
             <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
-                  Parametri
-                </h2>
-                <button
-                  onClick={() => {
-                    setTempParameters(parameterConfig.value);
-                    setTempEnabled(parameterConfig.enabled);
-                    setShowParameterEditor(true);
-                  }}
-                  className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm transition-colors"
-                >
-                  Editează Parametrii
-                </button>
-              </div>
+              <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                <Settings className="w-5 h-5" />
+                Parametri
+              </h2>
 
-              <div className="space-y-3">
+              <div className="space-y-3 mb-4">
                 {Object.entries(parameterConfig.value).map(([key, value]) => {
                   const enabled = parameterConfig.enabled[key as keyof Parameters];
                   const labels = {
@@ -414,6 +422,17 @@ export default function App() {
                   );
                 })}
               </div>
+
+              <button
+                onClick={() => {
+                  setTempParameters(parameterConfig.value);
+                  setTempEnabled(parameterConfig.enabled);
+                  setShowParameterEditor(true);
+                }}
+                className="w-full bg-black hover:bg-gray-800 text-white px-4 py-2 rounded text-sm transition-colors"
+              >
+                Editează Parametrii
+              </button>
             </div>
           </div>
 
@@ -434,29 +453,27 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Summary */}
+              {/* Summary and Breakdown */}
               <div className="bg-black text-white rounded-lg p-4 mb-4">
-                <div className="text-center">
+                <div className="text-center mb-4">
                   <p className="text-gray-300 text-sm">Cost Total</p>
-                  <p className="text-2xl font-bold">{formatCurrency(costs.total)}</p>
+                  <p className="text-3xl font-bold">{formatCurrency(costs.total)}</p>
                 </div>
+                <button
+                  onClick={() => setShowBreakdown(!showBreakdown)}
+                  className="w-full text-left bg-gray-700 hover:bg-gray-600 p-3 rounded transition-colors"
+                >
+                  <span className="flex items-center justify-between">
+                    <span>{showBreakdown ? 'Ascunde detaliile' : 'Vezi detaliile complete'}</span>
+                    <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`}>
+                      ▼
+                    </span>
+                  </span>
+                </button>
               </div>
 
-              {/* Expandable Breakdown */}
-              <button
-                onClick={() => setShowBreakdown(!showBreakdown)}
-                className="w-full text-left bg-gray-200 hover:bg-gray-300 border border-gray-400 p-3 rounded transition-colors mb-4"
-              >
-                <span className="flex items-center justify-between">
-                  <span>Vezi detaliile complete</span>
-                  <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`}>
-                    ▼
-                  </span>
-                </span>
-              </button>
-
               {showBreakdown && (
-                <div className="space-y-2 text-sm">
+                <div className="space-y-2 text-sm bg-gray-100 border border-gray-300 rounded-lg p-4">
                   {parameterConfig.enabled.pricePerKg && (
                     <div className="flex justify-between">
                       <span>Cost material:</span>
