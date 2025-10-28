@@ -525,23 +525,10 @@ const calculateCosts = (): CostBreakdown => {
                   };
 
                   return (
-                    <div key={key}>
-                      <div className="flex items-center gap-3 mb-2">
-                        <input
-                          type="checkbox"
-                          checked={tempEnabled[key as keyof Parameters]}
-                          onChange={(e) => {
-                            setTempEnabled(prev => ({
-                              ...prev,
-                              [key]: e.target.checked,
-                            }));
-                          }}
-                          className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
-                        />
-                        <label className="text-sm font-medium">
-                          {labels[key as keyof typeof labels]}
-                        </label>
-                      </div>
+                    <div key={key} className="flex items-center justify-between">
+                      <label className="text-sm font-medium w-1/3">
+                        {labels[key as keyof typeof labels]}
+                      </label>
                       <input
                         type="number"
                         min="0"
@@ -553,8 +540,7 @@ const calculateCosts = (): CostBreakdown => {
                             [key]: parseFloat(e.target.value) || 0,
                           }));
                         }}
-                        disabled={!tempEnabled[key as keyof Parameters]}
-                        className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent disabled:opacity-50 appearance-none"
+                        className="w-2/3 bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
                         style={{ MozAppearance: 'textfield' }}
                       />
                     </div>
