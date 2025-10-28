@@ -285,18 +285,23 @@ const calculateCosts = (): CostBreakdown => {
                     {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
                   </label>
                   <div className="relative">
-                    <input
-                      id="grams"
-                      type="number"
-                      min="0"
-                      step="0.1"
-                      value={grams}
-                      onChange={(e) => setGrams(e.target.value)}
-                      className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
-                      placeholder="0"
-                      aria-describedby="grams-unit"
-                      style={{ MozAppearance: 'textfield' }}
-                    />
+<input
+  id="grams"
+  type="text"
+  inputMode="decimal"
+  value={grams}
+  onChange={(e) => {
+    let cleanedValue = e.target.value.replace(/[^0-9.,]/g, '');
+    cleanedValue = cleanedValue.replace(/,/g, '.');
+    cleanedValue = cleanedValue.replace(/(\..*)\./g, '$1');
+    setGrams(cleanedValue);
+  }}
+  maxLength={5}
+  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+  placeholder="0"
+  aria-describedby="grams-unit"
+  style={{ MozAppearance: 'textfield' }}
+/>
                     <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
                   </div>
                   {grams && !validatePositive(grams) && (
@@ -311,18 +316,21 @@ const calculateCosts = (): CostBreakdown => {
                   <div className="grid grid-cols-2 gap-2">
                     <div>
                       <div className="relative">
-                        <input
-                          id="hours"
-                          type="number"
-                          min="0"
-                          step="1"
-                          value={hours}
-                          onChange={(e) => setHours(e.target.value)}
-                          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
-                          placeholder="0"
-                          aria-describedby="hours-unit"
-                          style={{ MozAppearance: 'textfield' }}
-                        />
+<input
+  id="hours"
+  type="text"
+  inputMode="numeric"
+  value={hours}
+  onChange={(e) => {
+    const cleanedValue = e.target.value.replace(/[^0-9]/g, '');
+    setHours(cleanedValue);
+  }}
+  maxLength={3}
+  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+  placeholder="0"
+  aria-describedby="hours-unit"
+  style={{ MozAppearance: 'textfield' }}
+/>
                         <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.HOURS}</span>
                       </div>
                       {hours && !validatePositive(hours) && (
@@ -331,19 +339,21 @@ const calculateCosts = (): CostBreakdown => {
                     </div>
                     <div>
                       <div className="relative">
-                        <input
-                          id="minutes"
-                          type="number"
-                          min="0"
-                          max="59"
-                          step="1"
-                          value={minutes}
-                          onChange={(e) => setMinutes(e.target.value)}
-                          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
-                          placeholder="0"
-                          aria-describedby="minutes-unit"
-                          style={{ MozAppearance: 'textfield' }}
-                        />
+<input
+  id="minutes"
+  type="text"
+  inputMode="numeric"
+  value={minutes}
+  onChange={(e) => {
+    const cleanedValue = e.target.value.replace(/[^0-9]/g, '');
+    setMinutes(cleanedValue);
+  }}
+  maxLength={3}
+  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+  placeholder="0"
+  aria-describedby="minutes-unit"
+  style={{ MozAppearance: 'textfield' }}
+/>
                         <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.MINUTES}</span>
                       </div>
                       {minutes && !validateMinutes(minutes) && (
