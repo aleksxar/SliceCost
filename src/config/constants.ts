@@ -63,12 +63,12 @@ export const UI_TEXT = {
     MODIFY_PARAMS: 'Modify Print Parameters',
   },
   PARAMETER_LABELS: {
-    PRICE_PER_KG: 'Price per kg',
-    PRICE_PER_HOUR: 'Price per hour',
-    FLAT_WORK_FEE: 'Flat work fee',
-    ELECTRICITY_CONSUMPTION: 'Electricity consumption',
-    ELECTRICITY_PRICE: 'Electricity price',
-    MARKUP: 'Markup percentage',
+    PRICE_PER_KG: 'Price per kg (RON/kg)',
+    PRICE_PER_HOUR: 'Price per hour (RON/h)',
+    FLAT_WORK_FEE: 'Flat work fee (RON)',
+    ELECTRICITY_CONSUMPTION: 'Electricity consumption (W)',
+    ELECTRICITY_PRICE: 'Electricity price (RON/kWh)',
+    MARKUP: 'Markup percentage (%)',
   },
   COST_BREAKDOWN: {
     MATERIAL_COST: 'Material cost:',
