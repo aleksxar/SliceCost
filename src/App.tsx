@@ -555,9 +555,8 @@ const calculateCosts = (): CostBreakdown => {
                         maxLength={4}
                         value={value}
                           onChange={(e) => {
-                            // Allow numbers, dots and commas - convert commas to dots
                             let cleanedValue = e.target.value.replace(/[^0-9.,]/g, '');
-                            cleanedValue = cleanedValue.replace(/,/g, '.'); // Convert commas to dots
+                            cleanedValue = cleanedValue.replace(/./g, ','); // Convert dots to commas
                             cleanedValue = cleanedValue.replace(/(\..*)\./g, '$1'); // Prevent multiple dots
                             
                             setTempParameters(prev => ({
