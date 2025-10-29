@@ -24,15 +24,15 @@ export function WorkDetailsForm({
   UI_TEXT,
 }: WorkDetailsFormProps) {
   return (
-    <div className="rounded-lg p-6 bg-gray-800 border border-gray-700">
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-white">
-        <FileText className="w-5 h-5 text-white" />
+    <div className="rounded-lg p-6" style={{ backgroundColor: 'var(--dark-card)', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
+      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--dark-text)' }}>
+        <FileText className="w-5 h-5" style={{ color: 'var(--dark-text)' }} />
         {UI_TEXT.WORK_DETAILS.TITLE}
       </h2>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
         <div>
-          <label htmlFor="grams" className="block text-sm font-medium mb-2 text-white">
+          <label htmlFor="grams" className="block text-sm font-medium mb-2" style={{ color: 'var(--dark-text)' }}>
             {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
           </label>
           <div className="relative">
@@ -49,12 +49,17 @@ export function WorkDetailsForm({
                   setGrams(val.replace(',', '.'));
                 }
               }}
-              className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white"
+              className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none"
               placeholder="0"
               aria-describedby="grams-unit"
-              style={{ MozAppearance: 'textfield' }}
+              style={{ 
+                backgroundColor: 'var(--dark-gray)', 
+                borderColor: 'var(--dark-border)',
+                MozAppearance: 'textfield',
+                color: 'var(--dark-text)'
+              }}
             />
-            <span id="grams-unit" className="absolute right-3 top-2 text-sm text-gray-400">g</span>
+            <span id="grams-unit" className="absolute right-3 top-2 text-sm" style={{ color: 'var(--dark-secondary)' }}>g</span>
           </div>
           {grams && !validatePositiveNumber(grams.replace(',', '.')) && (
             <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
@@ -62,7 +67,7 @@ export function WorkDetailsForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 text-white">
+          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--dark-text)' }}>
             {UI_TEXT.WORK_DETAILS.PRINT_TIME}
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -79,12 +84,17 @@ export function WorkDetailsForm({
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setHours(v);
                   }}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white"
+                  className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none"
                   placeholder="0"
                   aria-describedby="hours-unit"
-                  style={{ MozAppearance: 'textfield' }}
+                  style={{ 
+                    backgroundColor: 'var(--dark-gray)', 
+                    borderColor: 'var(--dark-border)',
+                    MozAppearance: 'textfield',
+                    color: 'var(--dark-text)'
+                  }}
                 />
-                <span id="hours-unit" className="absolute right-2 top-2 text-xs text-gray-400">
+                <span id="hours-unit" className="absolute right-2 top-2 text-xs" style={{ color: 'var(--dark-secondary)' }}>
                   {UI_TEXT.UNITS.HOURS}
                 </span>
               </div>
@@ -105,12 +115,17 @@ export function WorkDetailsForm({
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setMinutes(v);
                   }}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white"
+                  className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none"
                   placeholder="0"
                   aria-describedby="minutes-unit"
-                  style={{ MozAppearance: 'textfield' }}
+                  style={{ 
+                    backgroundColor: 'var(--dark-gray)', 
+                    borderColor: 'var(--dark-border)',
+                    MozAppearance: 'textfield',
+                    color: 'var(--dark-text)'
+                  }}
                 />
-                <span id="minutes-unit" className="absolute right-2 top-2 text-xs text-gray-400">
+                <span id="minutes-unit" className="absolute right-2 top-2 text-xs" style={{ color: 'var(--dark-secondary)' }}>
                   {UI_TEXT.UNITS.MINUTES}
                 </span>
               </div>
@@ -124,10 +139,17 @@ export function WorkDetailsForm({
         <div>
           <button
             onClick={onOpenGcode}
-            className="w-full bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors text-white"
+            className="w-full rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
             title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
+            style={{ 
+              backgroundColor: 'var(--dark-gray)', 
+              borderColor: 'var(--dark-border)',
+              borderWidth: '1px',
+              borderStyle: 'solid',
+              color: 'var(--dark-text)'
+            }}
           >
-            <FileText className="w-4 h-4 text-white" />
+            <FileText className="w-4 h-4" style={{ color: 'var(--dark-text)' }} />
             {UI_TEXT.WORK_DETAILS.OPEN_GCODE}
           </button>
         </div>

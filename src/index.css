@@ -5,24 +5,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Dark theme colors */
+  /* Custom greyscale colors from tailwind.config.js */
+  --dark-bg: #181818;
+  --dark-card: #2d2d2d;
+  --dark-border: #818181;
+  --dark-gray: #383838;
+  --dark-text: #f9fafb;
+  --dark-secondary: #9ca3af;
+  
+  /* Legacy CSS variables for compatibility */
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --body-bg: #121212;
-  --text-color: #f0f0f0;
-  --card-bg: #1e1e1e;
-  --input-bg: #242424;
-  --input-border: #444;
-  --checkbox-border: #444;
-  --checkbox-checked: #8ea5ff;
-  --breakdown-bg: #2c2c2c;
-  --breakdown-text: #f0f0f0;
-  --dark-secondary: #a0a0a0;
 }
 
 body {
   font-family: var(--font-family);
-  background-color: var(--body-bg);
-  color: var(--text-color);
+  background-color: var(--dark-bg);
+  color: var(--dark-text);
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
@@ -45,16 +43,16 @@ input[type="checkbox"] {
   -webkit-appearance: none;
   width: 1rem;
   height: 1rem;
-  border: 1px solid var(--checkbox-border);
-  background-color: var(--input-bg);
+  border: 1px solid var(--dark-border);
+  background-color: white;
   border-radius: 0.25rem;
   cursor: pointer;
   position: relative;
 }
 
 input[type="checkbox"]:checked {
-  background-color: var(--input-bg);
-  border-color: var(--checkbox-checked);
+  background-color: white;
+  border-color: var(--dark-border);
 }
 
 input[type="checkbox"]:checked::after {

@@ -60,79 +60,92 @@ export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEX
   };
 
   return (
-    <div className="rounded-lg p-6 bg-gray-800 border border-gray-700 print-area">
+    <div className="rounded-lg p-6 print-area" style={{ backgroundColor: 'var(--dark-card)', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
-          <DollarSign className="w-5 h-5 text-white" />
+        <h2 className="text-xl font-semibold flex items-center gap-2" style={{ color: 'var(--dark-text)' }}>
+          <DollarSign className="w-5 h-5" style={{ color: 'var(--dark-text)' }} />
           {UI_TEXT.COST_DETAILS.TITLE}
         </h2>
         <button
           onClick={handlePrint}
-          className="p-2 rounded transition-colors bg-gray-700 border border-gray-600 text-white hover:bg-gray-600"
+          className="p-2 rounded transition-colors"
           title={UI_TEXT.COMMON.PRINT_BUTTON}
+          style={{ 
+            backgroundColor: 'var(--dark-gray)', 
+            borderColor: 'var(--dark-border)',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            color: 'var(--dark-text)'
+          }}
         >
-          <Printer className="w-4 h-4 text-white" />
+          <Printer className="w-4 h-4" style={{ color: 'var(--dark-text)' }} />
         </button>
       </div>
 
-      <div className="rounded-lg p-4 mb-4 bg-gray-900 border border-gray-700">
+      <div className="rounded-lg p-4 mb-4" style={{ backgroundColor: '#181818', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
         <div className="text-center">
-          <p className="text-sm text-gray-400">{UI_TEXT.COST_DETAILS.TOTAL_COST}</p>
-          <p className="text-2xl font-bold text-white">{formatCurrency(costs.total)}</p>
+          <p className="text-sm" style={{ color: 'var(--dark-secondary)' }}>{UI_TEXT.COST_DETAILS.TOTAL_COST}</p>
+          <p className="text-2xl font-bold" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.total)}</p>
         </div>
       </div>
 
       <button
         onClick={() => setShowBreakdown(!showBreakdown)}
-        className="w-full text-left p-3 rounded transition-colors mb-4 bg-gray-700 border border-gray-600 text-white hover:bg-gray-600"
+        className="w-full text-left p-3 rounded transition-colors mb-4"
+        style={{ 
+          backgroundColor: 'var(--dark-gray)', 
+          borderColor: 'var(--dark-border)',
+          borderWidth: '1px',
+          borderStyle: 'solid'
+        }}
       >
         <span className="flex items-center justify-between">
-          <span>{UI_TEXT.COST_DETAILS.SHOW_DETAILS}</span>
-          <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`}>▼</span>
+          <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.SHOW_DETAILS}</span>
+          <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`} style={{ color: 'var(--dark-text)' }}>▼</span>
         </span>
       </button>
 
       {showBreakdown && (
-        <div className="space-y-2 text-sm bg-gray-700 border border-gray-600 rounded-lg p-4">
+        <div className="space-y-2 text-sm" style={{ backgroundColor: 'var(--dark-card)', padding: '16px', borderRadius: '8px', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
           {parameterConfig.enabled.pricePerKg && (
             <div className="flex justify-between">
-              <span className="text-white">{UI_TEXT.COST_DETAILS.MATERIAL_COST}</span>
-              <span className="font-mono text-white">{formatCurrency(costs.materialCost)}</span>
+              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.MATERIAL_COST}</span>
+              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.materialCost)}</span>
             </div>
           )}
           {parameterConfig.enabled.pricePerHour && (
             <div className="flex justify-between">
-              <span className="text-white">{UI_TEXT.COST_DETAILS.TIME_COST}</span>
-              <span className="font-mono text-white">{formatCurrency(costs.printTimeCost)}</span>
+              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.TIME_COST}</span>
+              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.printTimeCost)}</span>
             </div>
           )}
           {(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) && (
             <div className="flex justify-between">
-              <span className="text-white">{UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span>
-              <span className="font-mono text-white">{formatCurrency(costs.electricityCost)}</span>
+              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span>
+              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.electricityCost)}</span>
             </div>
           )}
           {parameterConfig.enabled.flatWorkFee && (
             <div className="flex justify-between">
-              <span className="text-white">{UI_TEXT.COST_DETAILS.WORK_FEE}</span>
-              <span className="font-mono text-white">{formatCurrency(costs.flatWorkFee)}</span>
+              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.WORK_FEE}</span>
+              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.flatWorkFee)}</span>
             </div>
           )}
-          <hr className="border-gray-600" />
+          <hr style={{ borderColor: 'var(--dark-border)' }} />
           <div className="flex justify-between font-medium">
-            <span className="text-white">{UI_TEXT.COST_DETAILS.SUBTOTAL}</span>
-            <span className="font-mono text-white">{formatCurrency(costs.subtotal)}</span>
+            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.SUBTOTAL}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.subtotal)}</span>
           </div>
           {parameterConfig.enabled.markup && (
             <div className="flex justify-between">
-              <span className="text-white">{parameterConfig.useDiscount ? UI_TEXT.COST_DETAILS.DISCOUNT_LABEL(parameterConfig.value.markup) : UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
-              <span className="font-mono text-white">{formatCurrency(costs.markupAmount)}</span>
+              <span style={{ color: 'var(--dark-text)' }}>{parameterConfig.useDiscount ? UI_TEXT.COST_DETAILS.DISCOUNT_LABEL(parameterConfig.value.markup) : UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
+              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.markupAmount)}</span>
             </div>
           )}
-          <hr className="border-gray-600" />
+          <hr style={{ borderColor: 'var(--dark-border)' }} />
           <div className="flex justify-between font-bold text-lg">
-            <span className="text-white">{UI_TEXT.COST_DETAILS.TOTAL}</span>
-            <span className="font-mono text-white">{formatCurrency(costs.total)}</span>
+            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.TOTAL}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.total)}</span>
           </div>
         </div>
       )}
