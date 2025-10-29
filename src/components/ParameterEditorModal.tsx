@@ -56,19 +56,13 @@ export function ParameterEditorModal({
   }, [show, tempParameters]);
 
   const handleChange = (key: keyof Parameters, raw: string) => {
-    const v = raw.replace(/[^0-9.,]/g, '');
-    const firstSepIndex = v.search(/[.,]/);
-    const singleSep = firstSepIndex === -1
-      ? v
-      : v.slice(0, firstSepIndex + 1) + v.slice(firstSepIndex + 1).replace(/[.,]/g, '');
-    setInputs(prev => ({ ...prev, [key]: singleSep }));
+    const filtered = raw.replace(/[^0-9.,]/g, '');
+    setInputs(prev => ({ ...prev, [key]: filtered }));
   };
 
   const parseToNumber = (text: string): number => {
     if (!text) return 0;
-    const normalized = text
-      .replace(/,/g, '.')
-      .replace(/(\..*)\./g, '$1');
+    const normalized = text.replace(/,/g, '.').replace(/(\..*)\./g, '$1');
     const num = parseFloat(normalized);
     return isNaN(num) ? 0 : num;
   };
