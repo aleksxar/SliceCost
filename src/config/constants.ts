@@ -16,17 +16,7 @@ export const DEFAULT_ENABLED = {
   markup: true,
 };
 
-const LABELS = {
-  PRICE_PER_KG: 'Price per kg',
-  PRICE_PER_HOUR: 'Price per hour',
-  FLAT_WORK_FEE: 'Maintenance fee',
-  ELECTRICITY_CONSUMPTION: 'Power consumption',
-  ELECTRICITY_PRICE: 'Power price',
-  MARKUP: 'Markup',
-};
-
 export const UI_TEXT = {
-  LABELS,
   COMMON: {
     PRINT_BUTTON: 'Print',
     SAVE_BUTTON: 'Save',
@@ -43,12 +33,12 @@ export const UI_TEXT = {
   PARAMETERS: {
     TITLE: 'Parameters',
     EDIT_BUTTON: 'Edit',
-    PER_KG: LABELS.PRICE_PER_KG,
-    PER_HOUR: LABELS.PRICE_PER_HOUR,
-    WORK_FEE: LABELS.FLAT_WORK_FEE,
-    ELECTRICITY_CONSUMPTION: LABELS.ELECTRICITY_CONSUMPTION,
-    ELECTRICITY_PRICE: LABELS.ELECTRICITY_PRICE,
-    MARKUP: LABELS.MARKUP,
+    PER_KG: 'Price per kg',
+    PER_HOUR: 'Price per hour',
+    WORK_FEE: 'Maintenance fee',
+    ELECTRICITY_CONSUMPTION: 'Power consumption',
+    ELECTRICITY_PRICE: 'Power price',
+    MARKUP: 'Markup',
   },
   COST_DETAILS: {
     TITLE: 'Price Details',
@@ -76,12 +66,12 @@ export const UI_TEXT = {
     MODIFY_PARAMS: 'Modify Print Parameters',
   },
   PARAMETER_LABELS: {
-    PRICE_PER_KG: LABELS.PRICE_PER_KG,
-    PRICE_PER_HOUR: LABELS.PRICE_PER_HOUR,
-    FLAT_WORK_FEE: LABELS.FLAT_WORK_FEE,
-    ELECTRICITY_CONSUMPTION: LABELS.ELECTRICITY_CONSUMPTION,
-    ELECTRICITY_PRICE: LABELS.ELECTRICITY_PRICE,
-    MARKUP: LABELS.MARKUP,
+    PRICE_PER_KG: 'Price per kg',
+    PRICE_PER_HOUR: 'Price per hour',
+    FLAT_WORK_FEE: 'Maintenance fee',
+    ELECTRICITY_CONSUMPTION: 'Power consumption',
+    ELECTRICITY_PRICE: 'Power cost',
+    MARKUP: 'Markup',
   },
   COST_BREAKDOWN: {
     MATERIAL_COST: 'Material cost:',

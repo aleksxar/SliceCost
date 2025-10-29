@@ -27,29 +27,6 @@ interface CalculationConfig {
   value: Parameters;
 }
 
-function calculateMaterialCost(grams: number, enabled: Record<keyof Parameters, boolean>, value: Parameters): number {
-  return enabled.pricePerKg ? (grams / 1000) * value.pricePerKg : 0;
-}
-
-function calculatePrintTimeCost(hours: number, minutes: number, enabled: Record<keyof Parameters, boolean>, value: Parameters): number {
-  const totalHours = hours + minutes / 60;
-  return enabled.pricePerHour ? totalHours * value.pricePerHour : 0;
-}
-
-function calculateElectricityCost(hours: number, minutes: number, enabled: Record<keyof Parameters, boolean>, value: Parameters): number {
-  const totalHours = hours + minutes / 60;
-  return (enabled.electricityConsumption && enabled.electricityPrice)
-    ? (value.electricityConsumption / 1000) * totalHours * value.electricityPrice : 0;
-}
-
-function calculateFlatWorkFee(enabled: Record<keyof Parameters, boolean>, value: Parameters): number {
-  return enabled.flatWorkFee ? value.flatWorkFee : 0;
-}
-
-function calculateMarkup(subtotal: number, enabled: Record<keyof Parameters, boolean>, value: Parameters): number {
-  return enabled.markup ? subtotal * (value.markup / 100) : 0;
-}
-
 export function calculateCosts(
   grams: number,
   hours: number,
@@ -62,14 +39,16 @@ export function calculateCosts(
   }
 
   const { enabled, value } = config;
+  const totalHours = hours + minutes / 60;
 
-  const materialCost = calculateMaterialCost(grams, enabled, value);
-  const printTimeCost = calculatePrintTimeCost(hours, minutes, enabled, value);
-  const electricityCost = calculateElectricityCost(hours, minutes, enabled, value);
-  const flatWorkFee = calculateFlatWorkFee(enabled, value);
+  const materialCost = enabled.pricePerKg ? (grams / 1000) * value.pricePerKg : 0;
+  const printTimeCost = enabled.pricePerHour ? totalHours * value.pricePerHour : 0;
+  const electricityCost = (enabled.electricityConsumption && enabled.electricityPrice)
+    ? (value.electricityConsumption / 1000) * totalHours * value.electricityPrice : 0;
+  const flatWorkFee = enabled.flatWorkFee ? value.flatWorkFee : 0;
   
   const subtotal = materialCost + printTimeCost + electricityCost + flatWorkFee;
-  const markupAmount = calculateMarkup(subtotal, enabled, value);
+  const markupAmount = enabled.markup ? subtotal * (value.markup / 100) : 0;
   const total = subtotal + markupAmount;
 
   return { materialCost, printTimeCost, electricityCost, 

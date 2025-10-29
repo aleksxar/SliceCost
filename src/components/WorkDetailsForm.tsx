@@ -2,75 +2,6 @@ import React from 'react';
 import { FileText } from 'lucide-react';
 import { validateMinutes, validatePositiveNumber } from '../lib/calculations';
 
-interface InputFieldProps {
-  id: string;
-  label: string;
-  value: string;
-  onChange: (value: string) => void;
-  type: 'decimal' | 'numeric';
-  unit?: string;
-  maxLength?: number;
-  validation?: (value: string) => boolean;
-  errorMessage?: string;
-}
-
-const InputField: React.FC<InputFieldProps> = ({
-  id,
-  label,
-  value,
-  onChange,
-  type,
-  unit,
-  maxLength,
-  validation,
-  errorMessage,
-}) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value;
-    if (type === 'numeric') {
-      val = val.replace(/[^0-9]/g, '');
-    } else if (type === 'decimal') {
-      if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
-        val = val.replace(',', '.');
-      } else {
-        return;
-      }
-    }
-    onChange(val);
-  };
-
-  return (
-    <div>
-      <label htmlFor={id} className="block text-sm font-medium mb-2">
-        {label}
-      </label>
-      <div className="relative">
-        <input
-          id={id}
-          type="text"
-          inputMode={type === 'decimal' ? 'decimal' : 'numeric'}
-          pattern={type === 'decimal' ? '[0-9.,]*' : '[0-9]*'}
-          value={value}
-          maxLength={maxLength}
-          onChange={handleChange}
-          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
-          placeholder="0"
-          aria-describedby={`${id}-unit`}
-          style={{ MozAppearance: 'textfield' }}
-        />
-        {unit && (
-          <span id={`${id}-unit`} className={`absolute ${type === 'decimal' ? 'right-3 top-2 text-sm' : 'right-2 top-2 text-xs'}`}>
-            {unit}
-          </span>
-        )}
-      </div>
-      {validation && !validation(value) && errorMessage && (
-        <p className="text-red-600 text-sm mt-1">{errorMessage}</p>
-      )}
-    </div>
-  );
-};
-
 interface WorkDetailsFormProps {
   grams: string;
   hours: string;
@@ -100,40 +31,93 @@ export function WorkDetailsForm({
       </h2>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
-        <InputField
-          id="grams"
-          label={UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
-          value={grams}
-          onChange={setGrans}
-          type="decimal"
-          unit="g"
-          validation={(value) => validatePositiveNumber(value.replace(',', '.'))}
-          errorMessage={UI_TEXT.VALIDATION.POSITIVE_NUMBER}
-        />
+        <div>
+          <label htmlFor="grams" className="block text-sm font-medium mb-2">
+            {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
+          </label>
+          <div className="relative">
+            <input
+              id="grams"
+              type="text"
+              inputMode="decimal"
+              pattern="[0-9.,]*"
+              value={grams}
+              maxLength={10}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
+                  setGrams(val.replace(',', '.'));
+                }
+              }}
+              className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+              placeholder="0"
+              aria-describedby="grams-unit"
+              style={{ MozAppearance: 'textfield' }}
+            />
+            <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
+          </div>
+          {grams && !validatePositiveNumber(grams.replace(',', '.')) && (
+            <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
+          )}
+        </div>
 
         <div>
           <label className="block text-sm font-medium mb-2">
             {UI_TEXT.WORK_DETAILS.PRINT_TIME}
           </label>
           <div className="grid grid-cols-2 gap-2">
-            <InputField
-              id="hours"
-              label={UI_TEXT.UNITS.HOURS}
-              value={hours}
-              onChange={setHours}
-              type="numeric"
-              validation={(value) => validatePositiveNumber(value)}
-              errorMessage={UI_TEXT.VALIDATION.POSITIVE_NUMBER}
-            />
-            <InputField
-              id="minutes"
-              label={UI_TEXT.UNITS.MINUTES}
-              value={minutes}
-              onChange={setMinutes}
-              type="numeric"
-              validation={(value) => validateMinutes(value)}
-              errorMessage={UI_TEXT.VALIDATION.MINUTES_RANGE}
-            />
+            <div>
+              <div className="relative">
+                <input
+                  id="hours"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={hours}
+                  maxLength={8}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9]/g, '');
+                    setHours(v);
+                  }}
+                  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                  placeholder="0"
+                  aria-describedby="hours-unit"
+                  style={{ MozAppearance: 'textfield' }}
+                />
+                <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">
+                  {UI_TEXT.UNITS.HOURS}
+                </span>
+              </div>
+              {hours && !validatePositiveNumber(hours) && (
+                <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
+              )}
+            </div>
+            <div>
+              <div className="relative">
+                <input
+                  id="minutes"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={minutes}
+                  maxLength={8}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9]/g, '');
+                    setMinutes(v);
+                  }}
+                  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                  placeholder="0"
+                  aria-describedby="minutes-unit"
+                  style={{ MozAppearance: 'textfield' }}
+                />
+                <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">
+                  {UI_TEXT.UNITS.MINUTES}
+                </span>
+              </div>
+              {minutes && !validateMinutes(minutes) && (
+                <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.MINUTES_RANGE}</p>
+              )}
+            </div>
           </div>
         </div>
 
