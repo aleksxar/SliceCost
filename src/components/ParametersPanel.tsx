@@ -73,17 +73,11 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                       {parameterConfig.useDiscount ? UI_TEXT.PARAMETER_LABELS.DISCOUNT : UI_TEXT.PARAMETER_LABELS.MARKUP}
                     </span>
                     <button
-                      onClick={(e) => {
-                        e.currentTarget.classList.add('animate-spin');
-                        setTimeout(() => {
-                          e.currentTarget.classList.remove('animate-spin');
-                        }, 500);
-                        setParameterConfig(prev => ({
-                          ...prev,
-                          useDiscount: !prev.useDiscount
-                        }));
-                      }}
-                      className="p-1 text-gray-600 hover:text-gray-600 transition-colors"
+                      onClick={() => setParameterConfig(prev => ({
+                        ...prev,
+                        useDiscount: !prev.useDiscount
+                      }))}
+                      className="p-1 text-gray-600 hover:text-gray-600 transition-transform duration-500"
                       title={parameterConfig.useDiscount ? "Switch to markup" : "Switch to discount"}
                     >
                       ↻
