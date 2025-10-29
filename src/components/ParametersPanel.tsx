@@ -1,5 +1,5 @@
   import React from 'react';
-import { Settings, ArrowCounterClockwise } from 'lucide-react';
+  import { Settings } from 'lucide-react';
 import type { Parameters, ParameterConfig } from '../lib/calculations';
 
 interface ParametersPanelProps {
@@ -82,7 +82,7 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                       } hover:bg-gray-200 transition-colors`}
                       title={parameterConfig.useDiscount ? "Switch to markup" : "Switch to discount"}
                     >
-                      <ArrowCounterClockwise className="w-4 h-4" />
+                      ↻
                     </button>
                   </div>
                 ) : (

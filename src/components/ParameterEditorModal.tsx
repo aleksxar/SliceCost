@@ -1,6 +1,5 @@
   import React, { useState } from 'react';
 import type { Parameters } from '../lib/calculations';
-import { ArrowCounterClockwise } from 'lucide-react';
 
 interface ParameterEditorModalProps {
   show: boolean;
@@ -67,7 +66,7 @@ export function ParameterEditorModal({
                     } hover:bg-gray-200 transition-colors`}
                     title={tempUseDiscount ? "Switch to markup" : "Switch to discount"}
                   >
-                    <ArrowCounterClockwise className="w-4 h-4" />
+                    ↻
                   </button>
                 </div>
               ) : (
