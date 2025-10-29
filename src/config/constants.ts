@@ -68,15 +68,15 @@ export const UI_TEXT = {
   PARAMETER_LABELS: {
     PRICE_PER_KG: 'Price per kg',
     PRICE_PER_HOUR: 'Price per hour',
-    FLAT_WORK_FEE: 'Flat work fee',
-    ELECTRICITY_CONSUMPTION: 'Electricity consumption',
-    ELECTRICITY_PRICE: 'Electricity price',
-    MARKUP: 'Markup percentage',
+    FLAT_WORK_FEE: 'Maintenance fee',
+    ELECTRICITY_CONSUMPTION: 'Power consumption',
+    ELECTRICITY_PRICE: 'Power cost',
+    MARKUP: 'Markup',
   },
   COST_BREAKDOWN: {
     MATERIAL_COST: 'Material cost:',
     TIME_COST: 'Time cost:',
-    ELECTRICITY_COST: 'Electricity cost:',
+    ELECTRICITY_COST: 'Power cost:',
     WORK_FEE: 'Work fee:',
   },
   UNITS: {

@@ -42,6 +42,7 @@ export function WorkDetailsForm({
               inputMode="decimal"
               pattern="[0-9.,]*"
               value={grams}
+              maxLength={10}
               onChange={(e) => {
                 const val = e.target.value;
                 if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
@@ -73,6 +74,7 @@ export function WorkDetailsForm({
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={hours}
+                  maxLength={8}
                   onChange={(e) => {
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setHours(v);
@@ -98,6 +100,7 @@ export function WorkDetailsForm({
                   inputMode="numeric"
                   pattern="[0-9]*"
                   value={minutes}
+                  maxLength={8}
                   onChange={(e) => {
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setMinutes(v);
