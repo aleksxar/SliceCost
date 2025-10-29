@@ -39,6 +39,7 @@ export const UI_TEXT = {
     ELECTRICITY_CONSUMPTION: 'Power consumption',
     ELECTRICITY_PRICE: 'Power price',
     MARKUP: 'Markup',
+    DISCOUNT: 'Discount',
   },
   COST_DETAILS: {
     TITLE: 'Price Details',
@@ -49,6 +50,7 @@ export const UI_TEXT = {
     WORK_FEE: 'Maintenance fee:',
     SUBTOTAL: 'Subtotal:',
     MARKUP_LABEL: (value: number) => `Markup (${value}%):`,
+    DISCOUNT_LABEL: (value: number) => `Discount (${value}%):`,
     TOTAL: 'Total:',
     SHOW_DETAILS: 'View full details',
   },
@@ -72,6 +74,7 @@ export const UI_TEXT = {
     ELECTRICITY_CONSUMPTION: 'Power consumption',
     ELECTRICITY_PRICE: 'Power cost',
     MARKUP: 'Markup',
+    DISCOUNT: 'Discount',
   },
   COST_BREAKDOWN: {
     MATERIAL_COST: 'Material cost:',

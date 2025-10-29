@@ -1,10 +1,13 @@
-import React from 'react';
+  import React, { useState } from 'react';
 import type { Parameters } from '../lib/calculations';
+import { ArrowCounterClockwise } from 'lucide-react';
 
 interface ParameterEditorModalProps {
   show: boolean;
   tempParameters: Parameters;
+  tempUseDiscount: boolean;
   setTempParameters: React.Dispatch<React.SetStateAction<Parameters>>;
+  setTempUseDiscount: React.Dispatch<React.SetStateAction<boolean>>;
   onReset: () => void;
   onCancel: () => void;
   onSave: () => void;
@@ -14,7 +17,9 @@ interface ParameterEditorModalProps {
 export function ParameterEditorModal({
   show,
   tempParameters,
+  tempUseDiscount,
   setTempParameters,
+  setTempUseDiscount,
   onReset,
   onCancel,
   onSave,
@@ -22,13 +27,22 @@ export function ParameterEditorModal({
 }: ParameterEditorModalProps) {
   if (!show) return null;
 
+  const toggleDiscount = () => {
+    setTempUseDiscount(!tempUseDiscount);
+    // Update the markup value to reflect discount mode
+    setTempParameters(prev => ({
+      ...prev,
+      markup: Math.abs(prev.markup)
+    }));
+  };
+
   const labels = {
     pricePerKg: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG} (RON)`,
     pricePerHour: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR} (RON)`,
     flatWorkFee: `${UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE} (RON)`,
     electricityConsumption: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION} (W)`,
     electricityPrice: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE} (RON/kWh)`,
-    markup: `${UI_TEXT.PARAMETER_LABELS.MARKUP} (%)`,
+    markup: tempUseDiscount ? `${UI_TEXT.PARAMETER_LABELS.DISCOUNT} (%)` : `${UI_TEXT.PARAMETER_LABELS.MARKUP} (%)`,
   } as const;
 
   return (
@@ -41,9 +55,26 @@ export function ParameterEditorModal({
         <div className="space-y-4 mb-6">
           {Object.entries(tempParameters).map(([key, value]) => (
             <div key={key} className="flex items-center justify-between">
-              <label className="text-sm font-medium w-3/5 whitespace-nowrap">
-                {labels[key as keyof typeof labels]}
-              </label>
+              {key === 'markup' ? (
+                <div className="flex items-center gap-2 w-3/5">
+                  <label className="text-sm font-medium whitespace-nowrap">
+                    {labels[key as keyof typeof labels]}
+                  </label>
+                  <button
+                    onClick={toggleDiscount}
+                    className={`p-1 rounded ${
+                      tempUseDiscount ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
+                    } hover:bg-gray-200 transition-colors`}
+                    title={tempUseDiscount ? "Switch to markup" : "Switch to discount"}
+                  >
+                    <ArrowCounterClockwise className="w-4 h-4" />
+                  </button>
+                </div>
+              ) : (
+                <label className="text-sm font-medium w-3/5 whitespace-nowrap">
+                  {labels[key as keyof typeof labels]}
+                </label>
+              )}
 
               <input
                 type="text"

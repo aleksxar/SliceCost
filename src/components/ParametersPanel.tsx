@@ -1,5 +1,5 @@
-import React from 'react';
-import { Settings } from 'lucide-react';
+  import React from 'react';
+import { Settings, ArrowCounterClockwise } from 'lucide-react';
 import type { Parameters, ParameterConfig } from '../lib/calculations';
 
 interface ParametersPanelProps {
@@ -53,23 +53,59 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
               }`}
             >
               <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={enabled}
-                  onChange={(e) => {
-                    setParameterConfig(prev => ({
-                      ...prev,
-                      enabled: {
-                        ...prev.enabled,
-                        [key]: e.target.checked,
-                      },
-                    }));
-                  }}
-                  className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
-                />
-                <span className={enabled ? 'text-black' : 'text-gray-500'}>
-                  {labels[key as keyof typeof labels]}
-                </span>
+                {key === 'markup' ? (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={enabled}
+                      onChange={(e) => {
+                        setParameterConfig(prev => ({
+                          ...prev,
+                          enabled: {
+                            ...prev.enabled,
+                            [key]: e.target.checked,
+                          },
+                        }));
+                      }}
+                      className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
+                    />
+                    <span className={enabled ? 'text-black' : 'text-gray-500'}>
+                      {parameterConfig.useDiscount ? UI_TEXT.PARAMETER_LABELS.DISCOUNT : UI_TEXT.PARAMETER_LABELS.MARKUP}
+                    </span>
+                    <button
+                      onClick={() => setParameterConfig(prev => ({
+                        ...prev,
+                        useDiscount: !prev.useDiscount
+                      }))}
+                      className={`p-1 rounded ${
+                        parameterConfig.useDiscount ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
+                      } hover:bg-gray-200 transition-colors`}
+                      title={parameterConfig.useDiscount ? "Switch to markup" : "Switch to discount"}
+                    >
+                      <ArrowCounterClockwise className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <input
+                      type="checkbox"
+                      checked={enabled}
+                      onChange={(e) => {
+                        setParameterConfig(prev => ({
+                          ...prev,
+                          enabled: {
+                            ...prev.enabled,
+                            [key]: e.target.checked,
+                          },
+                        }));
+                      }}
+                      className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
+                    />
+                    <span className={enabled ? 'text-black' : 'text-gray-500'}>
+                      {labels[key as keyof typeof labels]}
+                    </span>
+                  </>
+                )}
               </div>
               <span className={`font-mono ${enabled ? 'text-black' : 'text-gray-500'}`}>
                 {value} {units[key as keyof typeof units]}
@@ -83,5 +119,3 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
 }
 
 export default ParametersPanel;
-
-

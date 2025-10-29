@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+  import React, { useState, useEffect } from 'react';
 import { Coins } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
 import { 
@@ -24,13 +24,20 @@ export default function App() {
   const [hours, setHours] = useState<string>('');
   const [minutes, setMinutes] = useState<string>('');
   const [showParameterEditor, setShowParameterEditor] = useState(false);
+  const [fileName, setFileName] = useState<string>('');
+
   
   
   const [parameterConfig, setParameterConfig] = useState<ParameterConfig>(() => {
     const saved = localStorage.getItem('3d-calc-parameters');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Ensure useDiscount exists with default value
+        if (!parsed.useDiscount) {
+          parsed.useDiscount = false;
+        }
+        return parsed;
       } catch {
         // Fall back to defaults if parsing fails
       }
@@ -38,11 +45,13 @@ export default function App() {
     return {
       enabled: DEFAULT_ENABLED,
       value: { ...DEFAULT_PARAMETERS },
+      useDiscount: false, // Default to markup mode
     };
   });
 
   const [tempParameters, setTempParameters] = useState<Parameters>(parameterConfig.value);
   const [tempEnabled, setTempEnabled] = useState<Record<keyof Parameters, boolean>>(parameterConfig.enabled);
+  const [tempUseDiscount, setTempUseDiscount] = useState<boolean>(parameterConfig.useDiscount);
 
   useEffect(() => {
     localStorage.setItem('3d-calc-parameters', JSON.stringify(parameterConfig));
@@ -52,7 +61,7 @@ export default function App() {
     parseFloat(grams) || 0,
     parseFloat(hours) || 0,
     parseFloat(minutes) || 0,
-    { enabled: parameterConfig.enabled, value: parameterConfig.value }
+    { enabled: parameterConfig.enabled, value: parameterConfig.value, useDiscount: parameterConfig.useDiscount }
   );
 
   const handleOpenGcode = async () => {
@@ -96,6 +105,7 @@ export default function App() {
     setParameterConfig({
       enabled: tempEnabled,
       value: tempParameters,
+      useDiscount: tempUseDiscount,
     });
     setShowParameterEditor(false);
     toast.success(UI_TEXT.TOAST.PARAMS_SAVED);
@@ -104,6 +114,7 @@ export default function App() {
   const resetToDefaults = () => {
     setTempParameters({ ...DEFAULT_PARAMETERS });
     setTempEnabled({ ...DEFAULT_ENABLED });
+    setTempUseDiscount(false); // Reset to markup mode
   };
 
   
@@ -160,7 +171,9 @@ export default function App() {
         <ParameterEditorModal
           show={showParameterEditor}
           tempParameters={tempParameters}
+          tempUseDiscount={tempUseDiscount}
           setTempParameters={setTempParameters}
+          setTempUseDiscount={setTempUseDiscount}
           onReset={resetToDefaults}
           onCancel={() => setShowParameterEditor(false)}
           onSave={saveParameters}

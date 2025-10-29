@@ -10,6 +10,7 @@ export interface Parameters {
 export interface ParameterConfig {
   enabled: Record<keyof Parameters, boolean>;
   value: Parameters;
+  useDiscount: boolean; // New field to track discount mode
 }
 
 export interface CostBreakdown {
@@ -25,6 +26,7 @@ export interface CostBreakdown {
 interface CalculationConfig {
   enabled: Record<keyof Parameters, boolean>;
   value: Parameters;
+  useDiscount: boolean; // New field to track discount mode
 }
 
 export function calculateCosts(
@@ -38,7 +40,7 @@ export function calculateCosts(
       flatWorkFee: 0, subtotal: 0, markupAmount: 0, total: 0 };
   }
 
-  const { enabled, value } = config;
+  const { enabled, value, useDiscount } = config;
   const totalHours = hours + minutes / 60;
 
   const materialCost = enabled.pricePerKg ? (grams / 1000) * value.pricePerKg : 0;
@@ -48,7 +50,10 @@ export function calculateCosts(
   const flatWorkFee = enabled.flatWorkFee ? value.flatWorkFee : 0;
   
   const subtotal = materialCost + printTimeCost + electricityCost + flatWorkFee;
-  const markupAmount = enabled.markup ? subtotal * (value.markup / 100) : 0;
+  
+  // Apply markup or discount based on the toggle state
+  const effectiveMarkup = useDiscount ? -value.markup : value.markup;
+  const markupAmount = enabled.markup ? subtotal * (effectiveMarkup / 100) : 0;
   const total = subtotal + markupAmount;
 
   return { materialCost, printTimeCost, electricityCost, 

@@ -12,7 +12,7 @@ interface CostCardProps {
   UI_TEXT: any;
 }
 
-export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEXT }: CostCardProps) {
+  export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEXT }: CostCardProps) {
   const [showBreakdown, setShowBreakdown] = useState(false);
 
   const handlePrint = () => {
@@ -45,7 +45,7 @@ export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEX
             ${(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span><span>${formatCurrency(costs.electricityCost)}</span></div>` : ''}
             ${parameterConfig.enabled.flatWorkFee ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.WORK_FEE}</span><span>${formatCurrency(costs.flatWorkFee)}</span></div>` : ''}
             <div class="breakdown-item breakdown-subtotal"><span>${UI_TEXT.COST_DETAILS.SUBTOTAL}</span><span>${formatCurrency(costs.subtotal)}</span></div>
-            ${parameterConfig.enabled.markup ? `<div class="breakdown-item"><span>${UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span><span>${formatCurrency(costs.markupAmount)}</span></div>` : ''}
+            ${parameterConfig.enabled.markup ? `<div class="breakdown-item"><span>${parameterConfig.useDiscount ? UI_TEXT.COST_DETAILS.DISCOUNT_LABEL(parameterConfig.value.markup) : UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span><span>${formatCurrency(costs.markupAmount)}</span></div>` : ''}
             <div class="breakdown-item breakdown-total"><span>${UI_TEXT.COST_DETAILS.TOTAL}</span><span>${formatCurrency(costs.total)}</span></div>
           </div>
           <div style="margin-top: 40px; text-align: center; color: #666; font-size: 0.9em;">
@@ -125,7 +125,7 @@ export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEX
           </div>
           {parameterConfig.enabled.markup && (
             <div className="flex justify-between">
-              <span>{UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
+              <span>{parameterConfig.useDiscount ? UI_TEXT.COST_DETAILS.DISCOUNT_LABEL(parameterConfig.value.markup) : UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
               <span className="font-mono">{formatCurrency(costs.markupAmount)}</span>
             </div>
           )}
@@ -141,5 +141,3 @@ export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEX
 }
 
 export default CostCard;
-
-
