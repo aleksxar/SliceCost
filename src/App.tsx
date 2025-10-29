@@ -169,7 +169,7 @@ export default function App() {
               value: values,
             });
             setShowParameterEditor(false);
-            toast.success(UI_TEXT.TOAST.PARAMS_SAVED);
+            toast.success(UI_TEXT?.TOAST?.PARAMS_SAVED || 'Settings saved');
           }}
           UI_TEXT={UI_TEXT}
         />
