@@ -38,11 +38,18 @@ export function WorkDetailsForm({
           <div className="relative">
             <input
               id="grams"
-              type="number"
-              min="0"
-              step="0.1"
+              type="text"
+              inputMode="decimal"
+              pattern="[0-9.,]*"
               value={grams}
-              onChange={(e) => setGrams(e.target.value)}
+              onChange={(e) => {
+                const v = e.target.value.replace(/[^0-9.,]/g, '');
+                const firstSepIndex = v.search(/[.,]/);
+                const singleSep = firstSepIndex === -1
+                  ? v
+                  : v.slice(0, firstSepIndex + 1) + v.slice(firstSepIndex + 1).replace(/[.,]/g, '');
+                setGrams(singleSep);
+              }}
               className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
               placeholder="0"
               aria-describedby="grams-unit"
@@ -50,7 +57,7 @@ export function WorkDetailsForm({
             />
             <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
           </div>
-          {grams && !validatePositiveNumber(grams) && (
+          {grams && !validatePositiveNumber(grams.replace(',', '.')) && (
             <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
           )}
         </div>
@@ -64,11 +71,14 @@ export function WorkDetailsForm({
               <div className="relative">
                 <input
                   id="hours"
-                  type="number"
-                  min="0"
-                  step="1"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={hours}
-                  onChange={(e) => setHours(e.target.value)}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9]/g, '');
+                    setHours(v);
+                  }}
                   className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
                   placeholder="0"
                   aria-describedby="hours-unit"
@@ -84,12 +94,14 @@ export function WorkDetailsForm({
               <div className="relative">
                 <input
                   id="minutes"
-                  type="number"
-                  min="0"
-                  max="59"
-                  step="1"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   value={minutes}
-                  onChange={(e) => setMinutes(e.target.value)}
+                  onChange={(e) => {
+                    const v = e.target.value.replace(/[^0-9]/g, '');
+                    setMinutes(v);
+                  }}
                   className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
                   placeholder="0"
                   aria-describedby="minutes-unit"

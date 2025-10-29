@@ -44,17 +44,21 @@ export function ParameterEditorModal({
               </label>
               <input
                 type="text"
-                inputMode="numeric"
-                pattern="[0-9.]*"
-                maxLength={4}
+                inputMode="decimal"
+                pattern="[0-9.,]*"
+                maxLength={6}
                 value={value}
                 onChange={(e) => {
-                  const validValue = e.target.value
-                    .replace(/[^0-9.]/g, '')
-                    .replace(/(\..*)\./g, '$1');
+                  const raw = e.target.value;
+                  const digitsAndSeparators = raw.replace(/[^0-9.,]/g, '');
+                  const firstSepIndex = digitsAndSeparators.search(/[.,]/);
+                  const singleSep = firstSepIndex === -1
+                    ? digitsAndSeparators
+                    : digitsAndSeparators.slice(0, firstSepIndex + 1) + digitsAndSeparators.slice(firstSepIndex + 1).replace(/[.,]/g, '');
+                  const normalized = singleSep.replace(',', '.');
                   setTempParameters(prev => ({
                     ...prev,
-                    [key]: validValue ? parseFloat(validValue) : 0,
+                    [key]: normalized ? parseFloat(normalized) : 0,
                   }));
                 }}
                 className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
