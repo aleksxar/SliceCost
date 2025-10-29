@@ -53,7 +53,7 @@ export function ParameterEditorModal({
                 value={value}
                 onChange={(e) => {
                   const val = e.target.value;
-
+                  if (val.length > 4) return;
                   // Allow empty, integer, or decimal values (e.g. ".", "1.", "1.23")
                   if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
                     setTempParameters((prev) => ({
