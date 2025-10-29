@@ -160,10 +160,16 @@ export default function App() {
         <ParameterEditorModal
           show={showParameterEditor}
           tempParameters={tempParameters}
-          setTempParameters={setTempParameters}
           onReset={resetToDefaults}
           onCancel={() => setShowParameterEditor(false)}
-          onSave={saveParameters}
+          onSave={(values) => {
+            setParameterConfig({
+              enabled: tempEnabled,
+              value: values,
+            });
+            setShowParameterEditor(false);
+            toast.success(UI_TEXT.TOAST.PARAMS_SAVED);
+          }}
           UI_TEXT={UI_TEXT}
         />
       </div>

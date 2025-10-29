@@ -4,17 +4,15 @@ import type { Parameters } from '../lib/calculations';
 interface ParameterEditorModalProps {
   show: boolean;
   tempParameters: Parameters;
-  setTempParameters: React.Dispatch<React.SetStateAction<Parameters>>;
   onReset: () => void;
   onCancel: () => void;
-  onSave: () => void;
+  onSave: (values: Parameters) => void;
   UI_TEXT: any;
 }
 
 export function ParameterEditorModal({
   show,
   tempParameters,
-  setTempParameters,
   onReset,
   onCancel,
   onSave,
@@ -86,8 +84,7 @@ export function ParameterEditorModal({
       electricityPrice: parseToNumber(inputs.electricityPrice),
       markup: parseToNumber(inputs.markup),
     };
-    setTempParameters(parsed);
-    onSave();
+    onSave(parsed);
   };
 
   return (
