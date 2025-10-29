@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Coins } from 'lucide-react';
+import { Coins, Settings, FileText, Printer, DollarSign } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
 import { 
   DEFAULT_PARAMETERS, 
@@ -7,11 +7,6 @@ import {
   UI_TEXT 
 } from './config/constants';
 import { readGcodeMetadata } from './lib/utils';
-import { WorkDetailsSection } from './components/WorkDetailsSection';
-import ParametersSection from './components/ParametersSection';
-import { CostBreakdownSection } from './components/CostBreakdownSection';
-import { ParameterEditorModal } from './components/ParameterEditorModal';
-import { formatCurrency } from './lib/format';
 
 interface Parameters {
   pricePerKg: number;
@@ -25,16 +20,6 @@ interface Parameters {
 interface ParameterConfig {
   enabled: Record<keyof Parameters, boolean>;
   value: Parameters;
-}
-
-interface CostBreakdown {
-  materialCost: number;
-  printTimeCost: number;
-  electricityCost: number;
-  flatWorkFee: number;
-  subtotal: number;
-  markupAmount: number;
-  total: number;
 }
 
 
@@ -259,6 +244,13 @@ const calculateCosts = (): CostBreakdown => {
     }
   };
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('ro-RO', {
+      style: 'currency',
+      currency: 'RON',
+    }).format(amount);
+  };
+
   const validateMinutes = (value: string) => {
     const num = parseInt(value);
     return value === '' || (num >= 0 && num <= 59);
@@ -281,54 +273,326 @@ const calculateCosts = (): CostBreakdown => {
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">
-              <WorkDetailsSection
-                grams={grams}
-                setGrams={setGrams}
-                hours={hours}
-                setHours={setHours}
-                minutes={minutes}
-                setMinutes={setMinutes}
-                validatePositive={validatePositive}
-                validateMinutes={validateMinutes}
-                handleOpenGcode={handleOpenGcode}
-              />
+            <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
+                <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <FileText className="w-5 h-5" />
+                  {UI_TEXT.WORK_DETAILS.TITLE}
+                </h2>
+              
+              <div className="grid grid-cols-1 gap-4 mb-4">
+                <div>
+                  <label htmlFor="grams" className="block text-sm font-medium mb-2">
+                    {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="grams"
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      value={grams}
+                      onChange={(e) => setGrams(e.target.value)}
+                      className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                      placeholder="0"
+                      aria-describedby="grams-unit"
+                      style={{ MozAppearance: 'textfield' }}
+                    />
+                    <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
+                  </div>
+                  {grams && !validatePositive(grams) && (
+                    <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    {UI_TEXT.WORK_DETAILS.PRINT_TIME}
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <div className="relative">
+                        <input
+                          id="hours"
+                          type="number"
+                          min="0"
+                          step="1"
+                          value={hours}
+                          onChange={(e) => setHours(e.target.value)}
+                          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                          placeholder="0"
+                          aria-describedby="hours-unit"
+                          style={{ MozAppearance: 'textfield' }}
+                        />
+                        <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.HOURS}</span>
+                      </div>
+                      {hours && !validatePositive(hours) && (
+                        <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
+                      )}
+                    </div>
+                    <div>
+                      <div className="relative">
+                        <input
+                          id="minutes"
+                          type="number"
+                          min="0"
+                          max="59"
+                          step="1"
+                          value={minutes}
+                          onChange={(e) => setMinutes(e.target.value)}
+                          className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                          placeholder="0"
+                          aria-describedby="minutes-unit"
+                          style={{ MozAppearance: 'textfield' }}
+                        />
+                        <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.MINUTES}</span>
+                      </div>
+                      {minutes && !validateMinutes(minutes) && (
+                        <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.MINUTES_RANGE}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <button
+                    onClick={handleOpenGcode}
+                    className="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
+                    title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
+                  >
+                    <FileText className="w-4 h-4" />
+                    {UI_TEXT.WORK_DETAILS.OPEN_GCODE}
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-6">
-            <ParametersSection
-              parameterConfig={parameterConfig}
-              setParameterConfig={setParameterConfig}
-              onEditClick={() => {
-                setTempParameters(parameterConfig.value);
-                setTempEnabled(parameterConfig.enabled);
-                setShowParameterEditor(true);
-              }}
-            />
+            <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
+              <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-semibold flex items-center gap-2">
+                    <Settings className="w-5 h-5" />
+                    {UI_TEXT.PARAMETERS.TITLE}
+                  </h2>
+                <button
+                  onClick={() => {
+                    setTempParameters(parameterConfig.value);
+                    setTempEnabled(parameterConfig.enabled);
+                    setShowParameterEditor(true);
+                  }}
+                  className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm transition-colors"
+                >
+                  {UI_TEXT.PARAMETERS.EDIT_BUTTON}
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {Object.entries(parameterConfig.value).map(([key, value]) => {
+                  const enabled = parameterConfig.enabled[key as keyof Parameters];
+                  const labels = {
+                    pricePerKg: UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG,
+                    pricePerHour: UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR,
+                    flatWorkFee: UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE,
+                    electricityConsumption: UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION,
+                    electricityPrice: UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE,
+                    markup: UI_TEXT.PARAMETER_LABELS.MARKUP,
+                  };
+                  const units = {
+                    pricePerKg: UI_TEXT.UNITS.PER_KG,
+                    pricePerHour: UI_TEXT.UNITS.PER_HOUR,
+                    flatWorkFee: UI_TEXT.UNITS.WORK_FEE,
+                    electricityConsumption: UI_TEXT.UNITS.ELECTRICITY,
+                    electricityPrice: UI_TEXT.UNITS.ELECTRICITY_PRICE,
+                    markup: UI_TEXT.UNITS.PERCENT,
+                  };
+
+                  return (
+                    <div
+                      key={key}
+                      className={`flex items-center justify-between p-3 rounded border ${
+                        enabled ? 'bg-white border-gray-300' : 'bg-gray-50 border-gray-200'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={enabled}
+                          onChange={(e) => {
+                            setParameterConfig(prev => ({
+                              ...prev,
+                              enabled: {
+                                ...prev.enabled,
+                                [key]: e.target.checked,
+                              },
+                            }));
+                          }}
+                          className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
+                        />
+                        <span className={enabled ? 'text-black' : 'text-gray-500'}>
+                          {labels[key as keyof typeof labels]}
+                        </span>
+                      </div>
+                      <span className={`font-mono ${enabled ? 'text-black' : 'text-gray-500'}`}>
+                        {value} {units[key as keyof typeof units]}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <div className="space-y-6">
-            <CostBreakdownSection
-              costs={costs}
-              showBreakdown={showBreakdown}
-              setShowBreakdown={setShowBreakdown}
-              handlePrint={handlePrint}
-              formatCurrency={formatCurrency}
-              parameterConfig={{
-                enabled: parameterConfig.enabled,
-                value: parameterConfig.value as Record<string, number>
-              }}
-            />
+            <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 print-area">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-semibold flex items-center gap-2">
+                  <DollarSign className="w-5 h-5" />
+                  {UI_TEXT.COST_DETAILS.TITLE}
+                </h2>
+                <button
+                  onClick={handlePrint}
+                  className="bg-gray-200 hover:bg-gray-300 border border-gray-400 p-2 rounded transition-colors"
+                  title={UI_TEXT.COMMON.PRINT_BUTTON}
+                >
+                  <Printer className="w-4 h-4" />
+                </button>
+              </div>
+              {/* Summary */}
+              <div className="bg-black text-white rounded-lg p-4 mb-4">
+                <div className="text-center">
+                  <p className="text-gray-300 text-sm">{UI_TEXT.COST_DETAILS.TOTAL_COST}</p>
+                  <p className="text-2xl font-bold">{formatCurrency(costs.total)}</p>
+                </div>
+              </div>
+
+              {/* Expandable Breakdown */}
+              <button
+                onClick={() => setShowBreakdown(!showBreakdown)}
+                className="w-full text-left bg-gray-200 hover:bg-gray-300 border border-gray-400 p-3 rounded transition-colors mb-4"
+              >
+                <span className="flex items-center justify-between">
+                  <span>{UI_TEXT.COST_DETAILS.SHOW_DETAILS}</span>
+                  <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`}>
+                    ▼
+                  </span>
+                </span>
+              </button>
+
+              {showBreakdown && (
+                <div className="space-y-2 text-sm">
+                  {parameterConfig.enabled.pricePerKg && (
+                    <div className="flex justify-between">
+                      <span>{UI_TEXT.COST_DETAILS.MATERIAL_COST}</span>
+                      <span className="font-mono">{formatCurrency(costs.materialCost)}</span>
+                    </div>
+                  )}
+                  {parameterConfig.enabled.pricePerHour && (
+                    <div className="flex justify-between">
+                      <span>{UI_TEXT.COST_DETAILS.TIME_COST}</span>
+                      <span className="font-mono">{formatCurrency(costs.printTimeCost)}</span>
+                    </div>
+                  )}
+                  {(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) && (
+                    <div className="flex justify-between">
+                      <span>{UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span>
+                      <span className="font-mono">{formatCurrency(costs.electricityCost)}</span>
+                    </div>
+                  )}
+                  {parameterConfig.enabled.flatWorkFee && (
+                    <div className="flex justify-between">
+                      <span>{UI_TEXT.COST_DETAILS.WORK_FEE}</span>
+                      <span className="font-mono">{formatCurrency(costs.flatWorkFee)}</span>
+                    </div>
+                  )}
+                  <hr className="border-gray-400" />
+                    <div className="flex justify-between font-medium">
+                    <span>{UI_TEXT.COST_DETAILS.SUBTOTAL}</span>
+                    <span className="font-mono">{formatCurrency(costs.subtotal)}</span>
+                  </div>
+                  {parameterConfig.enabled.markup && (
+                    <div className="flex justify-between">
+                      <span>{UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
+                      <span className="font-mono">{formatCurrency(costs.markupAmount)}</span>
+                    </div>
+                  )}
+                  <hr className="border-gray-400" />
+                  <div className="flex justify-between font-bold text-lg">
+                    <span>{UI_TEXT.COST_DETAILS.TOTAL}</span>
+                    <span className="font-mono">{formatCurrency(costs.total)}</span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        <ParameterEditorModal
-          show={showParameterEditor}
-          onClose={() => setShowParameterEditor(false)}
-          tempParameters={tempParameters as Record<string, number>}
-          setTempParameters={(params) => setTempParameters(params as Parameters)}
-          resetToDefaults={resetToDefaults}
-          saveParameters={saveParameters}
-        />
+        {/* Parameter Editor Modal */}
+        {showParameterEditor && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+              <h3 className="text-xl font-semibold mb-4 text-center">{UI_TEXT.TOAST.MODIFY_PARAMS}</h3>
+              
+              <div className="space-y-4 mb-6">
+                {Object.entries(tempParameters).map(([key, value]) => {
+                  const labels = {
+                    pricePerKg: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG} (RON)`,
+                    pricePerHour: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR} (RON)`,
+                    flatWorkFee: `${UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE} (RON)`,
+                    electricityConsumption: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION} (W)`,
+                    electricityPrice: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE} (RON/kWh)`,
+                    markup: `${UI_TEXT.PARAMETER_LABELS.MARKUP} (%)`,
+                  };
+
+                  return (
+                    <div key={key} className="flex items-center justify-between">
+                      <label className="text-sm font-medium w-3/5 whitespace-nowrap">
+                        {labels[key as keyof typeof labels]}
+                      </label>
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9.]*"
+                        maxLength={4}
+                        value={value}
+                        onChange={(e) => {
+                          // Validate numeric inputs only
+                          const validValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                          setTempParameters(prev => ({
+                            ...prev,
+                            [key]: validValue ? parseFloat(validValue) : 0,
+                          }));
+                        }}
+                        className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
+                        style={{ MozAppearance: 'textfield' }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={resetToDefaults}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
+                >
+                  {UI_TEXT.COMMON.RESET_BUTTON}
+                </button>
+                <button
+                  onClick={() => setShowParameterEditor(false)}
+                  className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
+                >
+                  {UI_TEXT.COMMON.CANCEL_BUTTON}
+                </button>
+                <button
+                  onClick={saveParameters}
+                  className="flex-1 bg-black hover:bg-gray-800 text-white px-4 py-2 rounded transition-colors"
+                >
+                  {UI_TEXT.COMMON.SAVE_BUTTON}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       <Toaster theme="light" />
