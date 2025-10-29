@@ -1,20 +1,6 @@
-  import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Coins } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
-
-// Apply dark mode class based on system preference
-const applyDarkMode = () => {
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.classList.add('dark-mode');
-  } else {
-    document.documentElement.classList.remove('dark-mode');
-  }
-};
-
-// Apply dark mode on initial load
-applyDarkMode();
-+++++++
-REPLACE
 import { 
   DEFAULT_PARAMETERS, 
   DEFAULT_ENABLED, 
@@ -32,6 +18,18 @@ import WorkDetailsForm from './components/WorkDetailsForm';
 import ParametersPanel from './components/ParametersPanel';
 import CostCard from './components/CostCard';
 import ParameterEditorModal from './components/ParameterEditorModal';
+
+// Apply dark mode class based on system preference
+const applyDarkMode = () => {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.classList.add('dark-mode');
+  } else {
+    document.documentElement.classList.remove('dark-mode');
+  }
+};
+
+// Apply dark mode on initial load
+applyDarkMode();
 
 export default function App() {
   const [grams, setGrams] = useState<string>('');
@@ -142,8 +140,6 @@ export default function App() {
             <h1 className="text-3xl font-bold">SliceCost</h1>
           </div>
         </header>
-+++++++
-REPLACE
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">
