@@ -60,8 +60,14 @@ export function ParameterEditorModal({
                     {labels[key as keyof typeof labels]}
                   </label>
                   <button
-                    onClick={toggleDiscount}
-                    className="p-1 text-gray-600 hover:text-gray-600 transition-transform duration-500"
+                    onClick={(e) => {
+                      e.currentTarget.classList.add('animate-spin');
+                      setTimeout(() => {
+                        e.currentTarget.classList.remove('animate-spin');
+                      }, 500);
+                      toggleDiscount();
+                    }}
+                    className="p-1 text-gray-600 hover:text-gray-600 transition-colors"
                     title={tempUseDiscount ? "Switch to markup" : "Switch to discount"}
                   >
                     ↻
