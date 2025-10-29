@@ -1,6 +1,20 @@
   import React, { useState, useEffect } from 'react';
 import { Coins } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
+
+// Apply dark mode class based on system preference
+const applyDarkMode = () => {
+  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.documentElement.classList.add('dark-mode');
+  } else {
+    document.documentElement.classList.remove('dark-mode');
+  }
+};
+
+// Apply dark mode on initial load
+applyDarkMode();
++++++++
+REPLACE
 import { 
   DEFAULT_PARAMETERS, 
   DEFAULT_ENABLED, 
@@ -120,14 +134,16 @@ export default function App() {
   
 
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--body-bg)', color: 'var(--text-color)' }}>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Coins className="w-8 h-8 text-black" />
+            <Coins className="w-8 h-8" style={{ color: 'var(--text-color)' }} />
             <h1 className="text-3xl font-bold">SliceCost</h1>
           </div>
         </header>
++++++++
+REPLACE
 
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="space-y-6">

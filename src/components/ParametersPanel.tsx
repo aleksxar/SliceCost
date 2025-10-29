@@ -11,15 +11,22 @@ interface ParametersPanelProps {
 
 export function ParametersPanel({ parameterConfig, setParameterConfig, onEditClick, UI_TEXT }: ParametersPanelProps) {
   return (
-    <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
+    <div className="rounded-lg p-6" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--input-border)', borderWidth: '1px', borderStyle: 'solid' }}>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold flex items-center gap-2">
-          <Settings className="w-5 h-5" />
+        <h2 className="text-xl font-semibold flex items-center gap-2" style={{ color: 'var(--text-color)' }}>
+          <Settings className="w-5 h-5" style={{ color: 'var(--text-color)' }} />
           {UI_TEXT.PARAMETERS.TITLE}
         </h2>
         <button
           onClick={onEditClick}
-          className="bg-black hover:bg-gray-800 text-white px-3 py-1 rounded text-sm transition-colors"
+          className="px-3 py-1 rounded text-sm transition-colors"
+          style={{ 
+            backgroundColor: 'var(--input-bg)', 
+            borderColor: 'var(--input-border)',
+            borderWidth: '1px',
+            borderStyle: 'solid',
+            color: 'var(--text-color)'
+          }}
         >
           {UI_TEXT.PARAMETERS.EDIT_BUTTON}
         </button>
@@ -48,9 +55,13 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
           return (
             <div
               key={key}
-              className={`flex items-center justify-between p-3 rounded border ${
-                enabled ? 'bg-white border-gray-300' : 'bg-gray-50 border-gray-200'
-              }`}
+              className={`flex items-center justify-between p-3 rounded`}
+              style={{ 
+                backgroundColor: enabled ? 'var(--input-bg)' : '#333',
+                borderColor: 'var(--input-border)',
+                borderWidth: '1px',
+                borderStyle: 'solid'
+              }}
             >
               <div className="flex items-center gap-3">
                 {key === 'markup' ? (
@@ -67,9 +78,13 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                           },
                         }));
                       }}
-                      className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
+                      style={{ 
+                        borderColor: 'var(--checkbox-border)',
+                        backgroundColor: 'var(--input-bg)'
+                      }}
+                      className="w-4 h-4 rounded focus:ring-black"
                     />
-                    <span className={enabled ? 'text-black' : 'text-gray-500'}>
+                    <span style={{ color: enabled ? 'var(--text-color)' : 'var(--dark-secondary)' }}>
                       {parameterConfig.useDiscount ? UI_TEXT.PARAMETER_LABELS.DISCOUNT : UI_TEXT.PARAMETER_LABELS.MARKUP}
                     </span>
                     <button
@@ -77,9 +92,8 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                         ...prev,
                         useDiscount: !prev.useDiscount
                       }))}
-                      className={`p-1 text-gray-600 hover:text-gray-600 transition-colors ${
-                        parameterConfig.useDiscount ? 'text-gray-600' : ''
-                      } transform hover:rotate-[360deg] transition-transform duration-500`}
+                      className={`p-1 transition-colors transform hover:rotate-[360deg] transition-transform duration-500`}
+                      style={{ color: 'var(--text-color)' }}
                     >
                       ↻
                     </button>
@@ -98,15 +112,19 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                           },
                         }));
                       }}
-                      className="w-4 h-4 text-black bg-white border-gray-400 rounded focus:ring-black"
+                      style={{ 
+                        borderColor: 'var(--checkbox-border)',
+                        backgroundColor: 'var(--input-bg)'
+                      }}
+                      className="w-4 h-4 rounded focus:ring-black"
                     />
-                    <span className={enabled ? 'text-black' : 'text-gray-500'}>
+                    <span style={{ color: enabled ? 'var(--text-color)' : 'var(--dark-secondary)' }}>
                       {labels[key as keyof typeof labels]}
                     </span>
                   </>
                 )}
               </div>
-              <span className={`font-mono ${enabled ? 'text-black' : 'text-gray-500'}`}>
+              <span className="font-mono" style={{ color: enabled ? 'var(--text-color)' : 'var(--dark-secondary)' }}>
                 {value} {units[key as keyof typeof units]}
               </span>
             </div>
@@ -115,6 +133,8 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
       </div>
     </div>
   );
++++++++
+REPLACE
 }
 
 export default ParametersPanel;
