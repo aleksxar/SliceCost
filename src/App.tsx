@@ -18,14 +18,16 @@ import WorkDetailsForm from './components/WorkDetailsForm';
 import ParametersPanel from './components/ParametersPanel';
 import CostCard from './components/CostCard';
 import ParameterEditorModal from './components/ParameterEditorModal';
+import { FileContext } from './context/FileContext';
+import { useContext } from 'react';
 
 export default function App() {
+  const { setFileName } = useContext(FileContext);
   const [grams, setGrams] = useState<string>('');
   const [hours, setHours] = useState<string>('');
-  const [minutes, setMinutes] = useState<string>('');
-  const [showParameterEditor, setShowParameterEditor] = useState(false);
-  
-  
+  const [minutes, setMinutes] useState<string>('');
+  const [showParameterEditor, setShowParameterEditor] useState(false);
+
   const [parameterConfig, setParameterConfig] = useState<ParameterConfig>(() => {
     const saved = localStorage.getItem('3d-calc-parameters');
     if (saved) {
@@ -81,6 +83,7 @@ export default function App() {
       
       setHours(hoursMatch ? hoursMatch[1] : '0');
       setMinutes(minutesMatch ? minutesMatch[1] : '0');
+      setFileName(file.name);
 
       toast.success(UI_TEXT.TOAST.GCODE_SUCCESS);
     } catch (error: any) {
