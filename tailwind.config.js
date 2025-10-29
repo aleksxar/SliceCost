@@ -16,7 +16,7 @@ export default {
         'dark-bg': '#181818',
         'dark-card': '#1c1c1cff',
         'dark-border': '#6c6c6cff',
-        'dark-gray': '#383838',
+        'dark-gray': '#343434',
         
         // Text colors
         'dark-text': '#f9fafb',
