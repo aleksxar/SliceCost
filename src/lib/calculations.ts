@@ -29,17 +29,25 @@ interface CalculationConfig {
 
 export function calculateCosts(
   grams: number,
-  hours: number,
-  minutes: number,
+  printDuration: string,
   config: CalculationConfig
 ): CostBreakdown {
-  if (grams === 0 && hours === 0 && minutes === 0) {
+  if (grams === 0 && printDuration === '') {
     return { materialCost: 0, printTimeCost: 0, electricityCost: 0,
       flatWorkFee: 0, subtotal: 0, markupAmount: 0, total: 0 };
   }
 
   const { enabled, value } = config;
-  const totalHours = hours + minutes / 60;
+  
+  // Convert print duration to hours
+  let totalHours = 0;
+  const daysMatch = printDuration.match(/(\d+)d/);
+  const hoursMatch = printDuration.match(/(\d+)h/);
+  const minutesMatch = printDuration.match(/(\d+)m/);
+  
+  if (daysMatch) totalHours += parseInt(daysMatch[1]) * 24;
+  if (hoursMatch) totalHours += parseInt(hoursMatch[1]);
+  if (minutesMatch) totalHours += parseInt(minutesMatch[1]) / 60;
 
   const materialCost = enabled.pricePerKg ? (grams / 1000) * value.pricePerKg : 0;
   const printTimeCost = enabled.pricePerHour ? totalHours * value.pricePerHour : 0;

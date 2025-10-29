@@ -23,7 +23,7 @@ const defaultConfig: ParameterConfig = {
 
 describe('calculateCosts', () => {
   it('calculates costs correctly with all parameters enabled', () => {
-    const result = calculateCosts(500, 2, 30, defaultConfig);
+    const result = calculateCosts(500, "2h 30m", defaultConfig);
     
     // Material: (500/1000) * 100 = 50
     expect(result.materialCost).toBe(50);
@@ -57,7 +57,7 @@ describe('calculateCosts', () => {
       },
     };
 
-    const result = calculateCosts(500, 2, 30, config);
+    const result = calculateCosts(500, "2h 30m", config);
     
     expect(result.flatWorkFee).toBe(0);
     expect(result.markupAmount).toBe(0);
@@ -66,7 +66,7 @@ describe('calculateCosts', () => {
   });
 
   it('handles zero values correctly', () => {
-    const result = calculateCosts(0, 0, 0, defaultConfig);
+    const result = calculateCosts(0, "", defaultConfig);
     
     expect(result.materialCost).toBe(0);
     expect(result.printTimeCost).toBe(0);
@@ -77,14 +77,21 @@ describe('calculateCosts', () => {
     expect(result.total).toBe(3.6);
   });
 
-  it('converts minutes to hours correctly', () => {
-    const result = calculateCosts(0, 1, 30, defaultConfig);
+  it('parses duration formats correctly', () => {
+    const result1 = calculateCosts(0, "1h 30m", defaultConfig);
     
-    // 1.5 hours * 2 $/hour = 3
-    expect(result.printTimeCost).toBe(3);
+    // Test standard h/m conversion
+    expect(result1.printTimeCost).toBe(3);
+    expect(result1.electricityCost).toBe(0.3375);
     
-    // (150/1000) * 1.5 * 1.5 = 0.3375
-    expect(result.electricityCost).toBe(0.3375);
+    // Test with days
+    const result2 = calculateCosts(0, "1d 1h 30m", defaultConfig);
+    // (24 + 1 + 0.5) hours * 2 $/hour = 51
+    expect(result2.printTimeCost).toBe(51);
+    
+    // Test day-only
+    const result3 = calculateCosts(0, "2d", defaultConfig);
+    expect(result3.printTimeCost).toBe(48); // 2 * 24h * 2$/h
   });
 });
 
