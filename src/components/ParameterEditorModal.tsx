@@ -32,43 +32,42 @@ export function ParameterEditorModal({
   } as const;
 
   return (
-  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-    <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-      <h3 className="text-xl font-semibold mb-4 text-center">
-        {UI_TEXT.TOAST.MODIFY_PARAMS}
-      </h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <h3 className="text-xl font-semibold mb-4 text-center">
+          {UI_TEXT.TOAST.MODIFY_PARAMS}
+        </h3>
 
-      <div className="space-y-4 mb-6">
-        {Object.entries(tempParameters).map(([key, value]) => (
-          <div key={key} className="flex items-center justify-between">
-            <label className="text-sm font-medium w-3/5 whitespace-nowrap">
-              {labels[key as keyof typeof labels]}
-            </label>
+        <div className="space-y-4 mb-6">
+          {Object.entries(tempParameters).map(([key, value]) => (
+            <div key={key} className="flex items-center justify-between">
+              <label className="text-sm font-medium w-3/5 whitespace-nowrap">
+                {labels[key as keyof typeof labels]}
+              </label>
 
-            <input
-              type="text"
-              inputMode="decimal"
-              pattern="[0-9.,]*"
-              maxLength={6}
-              value={value}
-              onChange={(e) => {
-                const val = e.target.value;
+              <input
+                type="text"
+                inputMode="decimal"
+                pattern="[0-9.,]*"
+                maxLength={4}
+                value={value}
+                onChange={(e) => {
+                  const val = e.target.value;
 
-                // Allow empty, integer, or decimal values (e.g. ".", "1.", "1.23")
-                if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
-                  setTempParameters((prev) => ({
-                    ...prev,
-                    [key]: val.replace(',', '.'),
-                  }));
-                }
-              }}
-              className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
-              style={{ MozAppearance: 'textfield' }}
-            />
-          </div>
-        ))}
-      </div>
-
+                  // Allow empty, integer, or decimal values (e.g. ".", "1.", "1.23")
+                  if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
+                    setTempParameters((prev) => ({
+                      ...prev,
+                      [key]: val.replace(',', '.'),
+                    }));
+                  }
+                }}
+                className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
+                style={{ MozAppearance: 'textfield' }}
+              />
+            </div>
+          ))}
+        </div>
 
         <div className="flex gap-3">
           <button
@@ -96,5 +95,3 @@ export function ParameterEditorModal({
 }
 
 export default ParameterEditorModal;
-
-
