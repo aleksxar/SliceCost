@@ -49,9 +49,9 @@ export default function App() {
   }, [parameterConfig]);
 
   const costs: CostBreakdown = calculateCosts(
-    parseFloat(grams) || 0,
-    parseFloat(hours) || 0,
-    parseFloat(minutes) || 0,
+    parseFloat((grams || '0').replace(',', '.')) || 0,
+    parseFloat((hours || '0').replace(',', '.')) || 0,
+    parseFloat((minutes || '0').replace(',', '.')) || 0,
     { enabled: parameterConfig.enabled, value: parameterConfig.value }
   );
 
