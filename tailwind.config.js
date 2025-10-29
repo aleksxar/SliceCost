@@ -17,9 +17,9 @@ export default {
         'dark-primary-hover': '#5a79ff',
         
         // Backgrounds
-        'dark-bg': '#1a1a1a',
-        'dark-card': '#242424',
-        'dark-border': '#333',
+        'dark-bg': '#121212',
+        'dark-card': '#1e1e1e',
+        'dark-border': '#444',
         'dark-gray': '#333',
         
         // Text colors
@@ -36,5 +36,3 @@ export default {
   },
   plugins: [],
 }
-+++++++
-REPLACE

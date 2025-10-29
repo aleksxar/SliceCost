@@ -19,18 +19,6 @@ import ParametersPanel from './components/ParametersPanel';
 import CostCard from './components/CostCard';
 import ParameterEditorModal from './components/ParameterEditorModal';
 
-// Apply dark mode class based on system preference
-const applyDarkMode = () => {
-  if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    document.documentElement.classList.add('dark-mode');
-  } else {
-    document.documentElement.classList.remove('dark-mode');
-  }
-};
-
-// Apply dark mode on initial load
-applyDarkMode();
-
 export default function App() {
   const [grams, setGrams] = useState<string>('');
   const [hours, setHours] = useState<string>('');
@@ -132,12 +120,12 @@ export default function App() {
   
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--body-bg)', color: 'var(--text-color)' }}>
+    <div className="min-h-screen bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-8 max-w-6xl">
         <header className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Coins className="w-8 h-8" style={{ color: 'var(--text-color)' }} />
-            <h1 className="text-3xl font-bold">SliceCost</h1>
+            <Coins className="w-8 h-8 text-white" />
+            <h1 className="text-3xl font-bold text-white">SliceCost</h1>
           </div>
         </header>
 

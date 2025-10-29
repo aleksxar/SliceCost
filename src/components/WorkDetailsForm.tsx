@@ -24,15 +24,15 @@ export function WorkDetailsForm({
   UI_TEXT,
 }: WorkDetailsFormProps) {
   return (
-    <div className="rounded-lg p-6" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--input-border)', borderWidth: '1px', borderStyle: 'solid' }}>
-      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2" style={{ color: 'var(--text-color)' }}>
-        <FileText className="w-5 h-5" style={{ color: 'var(--text-color)' }} />
+    <div className="rounded-lg p-6 bg-gray-800 border border-gray-700">
+      <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-white">
+        <FileText className="w-5 h-5 text-white" />
         {UI_TEXT.WORK_DETAILS.TITLE}
       </h2>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
         <div>
-          <label htmlFor="grams" className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+          <label htmlFor="grams" className="block text-sm font-medium mb-2 text-white">
             {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
           </label>
           <div className="relative">
@@ -49,17 +49,12 @@ export function WorkDetailsForm({
                   setGrams(val.replace(',', '.'));
                 }
               }}
-              className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+              className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white"
               placeholder="0"
               aria-describedby="grams-unit"
-              style={{ 
-                backgroundColor: 'var(--input-bg)', 
-                borderColor: 'var(--input-border)',
-                MozAppearance: 'textfield',
-                color: 'var(--text-color)'
-              }}
+              style={{ MozAppearance: 'textfield' }}
             />
-            <span id="grams-unit" className="absolute right-3 top-2 text-sm" style={{ color: 'var(--text-color)' }}>g</span>
+            <span id="grams-unit" className="absolute right-3 top-2 text-sm text-gray-400">g</span>
           </div>
           {grams && !validatePositiveNumber(grams.replace(',', '.')) && (
             <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
@@ -67,7 +62,7 @@ export function WorkDetailsForm({
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+          <label className="block text-sm font-medium mb-2 text-white">
             {UI_TEXT.WORK_DETAILS.PRINT_TIME}
           </label>
           <div className="grid grid-cols-2 gap-2">
@@ -84,17 +79,12 @@ export function WorkDetailsForm({
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setHours(v);
                   }}
-                  className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white"
                   placeholder="0"
                   aria-describedby="hours-unit"
-                  style={{ 
-                    backgroundColor: 'var(--input-bg)', 
-                    borderColor: 'var(--input-border)',
-                    MozAppearance: 'textfield',
-                    color: 'var(--text-color)'
-                  }}
+                  style={{ MozAppearance: 'textfield' }}
                 />
-                <span id="hours-unit" className="absolute right-2 top-2 text-xs" style={{ color: 'var(--text-color)' }}>
+                <span id="hours-unit" className="absolute right-2 top-2 text-xs text-gray-400">
                   {UI_TEXT.UNITS.HOURS}
                 </span>
               </div>
@@ -115,17 +105,12 @@ export function WorkDetailsForm({
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setMinutes(v);
                   }}
-                  className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white"
                   placeholder="0"
                   aria-describedby="minutes-unit"
-                  style={{ 
-                    backgroundColor: 'var(--input-bg)', 
-                    borderColor: 'var(--input-border)',
-                    MozAppearance: 'textfield',
-                    color: 'var(--text-color)'
-                  }}
+                  style={{ MozAppearance: 'textfield' }}
                 />
-                <span id="minutes-unit" className="absolute right-2 top-2 text-xs" style={{ color: 'var(--text-color)' }}>
+                <span id="minutes-unit" className="absolute right-2 top-2 text-xs text-gray-400">
                   {UI_TEXT.UNITS.MINUTES}
                 </span>
               </div>
@@ -139,25 +124,16 @@ export function WorkDetailsForm({
         <div>
           <button
             onClick={onOpenGcode}
-            className="w-full rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
+            className="w-full bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors text-white"
             title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
-            style={{ 
-              backgroundColor: 'var(--input-bg)', 
-              borderColor: 'var(--input-border)',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              color: 'var(--text-color)'
-            }}
           >
-            <FileText className="w-4 h-4" style={{ color: 'var(--text-color)' }} />
+            <FileText className="w-4 h-4 text-white" />
             {UI_TEXT.WORK_DETAILS.OPEN_GCODE}
           </button>
         </div>
       </div>
     </div>
   );
-+++++++
-REPLACE
 }
 
 export default WorkDetailsForm;

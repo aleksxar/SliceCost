@@ -46,9 +46,8 @@ export function ParameterEditorModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto" 
-           style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--input-border)', borderWidth: '1px', borderStyle: 'solid' }}>
-        <h3 className="text-xl font-semibold mb-4 text-center" style={{ color: 'var(--text-color)' }}>
+      <div className="rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto bg-gray-800 border border-gray-700">
+        <h3 className="text-xl font-semibold mb-4 text-center text-white">
           {UI_TEXT.TOAST.MODIFY_PARAMS}
         </h3>
 
@@ -57,19 +56,18 @@ export function ParameterEditorModal({
             <div key={key} className="flex items-center justify-between">
               {key === 'markup' ? (
                 <div className="flex items-center gap-2 w-3/5">
-                  <label className="text-sm font-medium whitespace-nowrap" style={{ color: 'var(--text-color)' }}>
+                  <label className="text-sm font-medium whitespace-nowrap text-white">
                     {labels[key as keyof typeof labels]}
                   </label>
                   <button
                     onClick={toggleDiscount}
-                    className="p-1 transition-colors transform hover:rotate-[360deg] transition-transform duration-500"
-                    style={{ color: 'var(--text-color)' }}
+                    className="p-1 text-gray-400 hover:text-white transition-colors transform hover:rotate-[360deg] transition-transform duration-500"
                   >
                     ↻
                   </button>
                 </div>
               ) : (
-                <label className="text-sm font-medium w-3/5 whitespace-nowrap" style={{ color: 'var(--text-color)' }}>
+                <label className="text-sm font-medium w-3/5 whitespace-nowrap text-white">
                   {labels[key as keyof typeof labels]}
                 </label>
               )}
@@ -91,13 +89,8 @@ export function ParameterEditorModal({
                     }));
                   }
                 }}
-                className="w-16 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
-                style={{ 
-                  backgroundColor: 'var(--input-bg)', 
-                  borderColor: 'var(--input-border)',
-                  MozAppearance: 'textfield',
-                  color: 'var(--text-color)'
-                }}
+                className="w-16 bg-gray-700 border border-gray-600 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white text-center"
+                style={{ MozAppearance: 'textfield' }}
               />
             </div>
           ))}
@@ -106,40 +99,19 @@ export function ParameterEditorModal({
         <div className="flex gap-3">
           <button
             onClick={onReset}
-            className="flex-1 rounded transition-colors"
-            style={{ 
-              backgroundColor: 'var(--input-bg)', 
-              borderColor: 'var(--input-border)',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              color: 'var(--text-color)'
-            }}
+            className="flex-1 bg-gray-700 border border-gray-600 text-white px-4 py-2 rounded transition-colors hover:bg-gray-600"
           >
             {UI_TEXT.COMMON.RESET_BUTTON}
           </button>
           <button
             onClick={onCancel}
-            className="flex-1 rounded transition-colors"
-            style={{ 
-              backgroundColor: 'var(--input-bg)', 
-              borderColor: 'var(--input-border)',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              color: 'var(--text-color)'
-            }}
+            className="flex-1 bg-gray-700 border border-gray-600 text-white px-4 py-2 rounded transition-colors hover:bg-gray-600"
           >
             {UI_TEXT.COMMON.CANCEL_BUTTON}
           </button>
           <button
             onClick={onSave}
-            className="flex-1 rounded transition-colors"
-            style={{ 
-              backgroundColor: 'var(--input-bg)', 
-              borderColor: 'var(--input-border)',
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              color: 'var(--text-color)'
-            }}
+            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded transition-colors hover:bg-blue-700"
           >
             {UI_TEXT.COMMON.SAVE_BUTTON}
           </button>

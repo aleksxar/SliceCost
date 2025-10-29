@@ -1,5 +1,5 @@
-  import React from 'react';
-  import { Settings } from 'lucide-react';
+import React from 'react';
+import { Settings } from 'lucide-react';
 import type { Parameters, ParameterConfig } from '../lib/calculations';
 
 interface ParametersPanelProps {
@@ -11,22 +11,15 @@ interface ParametersPanelProps {
 
 export function ParametersPanel({ parameterConfig, setParameterConfig, onEditClick, UI_TEXT }: ParametersPanelProps) {
   return (
-    <div className="rounded-lg p-6" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--input-border)', borderWidth: '1px', borderStyle: 'solid' }}>
+    <div className="rounded-lg p-6 bg-gray-800 border border-gray-700">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold flex items-center gap-2" style={{ color: 'var(--text-color)' }}>
-          <Settings className="w-5 h-5" style={{ color: 'var(--text-color)' }} />
+        <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
+          <Settings className="w-5 h-5 text-white" />
           {UI_TEXT.PARAMETERS.TITLE}
         </h2>
         <button
           onClick={onEditClick}
-          className="px-3 py-1 rounded text-sm transition-colors"
-          style={{ 
-            backgroundColor: 'var(--input-bg)', 
-            borderColor: 'var(--input-border)',
-            borderWidth: '1px',
-            borderStyle: 'solid',
-            color: 'var(--text-color)'
-          }}
+          className="px-3 py-1 rounded text-sm transition-colors bg-gray-700 border border-gray-600 text-white hover:bg-gray-600"
         >
           {UI_TEXT.PARAMETERS.EDIT_BUTTON}
         </button>
@@ -55,13 +48,7 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
           return (
             <div
               key={key}
-              className={`flex items-center justify-between p-3 rounded`}
-              style={{ 
-                backgroundColor: enabled ? 'var(--input-bg)' : '#333',
-                borderColor: 'var(--input-border)',
-                borderWidth: '1px',
-                borderStyle: 'solid'
-              }}
+              className={`flex items-center justify-between p-3 rounded bg-gray-700 border border-gray-600`}
             >
               <div className="flex items-center gap-3">
                 {key === 'markup' ? (
@@ -78,13 +65,9 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                           },
                         }));
                       }}
-                      style={{ 
-                        borderColor: 'var(--checkbox-border)',
-                        backgroundColor: 'var(--input-bg)'
-                      }}
-                      className="w-4 h-4 rounded focus:ring-black"
+                      className="w-4 h-4 text-blue-500 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                     />
-                    <span style={{ color: enabled ? 'var(--text-color)' : 'var(--dark-secondary)' }}>
+                    <span className={enabled ? 'text-white' : 'text-gray-400'}>
                       {parameterConfig.useDiscount ? UI_TEXT.PARAMETER_LABELS.DISCOUNT : UI_TEXT.PARAMETER_LABELS.MARKUP}
                     </span>
                     <button
@@ -92,8 +75,7 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                         ...prev,
                         useDiscount: !prev.useDiscount
                       }))}
-                      className={`p-1 transition-colors transform hover:rotate-[360deg] transition-transform duration-500`}
-                      style={{ color: 'var(--text-color)' }}
+                      className="p-1 text-gray-400 hover:text-white transition-colors transform hover:rotate-[360deg] transition-transform duration-500"
                     >
                       ↻
                     </button>
@@ -112,19 +94,15 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                           },
                         }));
                       }}
-                      style={{ 
-                        borderColor: 'var(--checkbox-border)',
-                        backgroundColor: 'var(--input-bg)'
-                      }}
-                      className="w-4 h-4 rounded focus:ring-black"
+                      className="w-4 h-4 text-blue-500 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
                     />
-                    <span style={{ color: enabled ? 'var(--text-color)' : 'var(--dark-secondary)' }}>
+                    <span className={enabled ? 'text-white' : 'text-gray-400'}>
                       {labels[key as keyof typeof labels]}
                     </span>
                   </>
                 )}
               </div>
-              <span className="font-mono" style={{ color: enabled ? 'var(--text-color)' : 'var(--dark-secondary)' }}>
+              <span className={`font-mono ${enabled ? 'text-white' : 'text-gray-400'}`}>
                 {value} {units[key as keyof typeof units]}
               </span>
             </div>
@@ -133,8 +111,6 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
       </div>
     </div>
   );
-+++++++
-REPLACE
 }
 
 export default ParametersPanel;

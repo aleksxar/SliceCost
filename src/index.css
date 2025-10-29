@@ -5,21 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Light theme colors */
-  --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --body-bg: white;
-  --text-color: black;
-  --card-bg: #f8f9fa;
-  --input-bg: white;
-  --input-border: #9ca3af;
-  --checkbox-border: #9ca3af;
-  --checkbox-checked: #374151;
-  --breakdown-bg: white;
-  --breakdown-text: black;
-}
-
-/* Dark theme colors (will be active when .dark class is present) */
-.dark-mode {
+  /* Dark theme colors */
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   --body-bg: #121212;
   --text-color: #f0f0f0;
@@ -30,6 +16,7 @@
   --checkbox-checked: #8ea5ff;
   --breakdown-bg: #2c2c2c;
   --breakdown-text: #f0f0f0;
+  --dark-secondary: #a0a0a0;
 }
 
 body {
@@ -52,7 +39,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* Custom checkbox styling - white background */
+/* Custom checkbox styling */
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
