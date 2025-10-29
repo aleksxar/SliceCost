@@ -41,6 +41,9 @@ input[type="number"] {
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
+}
+
+input[type="checkbox"] {
   width: 1rem;
   height: 1rem;
   border: 1px solid var(--dark-border);
@@ -106,4 +109,9 @@ input[type="checkbox"]:checked::after {
     color: black !important;
     border: 1px solid #ccc !important;
   }
+}
+
+/* MARKUP ARROW SPECIFIC STYLING */
+button[class*="transform hover:rotate-[360deg]"] {
+  color: white !important;
 }
