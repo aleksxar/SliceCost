@@ -37,26 +37,22 @@ export function WorkDetailsForm({
           </label>
           <div className="relative">
             <input
-  id="grams"
-  type="text"
-  inputMode="decimal"
-  pattern="[0-9.,]*"
-  value={grams}
-  onChange={(e) => {
-    const val = e.target.value;
-
-    // Allow only numbers with at most one dot or comma
-    if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
-      // Always normalize commas → dots for consistency
-      setGrams(val.replace(',', '.'));
-    }
-  }}
-  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
-  placeholder="0"
-  aria-describedby="grams-unit"
-  style={{ MozAppearance: 'textfield' }}
-/>
-
+              id="grams"
+              type="text"
+              inputMode="decimal"
+              pattern="[0-9.,]*"
+              value={grams}
+              onChange={(e) => {
+                const val = e.target.value;
+                if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
+                  setGrams(val.replace(',', '.'));
+                }
+              }}
+              className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+              placeholder="0"
+              aria-describedby="grams-unit"
+              style={{ MozAppearance: 'textfield' }}
+            />
             <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
           </div>
           {grams && !validatePositiveNumber(grams.replace(',', '.')) && (
@@ -86,7 +82,9 @@ export function WorkDetailsForm({
                   aria-describedby="hours-unit"
                   style={{ MozAppearance: 'textfield' }}
                 />
-                <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.HOURS}</span>
+                <span id="hours-unit" className="absolute right-2 top-2 text-gray-600 text-xs">
+                  {UI_TEXT.UNITS.HOURS}
+                </span>
               </div>
               {hours && !validatePositiveNumber(hours) && (
                 <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.POSITIVE_NUMBER}</p>
@@ -109,7 +107,9 @@ export function WorkDetailsForm({
                   aria-describedby="minutes-unit"
                   style={{ MozAppearance: 'textfield' }}
                 />
-                <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">{UI_TEXT.UNITS.MINUTES}</span>
+                <span id="minutes-unit" className="absolute right-2 top-2 text-gray-600 text-xs">
+                  {UI_TEXT.UNITS.MINUTES}
+                </span>
               </div>
               {minutes && !validateMinutes(minutes) && (
                 <p className="text-red-600 text-sm mt-1">{UI_TEXT.VALIDATION.MINUTES_RANGE}</p>
@@ -134,5 +134,3 @@ export function WorkDetailsForm({
 }
 
 export default WorkDetailsForm;
-
-
