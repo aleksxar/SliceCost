@@ -4,8 +4,7 @@ import { toast, Toaster } from 'sonner';
 import { 
   DEFAULT_PARAMETERS, 
   DEFAULT_ENABLED, 
-  UI_TEXT,
-  BUILD_TIMESTAMP 
+  UI_TEXT 
 } from './config/constants';
 import { readGcodeMetadata } from './lib/utils';
 import {
@@ -175,11 +174,6 @@ export default function App() {
         />
       </div>
 
-      <div className="fixed bottom-2 right-2 text-xs text-gray-500">
-        {BUILD_TIMESTAMP !== "__BUILD_TIMESTAMP__" 
-          ? UI_TEXT.COMMON.BUILD_INFO(new Date(BUILD_TIMESTAMP).toLocaleString())
-          : "Development Build"}
-      </div>
       <Toaster theme="light" />
     </div>
   );
