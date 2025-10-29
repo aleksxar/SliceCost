@@ -35,8 +35,8 @@ export function ParameterEditorModal({
   }, [show, tempParameters]);
 
   const validateField = (field: keyof Parameters, value: number): string | undefined => {
-    if (isNaN(value)) return safeText.VALIDATION.POSITIVE_NUMBER || 'Must be a valid number';
-    if (value < 0) return safeText.VALIDATION.POSITIVE_NUMBER || 'Must be positive';
+    if (isNaN(value)) return UI_TEXT.VALIDATION.POSITIVE_NUMBER;
+    if (value < 0) return UI_TEXT.VALIDATION.POSITIVE_NUMBER;
     return undefined;
   };
 
@@ -91,21 +91,13 @@ export function ParameterEditorModal({
 
   if (!show) return null;
 
-  const safeText = UI_TEXT || {
-    PARAMETER_LABELS: {},
-    UNITS: {},
-    VALIDATION: {POSITIVE_NUMBER: 'Must be positive'},
-    COMMON: {},
-    TOAST: {}
-  };
-  
   const labels = {
-    pricePerKg: `${safeText.PARAMETER_LABELS.PRICE_PER_KG || 'Price per kg'} (${safeText.UNITS.PER_KG || 'RON/kg'})`,
-    pricePerHour: `${safeText.PARAMETER_LABELS.PRICE_PER_HOUR || 'Price per hour'} (${safeText.UNITS.PER_HOUR || 'RON/h'})`,
-    flatWorkFee: `${safeText.PARAMETER_LABELS.FLAT_WORK_FEE || 'Flat work fee'} (${safeText.UNITS.WORK_FEE || 'RON'})`,
-    electricityConsumption: `${safeText.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION || 'Electricity consumption'} (${safeText.UNITS.ELECTRICITY || 'W'})`,
-    electricityPrice: `${safeText.PARAMETER_LABELS.ELECTRICITY_PRICE || 'Electricity price'} (${safeText.UNITS.ELECTRICITY_PRICE || 'RON/kWh'})`,
-    markup: `${safeText.PARAMETER_LABELS.MARKUP || 'Markup'} (${safeText.UNITS.PERCENT || '%'})`,
+    pricePerKg: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG} (${UI_TEXT.UNITS.PER_KG})`,
+    pricePerHour: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR} (${UI_TEXT.UNITS.PER_HOUR})`,
+    flatWorkFee: `${UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE} (${UI_TEXT.UNITS.WORK_FEE})`,
+    electricityConsumption: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION} (${UI_TEXT.UNITS.ELECTRICITY})`,
+    electricityPrice: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE} (${UI_TEXT.UNITS.ELECTRICITY_PRICE})`,
+    markup: `${UI_TEXT.PARAMETER_LABELS.MARKUP} (${UI_TEXT.UNITS.PERCENT})`,
   } as const;
 
   const hasErrors = Object.values(errors).some(Boolean);
@@ -113,9 +105,7 @@ export function ParameterEditorModal({
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <h3 className="text-xl font-semibold mb-4 text-center">
-          {safeText.TOAST?.MODIFY_PARAMS || 'Edit Parameters'}
-        </h3>
+        <h3 className="text-xl font-semibold mb-4 text-center">{UI_TEXT.TOAST.MODIFY_PARAMS}</h3>
 
         <div className="space-y-4 mb-6">
           {Object.entries(values).map(([key, value]) => {
@@ -151,13 +141,13 @@ export function ParameterEditorModal({
             onClick={handleReset}
             className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
           >
-            {safeText.COMMON?.RESET_BUTTON || 'Reset'}
+            {UI_TEXT.COMMON.RESET_BUTTON}
           </button>
           <button
             onClick={handleCancel}
             className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
           >
-            {safeText.COMMON?.CANCEL_BUTTON || 'Cancel'}
+            {UI_TEXT.COMMON.CANCEL_BUTTON}
           </button>
           <button
             onClick={handleSave}
@@ -168,7 +158,7 @@ export function ParameterEditorModal({
                 : 'bg-black hover:bg-gray-800 text-white'
             }`}
           >
-            {safeText.COMMON?.SAVE_BUTTON || 'Save'}
+            {UI_TEXT.COMMON.SAVE_BUTTON}
           </button>
         </div>
       </div>
