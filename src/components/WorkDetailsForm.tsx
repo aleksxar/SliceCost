@@ -37,24 +37,26 @@ export function WorkDetailsForm({
           </label>
           <div className="relative">
             <input
-              id="grams"
-              type="text"
-              inputMode="decimal"
-              pattern="[0-9.,]*"
-              value={grams}
-              onChange={(e) => {
-                const v = e.target.value.replace(/[^0-9.,]/g, '');
-                const firstSepIndex = v.search(/[.,]/);
-                const singleSep = firstSepIndex === -1
-                  ? v
-                  : v.slice(0, firstSepIndex + 1) + v.slice(firstSepIndex + 1).replace(/[.,]/g, '');
-                setGrams(singleSep);
-              }}
-              className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
-              placeholder="0"
-              aria-describedby="grams-unit"
-              style={{ MozAppearance: 'textfield' }}
-            />
+  id="grams"
+  type="text"
+  inputMode="decimal"
+  pattern="[0-9.,]*"
+  value={grams}
+  onChange={(e) => {
+    const val = e.target.value;
+
+    // Allow only numbers with at most one dot or comma
+    if (/^[0-9]*[.,]?[0-9]*$/.test(val)) {
+      // Always normalize commas → dots for consistency
+      setGrams(val.replace(',', '.'));
+    }
+  }}
+  className="w-full bg-white border border-gray-400 rounded-md px-3 py-2 focus:ring-2 focus:ring-black focus:border-transparent appearance-none"
+  placeholder="0"
+  aria-describedby="grams-unit"
+  style={{ MozAppearance: 'textfield' }}
+/>
+
             <span id="grams-unit" className="absolute right-3 top-2 text-gray-600 text-sm">g</span>
           </div>
           {grams && !validatePositiveNumber(grams.replace(',', '.')) && (
