@@ -1,0 +1,88 @@
+import React from 'react';
+import { UI_TEXT } from '../config/constants';
+
+interface ParameterEditorModalProps {
+  show: boolean;
+  onClose: () => void;
+  tempParameters: Record<string, number>;
+  setTempParameters: (params: Record<string, number>) => void;
+  resetToDefaults: () => void;
+  saveParameters: () => void;
+}
+
+export const ParameterEditorModal: React.FC<ParameterEditorModalProps> = ({ 
+  show,
+  onClose,
+  tempParameters,
+  setTempParameters,
+  resetToDefaults,
+  saveParameters
+}) => {
+  if (!show) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+      <div className="bg-white border border-gray-300 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <h3 className="text-xl font-semibold mb-4 text-center">{UI_TEXT.TOAST.MODIFY_PARAMS}</h3>
+        
+        <div className="space-y-4 mb-6">
+          {Object.entries(tempParameters).map(([key, value]) => {
+            const labels = {
+              pricePerKg: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG} (RON)`,
+              pricePerHour: `${UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR} (RON)`,
+              flatWorkFee: `${UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE} (RON)`,
+              electricityConsumption: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION} (W)`,
+              electricityPrice: `${UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE} (RON/kWh)`,
+              markup: `${UI_TEXT.PARAMETER_LABELS.MARKUP} (%)`,
+            };
+
+            return (
+              <div key={key} className="flex items-center justify-between">
+                <label className="text-sm font-medium w-3/5 whitespace-nowrap">
+                  {labels[key as keyof typeof labels]}
+                </label>
+                <input
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9.]*"
+                  maxLength={4}
+                  value={value}
+                  onChange={(e) => {
+                    const validValue = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+                    setTempParameters({
+                      ...tempParameters,
+                      [key]: validValue ? parseFloat(validValue) : 0,
+                    });
+                  }}
+                  className="w-16 bg-white border border-gray-400 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-black focus:border-transparent appearance-none text-center"
+                  style={{ MozAppearance: 'textfield' }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="flex gap-3">
+          <button
+            onClick={resetToDefaults}
+            className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
+          >
+            {UI_TEXT.COMMON.RESET_BUTTON}
+          </button>
+          <button
+            onClick={onClose}
+            className="flex-1 bg-gray-200 hover:bg-gray-300 border border-gray-400 px-4 py-2 rounded transition-colors"
+          >
+            {UI_TEXT.COMMON.CANCEL_BUTTON}
+          </button>
+          <button
+            onClick={saveParameters}
+            className="flex-1 bg-black hover:bg-gray-800 text-white px-4 py-2 rounded transition-colors"
+          >
+            {UI_TEXT.COMMON.SAVE_BUTTON}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
