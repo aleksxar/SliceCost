@@ -61,9 +61,9 @@ export function ParameterEditorModal({
                   </label>
                   <button
                     onClick={toggleDiscount}
-                    className={`p-1 rounded ${
-                      tempUseDiscount ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
-                    } hover:bg-gray-200 transition-colors`}
+                    className={`p-1 text-gray-600 hover:text-blue-600 transition-colors ${
+                      tempUseDiscount ? 'text-blue-600' : ''
+                    } transform hover:rotate-[360deg] transition-transform duration-500`}
                     title={tempUseDiscount ? "Switch to markup" : "Switch to discount"}
                   >
                     ↻

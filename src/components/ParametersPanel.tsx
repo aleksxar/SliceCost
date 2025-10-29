@@ -77,9 +77,9 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                         ...prev,
                         useDiscount: !prev.useDiscount
                       }))}
-                      className={`p-1 rounded ${
-                        parameterConfig.useDiscount ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
-                      } hover:bg-gray-200 transition-colors`}
+                      className={`p-1 text-gray-600 hover:text-blue-600 transition-colors ${
+                        parameterConfig.useDiscount ? 'text-blue-600' : ''
+                      } transform hover:rotate-[360deg] transition-transform duration-500`}
                       title={parameterConfig.useDiscount ? "Switch to markup" : "Switch to discount"}
                     >
                       ↻
