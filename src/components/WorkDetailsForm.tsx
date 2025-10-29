@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FileText } from 'lucide-react';
 import { validateMinutes, validatePositiveNumber } from '../lib/calculations';
-import { useFileName } from '../context/FileContext';
 
 interface WorkDetailsFormProps {
   grams: string;
@@ -24,15 +23,8 @@ export function WorkDetailsForm({
   onOpenGcode,
   UI_TEXT,
 }: WorkDetailsFormProps) {
-  const { fileName } = useFileName();
   return (
     <div className="bg-gray-100 border border-gray-300 rounded-lg p-6">
-      {fileName && (
-        <div className="text-sm font-medium mb-4">
-          {UI_TEXT.GCODE_FILE}: {fileName}
-        </div>
-      )}
-      
       <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
         <FileText className="w-5 h-5" />
         {UI_TEXT.WORK_DETAILS.TITLE}
