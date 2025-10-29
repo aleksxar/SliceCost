@@ -10,6 +10,7 @@ interface WorkDetailsFormProps {
   setHours: (v: string) => void;
   setMinutes: (v: string) => void;
   onOpenGcode: () => void;
+  fileName?: string; // ✅ NEW PROP for showing file name
   UI_TEXT: any;
 }
 
@@ -21,6 +22,7 @@ export function WorkDetailsForm({
   setHours,
   setMinutes,
   onOpenGcode,
+  fileName, // ✅ added here
   UI_TEXT,
 }: WorkDetailsFormProps) {
   return (
@@ -31,6 +33,7 @@ export function WorkDetailsForm({
       </h2>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
+        {/* --- Grams Input --- */}
         <div>
           <label htmlFor="grams" className="block text-sm font-medium mb-2">
             {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}
@@ -61,6 +64,7 @@ export function WorkDetailsForm({
           )}
         </div>
 
+        {/* --- Time Inputs --- */}
         <div>
           <label className="block text-sm font-medium mb-2">
             {UI_TEXT.WORK_DETAILS.PRINT_TIME}
@@ -121,7 +125,14 @@ export function WorkDetailsForm({
           </div>
         </div>
 
-        <div>
+        {/* --- File name display + button --- */}
+        <div className="flex flex-col items-center">
+          {fileName && ( // ✅ only show if fileName is provided
+            <p className="text-sm text-gray-700 mb-2 truncate w-full text-center">
+              <strong>{UI_TEXT.WORK_DETAILS.FILE_LOADED || 'File:'}</strong> {fileName}
+            </p>
+          )}
+
           <button
             onClick={onOpenGcode}
             className="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
