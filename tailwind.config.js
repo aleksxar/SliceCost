@@ -13,10 +13,10 @@ export default {
         secondary: '#9ca3af',
         
         // Greyscale colors only
-        'dark-bg': '#111827',
-        'dark-card': '#1f2937',
-        'dark-border': '#374151',
-        'dark-gray': '#374151',
+        'dark-bg': '#181818',
+        'dark-card': '#2d2d2d',
+        'dark-border': '#818181',
+        'dark-gray': '#383838',
         
         // Text colors
         'dark-text': '#f9fafb',
