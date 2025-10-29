@@ -12,41 +12,7 @@ import ParametersSection from './components/ParametersSection';
 import { CostBreakdownSection } from './components/CostBreakdownSection';
 import { ParameterEditorModal } from './components/ParameterEditorModal';
 import { formatCurrency } from './lib/format';
-
-interface Parameters {
-  pricePerKg: number;
-  pricePerHour: number;
-  flatWorkFee: number;
-  electricityConsumption: number;
-  electricityPrice: number;
-  markup: number;
-}
-
-interface ParameterConfig {
-  enabled: Record<keyof Parameters, boolean>;
-  value: Parameters;
-}
-
-interface CostBreakdown {
-  materialCost: number;
-  printTimeCost: number;
-  electricityCost: number;
-  flatWorkFee: number;
-  subtotal: number;
-  markupAmount: number;
-  total: number;
-}
-
-
-interface CostBreakdown {
-  materialCost: number;
-  printTimeCost: number;
-  electricityCost: number;
-  flatWorkFee: number;
-  subtotal: number;
-  markupAmount: number;
-  total: number;
-}
+import type { CostBreakdown, Parameters, ParameterConfig } from './types';
 
 export default function App() {
   const [grams, setGrams] = useState<string>('');
