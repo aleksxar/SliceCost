@@ -7,8 +7,8 @@
 :root {
   /* Custom greyscale colors from tailwind.config.js */
   --dark-bg: #181818;
-  --dark-card: #2d2d2d;
-  --dark-border: #818181;
+  --dark-card: #1c1c1c;
+  --dark-border: #6c6c6c;
   --dark-gray: #383838;
   --dark-text: #f9fafb;
   --dark-secondary: #9ca3af;
