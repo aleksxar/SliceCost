@@ -10,12 +10,12 @@ export default {
       colors: {
         primary: '#6b7280',
         'primary-hover': '#4b5563',
-        secondary: '#9ca3af',
+        secondary: '#636363ff',
         
         // Greyscale colors only
         'dark-bg': '#181818',
-        'dark-card': '#2d2d2d',
-        'dark-border': '#818181',
+        'dark-card': '#1c1c1cff',
+        'dark-border': '#6c6c6cff',
         'dark-gray': '#383838',
         
         // Text colors
