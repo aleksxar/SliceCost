@@ -121,16 +121,16 @@ export function WorkDetailsForm({
           </div>
         </div>
 
-<div>
-  <button
-    onClick={() => handleOpenGcode('example.gcode')}
-    className="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
-    title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
-  >
-    <FileText className="w-4 h-4" />
-    {UI_TEXT.WORK_DETAILS.OPEN_GCODE}
-  </button>
-</div>
+        <div>
+          <button
+            onClick={onOpenGcode}
+            className="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md px-4 py-2 flex items-center justify-center gap-2 transition-colors"
+            title={UI_TEXT.WORK_DETAILS.OPEN_GCODE}
+          >
+            <FileText className="w-4 h-4" />
+            {UI_TEXT.WORK_DETAILS.OPEN_GCODE}
+          </button>
+        </div>
       </div>
     </div>
   );
