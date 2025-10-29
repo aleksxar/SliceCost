@@ -65,7 +65,7 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                           },
                         }));
                       }}
-                      className="w-4 h-4 text-blue-500 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 bg-white border-gray-600 rounded focus:ring-gray-500"
                     />
                     <span className={enabled ? 'text-white' : 'text-gray-400'}>
                       {parameterConfig.useDiscount ? UI_TEXT.PARAMETER_LABELS.DISCOUNT : UI_TEXT.PARAMETER_LABELS.MARKUP}
@@ -94,7 +94,7 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                           },
                         }));
                       }}
-                      className="w-4 h-4 text-blue-500 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+                      className="w-4 h-4 bg-white border-gray-600 rounded focus:ring-gray-500"
                     />
                     <span className={enabled ? 'text-white' : 'text-gray-400'}>
                       {labels[key as keyof typeof labels]}

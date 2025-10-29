@@ -8,23 +8,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#3b82f6',
-        'primary-hover': '#2563eb',
-        secondary: '#6b7280',
+        primary: '#6b7280',
+        'primary-hover': '#4b5563',
+        secondary: '#9ca3af',
         
-        // Dark mode specific colors
-        'dark-primary': '#8ea5ff',
-        'dark-primary-hover': '#5a79ff',
-        
-        // Backgrounds
-        'dark-bg': '#121212',
-        'dark-card': '#1e1e1e',
-        'dark-border': '#444',
-        'dark-gray': '#333',
+        // Greyscale colors only
+        'dark-bg': '#111827',
+        'dark-card': '#1f2937',
+        'dark-border': '#374151',
+        'dark-gray': '#374151',
         
         // Text colors
-        'dark-text': '#f0f0f0',
-        'dark-secondary': '#a0a0a0',
+        'dark-text': '#f9fafb',
+        'dark-secondary': '#9ca3af',
       },
       spacing: {
         'section': '2rem',

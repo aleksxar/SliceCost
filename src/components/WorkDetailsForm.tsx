@@ -49,7 +49,7 @@ export function WorkDetailsForm({
                   setGrams(val.replace(',', '.'));
                 }
               }}
-              className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white"
+              className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white"
               placeholder="0"
               aria-describedby="grams-unit"
               style={{ MozAppearance: 'textfield' }}
@@ -79,7 +79,7 @@ export function WorkDetailsForm({
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setHours(v);
                   }}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white"
                   placeholder="0"
                   aria-describedby="hours-unit"
                   style={{ MozAppearance: 'textfield' }}
@@ -105,7 +105,7 @@ export function WorkDetailsForm({
                     const v = e.target.value.replace(/[^0-9]/g, '');
                     setMinutes(v);
                   }}
-                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white"
+                  className="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white"
                   placeholder="0"
                   aria-describedby="minutes-unit"
                   style={{ MozAppearance: 'textfield' }}

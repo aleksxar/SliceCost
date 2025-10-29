@@ -78,7 +78,7 @@ export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEX
       <div className="rounded-lg p-4 mb-4 bg-gray-900 border border-gray-700">
         <div className="text-center">
           <p className="text-sm text-gray-400">{UI_TEXT.COST_DETAILS.TOTAL_COST}</p>
-          <p className="text-2xl font-bold text-blue-400">{formatCurrency(costs.total)}</p>
+          <p className="text-2xl font-bold text-white">{formatCurrency(costs.total)}</p>
         </div>
       </div>
 

@@ -89,7 +89,7 @@ export function ParameterEditorModal({
                     }));
                   }
                 }}
-                className="w-16 bg-gray-700 border border-gray-600 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none text-white text-center"
+                className="w-16 bg-gray-700 border border-gray-600 rounded-md px-2 py-2 font-mono text-sm focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none text-white text-center"
                 style={{ MozAppearance: 'textfield' }}
               />
             </div>
@@ -111,7 +111,7 @@ export function ParameterEditorModal({
           </button>
           <button
             onClick={onSave}
-            className="flex-1 bg-blue-600 text-white px-4 py-2 rounded transition-colors hover:bg-blue-700"
+            className="flex-1 bg-gray-700 border border-gray-600 text-white px-4 py-2 rounded transition-colors hover:bg-gray-600"
           >
             {UI_TEXT.COMMON.SAVE_BUTTON}
           </button>
