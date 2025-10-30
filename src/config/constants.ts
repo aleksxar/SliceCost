@@ -1,3 +1,19 @@
+import { 
+  RefreshCw, 
+  Save, 
+  X, 
+  RotateCcw, 
+  FileText, 
+  Settings, 
+  DollarSign,
+  Recycle,
+  Clock,
+  Zap,
+  Wrench,
+  TrendingUp,
+  TrendingDown
+} from 'lucide-react';
+
 export const DEFAULT_PARAMETERS = {
   pricePerKg: 100,
   pricePerHour: 2,
@@ -44,14 +60,14 @@ export const UI_TEXT = {
   COST_DETAILS: {
     TITLE: 'Price Details',
     TOTAL_COST: 'Final Cost',
-    MATERIAL_COST: 'Material cost:',
-    TIME_COST: 'Time cost:',
-    ELECTRICITY_COST: 'Power cost:',
-    WORK_FEE: 'Maintenance fee:',
-    SUBTOTAL: 'Subtotal:',
+    MATERIAL_COST: 'Material cost',
+    TIME_COST: 'Time cost',
+    ELECTRICITY_COST: 'Power cost',
+    WORK_FEE: 'Maintenance fee',
+    SUBTOTAL: 'Subtotal',
     MARKUP_LABEL: (value: number) => `Markup (${value}%):`,
     DISCOUNT_LABEL: (value: number) => `Discount (${value}%):`,
-    TOTAL: 'Total:',
+    TOTAL: 'Total',
     SHOW_DETAILS: 'View full details',
   },
   VALIDATION: {
@@ -59,9 +75,6 @@ export const UI_TEXT = {
     MINUTES_RANGE: 'Between 0 and 59 minutes',
   },
   TOAST: {
-    GCODE_PARSER: 'G-code parsing not implemented yet',
-    GCODE_DESCRIPTION: 'This feature will extract weight and print time from G-code files',
-    GCODE_SUCCESS: 'G-code parsed successfully',
     GCODE_INVALID: 'Missing metadata in G-code file',
     GCODE_ERROR: 'Error processing G-code file',
     PARAMS_SAVED: 'Parameters saved successfully',
@@ -77,10 +90,10 @@ export const UI_TEXT = {
     DISCOUNT: 'Discount',
   },
   COST_BREAKDOWN: {
-    MATERIAL_COST: 'Material cost:',
-    TIME_COST: 'Time cost:',
-    ELECTRICITY_COST: 'Power cost:',
-    WORK_FEE: 'Work fee:',
+    MATERIAL_COST: 'Material cost',
+    TIME_COST: 'Time cost',
+    ELECTRICITY_COST: 'Power cost',
+    WORK_FEE: 'Maintenance fee',
   },
   UNITS: {
     GRAMS: 'g',
@@ -92,5 +105,13 @@ export const UI_TEXT = {
     ELECTRICITY: 'W',
     ELECTRICITY_PRICE: 'RON/kWh',
     PERCENT: '%',
+  },
+  ICONS: {
+    MATERIAL: Recycle,
+    TIME: Clock,
+    ELECTRICITY: Zap,
+    WORK: Wrench,
+    MARKUP_UP: TrendingUp,
+    MARKUP_DOWN: TrendingDown,
   },
 };
