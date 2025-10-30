@@ -1,19 +1,3 @@
-import { 
-  RefreshCw, 
-  Save, 
-  X, 
-  RotateCcw, 
-  FileText, 
-  Settings, 
-  DollarSign,
-  Recycle,
-  Clock,
-  Zap,
-  Wrench,
-  TrendingUp,
-  TrendingDown
-} from 'lucide-react';
-
 export const DEFAULT_PARAMETERS = {
   pricePerKg: 100,
   pricePerHour: 2,
@@ -60,14 +44,14 @@ export const UI_TEXT = {
   COST_DETAILS: {
     TITLE: 'Price Details',
     TOTAL_COST: 'Final Cost',
-    MATERIAL_COST: 'Material cost',
-    TIME_COST: 'Time cost',
-    ELECTRICITY_COST: 'Power cost',
-    WORK_FEE: 'Maintenance fee',
-    SUBTOTAL: 'Subtotal',
-    MARKUP_LABEL: (value: number) => `Markup (${value}%):`,
-    DISCOUNT_LABEL: (value: number) => `Discount (${value}%):`,
-    TOTAL: 'Total',
+    MATERIAL_COST: '♻️ Material cost:',
+    TIME_COST: '⏳ Time cost:',
+    ELECTRICITY_COST: '⚡ Power cost:',
+    WORK_FEE: '🛠️ Maintenance fee:',
+    SUBTOTAL: '🪙 Subtotal:',
+    MARKUP_LABEL: (value: number) => `📈 Markup (${value}%):`,
+    DISCOUNT_LABEL: (value: number) => `📉 Discount (${value}%):`,
+    TOTAL: '💲 Total:',
     SHOW_DETAILS: 'View full details',
   },
   VALIDATION: {
@@ -90,10 +74,10 @@ export const UI_TEXT = {
     DISCOUNT: 'Discount',
   },
   COST_BREAKDOWN: {
-    MATERIAL_COST: 'Material cost',
-    TIME_COST: 'Time cost',
-    ELECTRICITY_COST: 'Power cost',
-    WORK_FEE: 'Maintenance fee',
+    MATERIAL_COST: '♻️ Material cost:',
+    TIME_COST: '⏳ Time cost:',
+    ELECTRICITY_COST: '⚡ Power cost:',
+    WORK_FEE: '🛠️ Maintenance fee:',
   },
   UNITS: {
     GRAMS: 'g',
@@ -105,13 +89,5 @@ export const UI_TEXT = {
     ELECTRICITY: 'W',
     ELECTRICITY_PRICE: 'RON/kWh',
     PERCENT: '%',
-  },
-  ICONS: {
-    MATERIAL: Recycle,
-    TIME: Clock,
-    ELECTRICITY: Zap,
-    WORK: Wrench,
-    MARKUP_UP: TrendingUp,
-    MARKUP_DOWN: TrendingDown,
   },
 };
