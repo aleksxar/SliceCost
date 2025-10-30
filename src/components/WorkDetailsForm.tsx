@@ -6,9 +6,11 @@ interface WorkDetailsFormProps {
   grams: string;
   hours: string;
   minutes: string;
+  projectName: string;
   setGrams: (v: string) => void;
   setHours: (v: string) => void;
   setMinutes: (v: string) => void;
+  setProjectName: (v: string) => void;
   onOpenGcode: () => void;
   UI_TEXT: any;
 }
@@ -17,9 +19,11 @@ export function WorkDetailsForm({
   grams,
   hours,
   minutes,
+  projectName,
   setGrams,
   setHours,
   setMinutes,
+  setProjectName,
   onOpenGcode,
   UI_TEXT,
 }: WorkDetailsFormProps) {
@@ -31,6 +35,25 @@ export function WorkDetailsForm({
       </h2>
 
       <div className="grid grid-cols-1 gap-4 mb-4">
+        <div>
+          <label htmlFor="projectName" className="block text-sm font-medium mb-2" style={{ color: 'var(--dark-text)' }}>
+            {UI_TEXT.WORK_DETAILS.PROJECT_NAME}
+          </label>
+          <input
+            id="projectName"
+            type="text"
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
+            className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none"
+            placeholder="Project Name"
+            style={{ 
+              backgroundColor: 'var(--dark-gray)', 
+              borderColor: 'var(--dark-border)',
+              MozAppearance: 'textfield',
+              color: 'var(--dark-text)'
+            }}
+          />
+        </div>
         <div>
           <label htmlFor="grams" className="block text-sm font-medium mb-2" style={{ color: 'var(--dark-text)' }}>
             {UI_TEXT.WORK_DETAILS.FILAMENT_WEIGHT}

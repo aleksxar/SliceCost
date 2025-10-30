@@ -26,9 +26,21 @@ export const UI_TEXT = {
   WORK_DETAILS: {
     TITLE: 'File Details',
     PRINT_TITLE: '3D Printing Cost Calculation',
+    PROJECT_NAME: 'Project Name',  // NEW FIELD INSERTED ABOVE FILAMENT_WEIGHT
     FILAMENT_WEIGHT: 'Filament Weight',
     PRINT_TIME: 'Print Time',
     OPEN_GCODE: 'Open G-code',
+  },
+  PARAMETERS: {
+    TITLE: 'Parameters',
+    EDIT_BUTTON: 'Edit',
+    PER_KG: 'Price per kg',
+    PER_HOUR: 'Price per hour',
+    WORK_FEE: 'Maintenance fee',
+    ELECTRICITY_CONSUMPTION: 'Power consumption',
+    ELECTRICITY_PRICE: 'Power price',
+    MARKUP: 'Markup',
+    DISCOUNT: 'Discount',
   },
   PARAMETERS: {
     TITLE: 'Parameters',
