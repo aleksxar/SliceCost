@@ -116,8 +116,9 @@ button[class*="transform hover:rotate-[360deg]"] {
   color: white !important;
 }
 
-/* Sonner Toast Custom Styling - Override with high specificity */
-html body .sonner {
+/* Sonner Toast Custom Styling */
+/* Override Sonner's default dark theme with our custom colors */
+.sonner {
   --toast-bg: #1c1c1c !important;
   --toast-border: #6c6c6c !important;
   --toast-text: #f9fafb !important;
@@ -129,74 +130,47 @@ html body .sonner {
   --toast-error-text: #f9fafb !important;
 }
 
-/* Target all toast containers with high specificity */
-html body .sonner > * {
+/* Target all toast containers */
+.sonner > * {
   background-color: #1c1c1c !important;
   border: 1px solid #6c6c6c !important;
   color: #f9fafb !important;
 }
 
-/* Target toast icons with high specificity */
-html body .sonner .sonner-toast-icon {
+/* Target toast icons */
+.sonner .sonner-toast-icon {
   color: #f9fafb !important;
 }
 
-/* Target toast action buttons with high specificity */
-html body .sonner .sonner-toast-action-button {
+/* Target toast action buttons */
+.sonner .sonner-toast-action-button {
   background-color: #343434 !important;
   color: #f9fafb !important;
 }
 
-html body .sonner .sonner-toast-action-button:hover {
+.sonner .sonner-toast-action-button:hover {
   background-color: #6c6c6c !important;
 }
 
-/* Additional selectors for Sonner toast elements with high specificity */
-html body .sonner .sonner-toast {
+/* Additional selectors for Sonner toast elements */
+.sonner .sonner-toast {
   background-color: #1c1c1c !important;
   border: 1px solid #6c6c6c !important;
   color: #f9fafb !important;
 }
 
-html body .sonner .sonner-toast-title {
+.sonner .sonner-toast-title {
   color: #f9fafb !important;
 }
 
-html body .sonner .sonner-toast-description {
+.sonner .sonner-toast-description {
   color: #f9fafb !important;
 }
 
-html body .sonner .sonner-toast-close-button {
+.sonner .sonner-toast-close-button {
   color: #f9fafb !important;
 }
 
-html body .sonner .sonner-toast-close-button:hover {
-  color: #f9fafb !important;
-}
-
-/* Even more specific selectors for Sonner */
-html body .sonner .sonner-toast__content {
-  color: #f9fafb !important;
-}
-
-html body .sonner .sonner-toast__title {
-  color: #f9fafb !important;
-}
-
-html body .sonner .sonner-toast__description {
-  color: #f9fafb !important;
-}
-
-html body .sonner .sonner-toast__close-button {
-  color: #f9fafb !important;
-}
-
-/* Override any inline styles */
-html body .sonner .sonner-toast {
-  background-color: #1c1c1c !important;
-  color: #f9fafb !important;
-}
-
-html body .sonner .sonner-toast * {
+.sonner .sonner-toast-close-button:hover {
   color: #f9fafb !important;
 }
