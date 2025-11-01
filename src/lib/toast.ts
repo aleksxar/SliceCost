@@ -8,6 +8,7 @@ export const toast = {
         border: '1px solid #6c6c6c',
         color: '#f9fafb',
       },
+      className: 'sonner-success',
     });
   },
   
@@ -18,6 +19,7 @@ export const toast = {
         border: '1px solid #ef4444',
         color: '#ef4444',
       },
+      className: 'sonner-error',
     });
   },
   
