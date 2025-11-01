@@ -10,7 +10,7 @@ export default {
       colors: {
         primary: '#6b7280',
         'primary-hover': '#4b5563',
-        secondary: '#636363ff',
+        secondary: '#636363',
         
         // Greyscale colors only
         'dark-bg': '#181818',
@@ -20,7 +20,7 @@ export default {
         
         // Text colors
         'dark-text': '#f9fafb',
-        'dark-secondary': '#9ca3af',
+        'dark-secondary': '#636363',
       },
       spacing: {
         'section': '2rem',

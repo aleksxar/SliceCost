@@ -84,7 +84,7 @@ export default function App() {
       // Update filament weight
       setGrams(filamentUsed.toString());
       
-      // Parse print time (e.g. "4h 51m" or "3h 15m 30s")
+      // Parse print time
       const hoursMatch = printTime.match(/(\d+)h/);
       const minutesMatch = printTime.match(/(\d+)m/);
       
@@ -181,7 +181,7 @@ export default function App() {
         />
       </div>
 
-      <Toaster theme="light" />
+      <Toaster theme="dark" />
     </div>
   );
 }
