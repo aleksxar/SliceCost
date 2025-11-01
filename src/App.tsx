@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Coins } from 'lucide-react';
-import { toast as sonnerToast, Toaster } from 'sonner';
-import { toast } from './lib/toast';
+import { toast, Toaster } from 'sonner';
 import { 
   DEFAULT_PARAMETERS, 
   DEFAULT_ENABLED, 
@@ -187,13 +186,7 @@ export default function App() {
         />
       </div>
 
-      <Toaster 
-        theme="dark"
-        className="sonner"
-        position="top-right"
-        expand={true}
-        richColors={false}
-      />
+      <Toaster theme="dark" />
     </div>
   );
 }
