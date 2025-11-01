@@ -7,6 +7,7 @@ interface WorkDetailsFormProps {
   hours: string;
   minutes: string;
   projectName: string;
+  fileName: string;
   setGrams: (v: string) => void;
   setHours: (v: string) => void;
   setMinutes: (v: string) => void;
@@ -20,6 +21,7 @@ export function WorkDetailsForm({
   hours,
   minutes,
   projectName,
+  fileName,
   setGrams,
   setHours,
   setMinutes,
@@ -45,7 +47,7 @@ export function WorkDetailsForm({
             value={projectName}
             onChange={(e) => setProjectName(e.target.value)}
             className="w-full rounded-md px-3 py-2 focus:ring-2 focus:ring-gray-500 focus:border-transparent appearance-none"
-            placeholder="Project Name"
+            placeholder={fileName || "Project Name"}
             style={{ 
               backgroundColor: 'var(--dark-gray)', 
               borderColor: 'var(--dark-border)',
@@ -53,6 +55,11 @@ export function WorkDetailsForm({
               color: 'var(--dark-text)'
             }}
           />
+          <style jsx>{`
+            #projectName::placeholder {
+              color: #636363;
+            }
+          `}</style>
         </div>
         <div>
           <label htmlFor="grams" className="block text-sm font-medium mb-2" style={{ color: 'var(--dark-text)' }}>
