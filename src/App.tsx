@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Coins } from 'lucide-react';
-import { toast, Toaster } from 'sonner';
 import { 
   DEFAULT_PARAMETERS, 
   DEFAULT_ENABLED, 
@@ -18,6 +17,8 @@ import WorkDetailsForm from './components/WorkDetailsForm';
 import ParametersPanel from './components/ParametersPanel';
 import CostCard from './components/CostCard';
 import ParameterEditorModal from './components/ParameterEditorModal';
+import { useCustomToast } from './hooks/useCustomToast';
+import ToastManager from './components/ToastManager';
 
 export default function App() {
   const [grams, setGrams] = useState<string>('');
@@ -26,6 +27,8 @@ export default function App() {
   const [showParameterEditor, setShowParameterEditor] = useState(false);
   const [fileName, setFileName] = useState<string>('');
   const [projectName, setProjectName] = useState<string>('');
+
+  const { showSuccess, showError } = useCustomToast();
 
   const [parameterConfig, setParameterConfig] = useState<ParameterConfig>(() => {
     const saved = localStorage.getItem('3d-calc-parameters');
@@ -95,12 +98,12 @@ export default function App() {
       setHours(hoursMatch ? hoursMatch[1] : '0');
       setMinutes(minutesMatch ? minutesMatch[1] : '0');
 
-      toast.success(UI_TEXT.TOAST.GCODE_SUCCESS);
+      showSuccess(UI_TEXT.TOAST.GCODE_SUCCESS);
     } catch (error: any) {
       if (error.message.includes('Missing metadata')) {
-        toast.error(UI_TEXT.TOAST.GCODE_INVALID);
+        showError(UI_TEXT.TOAST.GCODE_INVALID);
       } else {
-        toast.error(UI_TEXT.TOAST.GCODE_ERROR);
+        showError(UI_TEXT.TOAST.GCODE_ERROR);
       }
     }
   };
@@ -112,7 +115,7 @@ export default function App() {
       useDiscount: tempUseDiscount,
     });
     setShowParameterEditor(false);
-    toast.success(UI_TEXT.TOAST.PARAMS_SAVED);
+    showSuccess(UI_TEXT.TOAST.PARAMS_SAVED);
   };
 
   const resetToDefaults = () => {
@@ -186,7 +189,8 @@ export default function App() {
         />
       </div>
 
-      <Toaster theme="dark" />
+      {/* Replace Sonner Toaster with our custom ToastManager */}
+      <ToastManager />
     </div>
   );
 }
