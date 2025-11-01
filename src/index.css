@@ -15,6 +15,18 @@
   
   /* Legacy CSS variables for compatibility */
   --font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  
+  /* Sonner toast colors that match the app theme */
+  --toast-bg: rgba(28, 28, 28, 0.95);
+  --toast-border: #6c6c6c;
+  --toast-success-bg: rgba(34, 197, 94, 0.1);
+  --toast-success-border: #22c55e;
+  --toast-error-bg: rgba(239, 68, 68, 0.1);
+  --toast-error-border: #ef4444;
+  --toast-text: #f9fafb;
+  --toast-success-text: #22c55e;
+  --toast-error-text: #ef4444;
+  --toast-icon: #f9fafb;
 }
 
 body {
@@ -114,4 +126,40 @@ input[type="checkbox"]:checked::after {
 /* MARKUP ARROW SPECIFIC STYLING */
 button[class*="transform hover:rotate-[360deg]"] {
   color: white !important;
+}
+
+/* Sonner Toast Custom Styling */
+.sonner {
+  --toast-bg: rgba(28, 28, 28, 0.95) !important;
+  --toast-border: #6c6c6c !important;
+  --toast-success-bg: rgba(34, 197, 94, 0.1) !important;
+  --toast-success-border: #22c55e !important;
+  --toast-error-bg: rgba(239, 68, 68, 0.1) !important;
+  --toast-error-border: #ef4444 !important;
+  --toast-text: #f9fafb !important;
+  --toast-success-text: #22c55e !important;
+  --toast-error-text: #ef4444 !important;
+  --toast-icon: #f9fafb !important;
+}
+
+.sonner > * {
+  background-color: var(--toast-bg) !important;
+  border: 1px solid var(--toast-border) !important;
+  color: var(--toast-text) !important;
+}
+
+.sonner-success {
+  background-color: var(--toast-success-bg) !important;
+  border-color: var(--toast-success-border) !important;
+  color: var(--toast-success-text) !important;
+}
+
+.sonner-error {
+  background-color: var(--toast-error-bg) !important;
+  border-color: var(--toast-error-border) !important;
+  color: var(--toast-error-text) !important;
+}
+
+.sonner .sonner-icon {
+  color: var(--toast-icon) !important;
 }
