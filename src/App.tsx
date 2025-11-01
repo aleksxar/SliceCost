@@ -25,9 +25,8 @@ export default function App() {
   const [minutes, setMinutes] = useState<string>('');
   const [showParameterEditor, setShowParameterEditor] = useState(false);
   const [fileName, setFileName] = useState<string>('');
+  const [projectName, setProjectName] = useState<string>('');
 
-  
-  
   const [parameterConfig, setParameterConfig] = useState<ParameterConfig>(() => {
     const saved = localStorage.getItem('3d-calc-parameters');
     if (saved) {
@@ -79,12 +78,17 @@ export default function App() {
 
       if (!file) return;
 
+      // Use the full filename with extension for both display and placeholder
+      const fullFileName = file.name;
+      setFileName(fullFileName);
+      setProjectName(fullFileName);
+
       const { filamentUsed, printTime } = await readGcodeMetadata(file);
       
       // Update filament weight
       setGrams(filamentUsed.toString());
       
-      // Parse print time
+      // Parse print time (e.g. "4h 51m" or "3h 15m 30s")
       const hoursMatch = printTime.match(/(\d+)h/);
       const minutesMatch = printTime.match(/(\d+)m/);
       
@@ -117,8 +121,6 @@ export default function App() {
     setTempUseDiscount(false); // Reset to markup mode
   };
 
-  
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: 'var(--dark-bg)', color: 'var(--dark-text)' }}>
       <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -135,9 +137,12 @@ export default function App() {
               grams={grams}
               hours={hours}
               minutes={minutes}
+              projectName={projectName}
+              fileName={fileName}
               setGrams={setGrams}
               setHours={setHours}
               setMinutes={setMinutes}
+              setProjectName={setProjectName}
               onOpenGcode={handleOpenGcode}
               UI_TEXT={UI_TEXT}
             />
