@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Printer, DollarSign } from 'lucide-react';
 import type { CostBreakdown, ParameterConfig } from '../lib/calculations';
 import { formatCurrency } from '../lib/calculations';
@@ -13,8 +13,6 @@ interface CostCardProps {
 }
 
 export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEXT }: CostCardProps) {
-  const [showBreakdown, setShowBreakdown] = useState(false);
-
   const handlePrint = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
@@ -85,70 +83,52 @@ export function CostCard({ costs, parameterConfig, grams, hours, minutes, UI_TEX
       <div className="rounded-lg p-4 mb-4" style={{ backgroundColor: '#181818', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
         <div className="text-center">
           <p className="text-sm" style={{ color: 'var(--dark-secondary)' }}>{UI_TEXT.COST_DETAILS.TOTAL_COST}</p>
-          <p className="text-2xl font-bold" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.total)}</p>
+          <p className="text-2xl font-bold" style={{ color: 'white' }}>{formatCurrency(costs.total)}</p>
         </div>
       </div>
 
-      <button
-        onClick={() => setShowBreakdown(!showBreakdown)}
-        className="w-full text-left p-3 rounded transition-colors mb-4"
-        style={{ 
-          backgroundColor: 'var(--dark-gray)', 
-          borderColor: 'var(--dark-border)',
-          borderWidth: '1px',
-          borderStyle: 'solid'
-        }}
-      >
-        <span className="flex items-center justify-between">
-          <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.SHOW_DETAILS}</span>
-          <span className={`transform transition-transform ${showBreakdown ? 'rotate-180' : ''}`} style={{ color: 'var(--dark-text)' }}>▼</span>
-        </span>
-      </button>
-
-      {showBreakdown && (
-        <div className="space-y-2 text-sm" style={{ backgroundColor: 'var(--dark-card)', padding: '16px', borderRadius: '8px', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
-          {parameterConfig.enabled.pricePerKg && (
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.MATERIAL_COST}</span>
-              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.materialCost)}</span>
-            </div>
-          )}
-          {parameterConfig.enabled.pricePerHour && (
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.TIME_COST}</span>
-              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.printTimeCost)}</span>
-            </div>
-          )}
-          {(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) && (
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span>
-              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.electricityCost)}</span>
-            </div>
-          )}
-          {parameterConfig.enabled.flatWorkFee && (
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.WORK_FEE}</span>
-              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.flatWorkFee)}</span>
-            </div>
-          )}
-          <hr style={{ borderColor: 'var(--dark-border)' }} />
-          <div className="flex justify-between font-medium">
-            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.SUBTOTAL}</span>
-            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.subtotal)}</span>
+      <div className="space-y-2 text-sm" style={{ backgroundColor: 'var(--dark-card)', padding: '16px', borderRadius: '8px', borderColor: 'var(--dark-border)', borderWidth: '1px', borderStyle: 'solid' }}>
+        {parameterConfig.enabled.pricePerKg && (
+          <div className="flex justify-between">
+            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.MATERIAL_COST}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.materialCost)}</span>
           </div>
-          {parameterConfig.enabled.markup && (
-            <div className="flex justify-between">
-              <span style={{ color: 'var(--dark-text)' }}>{parameterConfig.useDiscount ? UI_TEXT.COST_DETAILS.DISCOUNT_LABEL(parameterConfig.value.markup) : UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
-              <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.markupAmount)}</span>
-            </div>
-          )}
-          <hr style={{ borderColor: 'var(--dark-border)' }} />
-          <div className="flex justify-between font-bold text-lg">
-            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.TOTAL}</span>
-            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.total)}</span>
+        )}
+        {parameterConfig.enabled.pricePerHour && (
+          <div className="flex justify-between">
+            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.TIME_COST}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.printTimeCost)}</span>
           </div>
+        )}
+        {(parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice) && (
+          <div className="flex justify-between">
+            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.ELECTRICITY_COST}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.electricityCost)}</span>
+          </div>
+        )}
+        {parameterConfig.enabled.flatWorkFee && (
+          <div className="flex justify-between">
+            <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.WORK_FEE}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.flatWorkFee)}</span>
+          </div>
+        )}
+        <hr style={{ borderColor: 'var(--dark-border)' }} />
+        <div className="flex justify-between font-medium">
+          <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.SUBTOTAL}</span>
+          <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.subtotal)}</span>
         </div>
-      )}
+        {parameterConfig.enabled.markup && (
+          <div className="flex justify-between">
+            <span style={{ color: 'var(--dark-text)' }}>{parameterConfig.useDiscount ? UI_TEXT.COST_DETAILS.DISCOUNT_LABEL(parameterConfig.value.markup) : UI_TEXT.COST_DETAILS.MARKUP_LABEL(parameterConfig.value.markup)}</span>
+            <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.markupAmount)}</span>
+          </div>
+        )}
+        <hr style={{ borderColor: 'var(--dark-border)' }} />
+        <div className="flex justify-between font-bold text-lg">
+          <span style={{ color: 'var(--dark-text)' }}>{UI_TEXT.COST_DETAILS.TOTAL}</span>
+          <span className="font-mono" style={{ color: 'var(--dark-text)' }}>{formatCurrency(costs.total)}</span>
+        </div>
+      </div>
     </div>
   );
 }
