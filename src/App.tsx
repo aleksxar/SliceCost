@@ -78,10 +78,10 @@ export default function App() {
 
       if (!file) return;
 
-      // Use the full filename with extension for both display and placeholder
+      // Use the full filename with extension for display
       const fullFileName = file.name;
       setFileName(fullFileName);
-      setProjectName(fullFileName);
+      // Don't set projectName, let it remain empty so the filename shows as placeholder
 
       const { filamentUsed, printTime } = await readGcodeMetadata(file);
       
