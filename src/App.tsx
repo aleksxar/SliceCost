@@ -95,7 +95,6 @@ export default function App() {
       setHours(hoursMatch ? hoursMatch[1] : '0');
       setMinutes(minutesMatch ? minutesMatch[1] : '0');
 
-      toast.success(UI_TEXT.TOAST.GCODE_SUCCESS);
     } catch (error: any) {
       if (error.message.includes('Missing metadata')) {
         toast.error(UI_TEXT.TOAST.GCODE_INVALID);
