@@ -117,33 +117,60 @@ button[class*="transform hover:rotate-[360deg]"] {
 }
 
 /* Sonner Toast Custom Styling */
+/* Override Sonner's default dark theme with our custom colors */
 .sonner {
-  --toast-bg: var(--dark-card) !important;
-  --toast-border: var(--dark-border) !important;
-  --toast-text: var(--dark-text) !important;
-  --toast-success-bg: var(--dark-card) !important;
-  --toast-success-border: var(--dark-border) !important;
-  --toast-success-text: var(--dark-text) !important;
-  --toast-error-bg: var(--dark-card) !important;
-  --toast-error-border: var(--dark-border) !important;
-  --toast-error-text: var(--dark-text) !important;
+  --toast-bg: #1c1c1c !important;
+  --toast-border: #6c6c6c !important;
+  --toast-text: #f9fafb !important;
+  --toast-success-bg: #1c1c1c !important;
+  --toast-success-border: #6c6c6c !important;
+  --toast-success-text: #f9fafb !important;
+  --toast-error-bg: #1c1c1c !important;
+  --toast-error-border: #6c6c6c !important;
+  --toast-error-text: #f9fafb !important;
 }
 
+/* Target all toast containers */
 .sonner > * {
-  background-color: var(--dark-card) !important;
-  border: 1px solid var(--dark-border) !important;
-  color: var(--dark-text) !important;
+  background-color: #1c1c1c !important;
+  border: 1px solid #6c6c6c !important;
+  color: #f9fafb !important;
 }
 
+/* Target toast icons */
 .sonner .sonner-toast-icon {
-  color: var(--dark-text) !important;
+  color: #f9fafb !important;
 }
 
+/* Target toast action buttons */
 .sonner .sonner-toast-action-button {
-  background-color: var(--dark-gray) !important;
-  color: var(--dark-text) !important;
+  background-color: #343434 !important;
+  color: #f9fafb !important;
 }
 
 .sonner .sonner-toast-action-button:hover {
-  background-color: var(--dark-border) !important;
+  background-color: #6c6c6c !important;
+}
+
+/* Additional selectors for Sonner toast elements */
+.sonner .sonner-toast {
+  background-color: #1c1c1c !important;
+  border: 1px solid #6c6c6c !important;
+  color: #f9fafb !important;
+}
+
+.sonner .sonner-toast-title {
+  color: #f9fafb !important;
+}
+
+.sonner .sonner-toast-description {
+  color: #f9fafb !important;
+}
+
+.sonner .sonner-toast-close-button {
+  color: #f9fafb !important;
+}
+
+.sonner .sonner-toast-close-button:hover {
+  color: #f9fafb !important;
 }
