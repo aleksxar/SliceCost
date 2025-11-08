@@ -60,6 +60,13 @@ export function WorkDetailsForm({
               color: #636363;
             }
           `}</style>
+          <style jsx>{`
+            #grams::placeholder,
+            #hours::placeholder,
+            #minutes::placeholder {
+              color: #636363;
+            }
+          `}</style>
         </div>
         <div>
           <label htmlFor="grams" className="block text-sm font-medium mb-2" style={{ color: 'var(--dark-text)' }}>
