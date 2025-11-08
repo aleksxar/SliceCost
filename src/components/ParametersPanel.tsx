@@ -70,13 +70,24 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                       type="checkbox"
                       checked={enabled}
                       onChange={(e) => {
-                        setParameterConfig(prev => ({
-                          ...prev,
-                          enabled: {
-                            ...prev.enabled,
-                            [key]: e.target.checked,
-                          },
-                        }));
+                        const isElectricityConsumption = key === 'electricityConsumption';
+                        const isElectricityPrice = key === 'electricityPrice';
+
+                        setParameterConfig(prev => {
+                          const newEnabled = { ...prev.enabled };
+
+                          if (isElectricityConsumption || isElectricityPrice) {
+                            newEnabled.electricityConsumption = e.target.checked;
+                            newEnabled.electricityPrice = e.target.checked;
+                          } else {
+                            newEnabled[key] = e.target.checked;
+                          }
+
+                          return {
+                            ...prev,
+                            enabled: newEnabled,
+                          };
+                        });
                       }}
                       style={{ 
                         borderColor: 'var(--dark-border)',
