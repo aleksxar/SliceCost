@@ -86,7 +86,7 @@ export function WorkDetailsForm({
                 backgroundColor: 'var(--dark-gray)', 
                 borderColor: 'var(--dark-border)',
                 MozAppearance: 'textfield',
-                color: 'var(--dark-text)'
+                color: '#636363'
               }}
             />
             <span id="grams-unit" className="absolute right-3 top-2 text-sm" style={{ color: 'var(--dark-secondary)' }}>g</span>
@@ -121,7 +121,7 @@ export function WorkDetailsForm({
                     backgroundColor: 'var(--dark-gray)', 
                     borderColor: 'var(--dark-border)',
                     MozAppearance: 'textfield',
-                    color: 'var(--dark-text)'
+                    color: '#636363'
                   }}
                 />
                 <span id="hours-unit" className="absolute right-2 top-2 text-xs" style={{ color: 'var(--dark-secondary)' }}>
@@ -152,7 +152,7 @@ export function WorkDetailsForm({
                     backgroundColor: 'var(--dark-gray)', 
                     borderColor: 'var(--dark-border)',
                     MozAppearance: 'textfield',
-                    color: 'var(--dark-text)'
+                    color: '#636363'
                   }}
                 />
                 <span id="minutes-unit" className="absolute right-2 top-2 text-xs" style={{ color: 'var(--dark-secondary)' }}>
