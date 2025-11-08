@@ -39,16 +39,14 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
             pricePerKg: UI_TEXT.PARAMETER_LABELS.PRICE_PER_KG,
             pricePerHour: UI_TEXT.PARAMETER_LABELS.PRICE_PER_HOUR,
             flatWorkFee: UI_TEXT.PARAMETER_LABELS.FLAT_WORK_FEE,
-            electricityConsumption: UI_TEXT.PARAMETER_LABELS.ELECTRICITY_CONSUMPTION,
-            electricityPrice: UI_TEXT.PARAMETER_LABELS.ELECTRICITY_PRICE,
+            electricity: UI_TEXT.PARAMETER_LABELS.ELECTRICITY,
             markup: UI_TEXT.PARAMETER_LABELS.MARKUP,
           } as const;
           const units = {
             pricePerKg: UI_TEXT.UNITS.PER_KG,
             pricePerHour: UI_TEXT.UNITS.PER_HOUR,
             flatWorkFee: UI_TEXT.UNITS.WORK_FEE,
-            electricityConsumption: UI_TEXT.UNITS.ELECTRICITY,
-            electricityPrice: UI_TEXT.UNITS.ELECTRICITY_PRICE,
+            electricity: UI_TEXT.UNITS.ELECTRICITY,
             markup: UI_TEXT.UNITS.PERCENT,
           } as const;
 
@@ -100,33 +98,71 @@ export function ParametersPanel({ parameterConfig, setParameterConfig, onEditCli
                   </div>
                 ) : (
                   <>
-                    <input
-                      type="checkbox"
-                      checked={enabled}
-                      onChange={(e) => {
-                        setParameterConfig(prev => ({
-                          ...prev,
-                          enabled: {
-                            ...prev.enabled,
-                            [key]: e.target.checked,
-                          },
-                        }));
-                      }}
-                      style={{ 
-                        borderColor: 'var(--dark-border)',
-                        backgroundColor: 'white'
-                      }}
-                      className="w-4 h-4 rounded focus:ring-gray-500"
-                    />
-                    <span style={{ color: enabled ? 'var(--dark-text)' : 'var(--dark-secondary)' }}>
-                      {labels[key as keyof typeof labels]}
-                    </span>
+                    {key === 'electricityConsumption' || key === 'electricityPrice' ? (
+                      <>
+                        {key === 'electricityConsumption' && (
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={parameterConfig.enabled.electricityConsumption && parameterConfig.enabled.electricityPrice}
+                              onChange={(e) => {
+                                const checked = e.target.checked;
+                                setParameterConfig(prev => ({
+                                  ...prev,
+                                  enabled: {
+                                    ...prev.enabled,
+                                    electricityConsumption: checked,
+                                    electricityPrice: checked,
+                                  },
+                                }));
+                              }}
+                              style={{ 
+                                borderColor: 'var(--dark-border)',
+                                backgroundColor: 'white'
+                              }}
+                              className="w-4 h-4 rounded focus:ring-gray-500"
+                            />
+                            <span style={{ color: (parameterConfig.enabled.electricityConsumption || parameterConfig.enabled.electricityPrice) ? 'var(--dark-text)' : 'var(--dark-secondary)' }}>
+                              {labels['electricity']}
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        <input
+                          type="checkbox"
+                          checked={enabled}
+                          onChange={(e) => {
+                            setParameterConfig(prev => ({
+                              ...prev,
+                              enabled: {
+                                ...prev.enabled,
+                                [key]: e.target.checked,
+                              },
+                            }));
+                          }}
+                          style={{ 
+                            borderColor: 'var(--dark-border)',
+                            backgroundColor: 'white'
+                          }}
+                          className="w-4 h-4 rounded focus:ring-gray-500"
+                        />
+                        <span style={{ color: enabled ? 'var(--dark-text)' : 'var(--dark-secondary)' }}>
+                          {labels[key as keyof typeof labels]}
+                        </span>
+                      </>
+                    )}
                   </>
                 )}
               </div>
-              <span className="font-mono" style={{ color: enabled ? 'var(--dark-text)' : 'var(--dark-secondary)' }}>
-                {value} {units[key as keyof typeof units]}
-              </span>
+              {key === 'electricityConsumption' || key === 'electricityPrice' ? (
+                <></>
+              ) : (
+                <span className="font-mono" style={{ color: enabled ? 'var(--dark-text)' : 'var(--dark-secondary)' }}>
+                  {value} {units[key as keyof typeof units]}
+                </span>
+              )}
             </div>
           );
         })}
